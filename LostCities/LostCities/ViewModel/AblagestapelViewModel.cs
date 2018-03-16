@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using LostCities;
 using LostCities.Model;
+using LostCities;
 
 namespace LostCities.ViewModel
 {
@@ -48,6 +49,24 @@ namespace LostCities.ViewModel
                     break;
                 case "4":
                     WeißerStapelImageUri = new Card(Farbe.Karo.ToString(), Wert.Dame.ToString()).ImageUri;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void KarteAblegen(Card Card)
+        {
+            switch (Card.Name)
+            {
+                case "Herz":
+                    GelberStapelImageUri = Card.ImageUri;
+                    break;
+                case "Karo":
+                    break;
+                case "Pik":
+                    break;
+                case "Kreuz":
                     break;
                 default:
                     break;

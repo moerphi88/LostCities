@@ -10,7 +10,6 @@ namespace LostCities
 {
     public partial class MainPage : ContentPage
     {
-
         private MainViewModel vm;
 
         public MainPage()

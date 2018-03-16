@@ -5,19 +5,34 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LostCities.Model;
 
 namespace LostCities.Service
 {
     public class LostCitiesGameLogic
     {
-        public LostCitiesGameLogic(HandViewModel HandViewModelEins, HandViewModel HandVieWModelZwei)
+        HandViewModel _handSpielerEins;
+        AblagestapelViewModel _ablagestapel;
+
+        public LostCitiesGameLogic(HandViewModel HandSpielerEins, AblagestapelViewModel Ablagestapel)
         {
-            HandViewModelEins.CountdownCompleted += OnContdownCompleted;
+            _handSpielerEins = HandSpielerEins;
+            _ablagestapel = Ablagestapel;
+
+            HandSpielerEins.KarteAnlegen += OnKarteAnlegen;
+            HandSpielerEins.KarteAblegen += OnKarteAblegen;
         }
 
-        void OnContdownCompleted(object sender, EventArgs e)
+        void OnKarteAnlegen(object sender, EventArgs e)
         {
-            Debug.WriteLine("Es scheint geklappt zu haben");
+            Debug.WriteLine("OnKarteAnlegen");
         }
+
+        void OnKarteAblegen(object sender, EventArgs e)
+        {
+            _ablagestapel.KarteAblegen(new Card("Herz","Dame"));
+            Debug.WriteLine("OnKarteAblegen");
+        }
+
     }
 }
