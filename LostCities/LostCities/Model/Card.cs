@@ -4,6 +4,13 @@
     {
         private string _name;
         private string _zahl;
+        private string _imageUri;
+
+        public string ImageUri
+        {
+            get { return _imageUri; }
+            set { _imageUri = value; }
+        }
 
         public string Name
         {
@@ -20,11 +27,13 @@
         public Card() {
             Name = Farbe.Herz.ToString();
             Zahl = Wert.Acht.ToString();
+            ImageUri = this.ToString().ToLower() + ".png";
         }
 
         public Card(string name, string zahl) {
             Name = name;
             Zahl = zahl;
+            ImageUri = this.ToString().ToLower() + ".png";
         }
 
         public override string ToString()

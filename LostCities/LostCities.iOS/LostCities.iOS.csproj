@@ -135,7 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LostCities\LostCities.csproj">
-      <Project>{cf233728-c8c0-4fe7-b790-6146d9b99576}</Project>
+      <Project>{310aefe9-1286-4cc5-a3ad-df95d8012460}</Project>
       <Name>LostCities</Name>
     </ProjectReference>
   </ItemGroup>

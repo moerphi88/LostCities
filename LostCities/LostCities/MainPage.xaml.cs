@@ -13,11 +13,15 @@ namespace LostCities
 
         private MainViewModel vm;
 
+
         public MainPage()
         {
             InitializeComponent();
             vm = new MainViewModel(this.Navigation);
             BindingContext = vm;
+
+            stack.BindingContext = vm.AblageStapelVM;
+            stack2.BindingContext = vm.AblageStapelVM2;
         }
     }
 }
