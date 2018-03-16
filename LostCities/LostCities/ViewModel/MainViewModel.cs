@@ -12,12 +12,12 @@ namespace LostCities.ViewModel
     public class MainViewModel : BaseViewModel
     {
         public AblagestapelViewModel AblageStapelVM { get; set; }
-        public AblagestapelViewModel AblageStapelVM2 { get; set; }
+        public HandViewModel HandVM { get; set; }
 
         public MainViewModel(INavigation navigation) : base(navigation)
         {
             AblageStapelVM = new AblagestapelViewModel(null);
-            AblageStapelVM2 = new AblagestapelViewModel(null);
+            HandVM = new HandViewModel(null);
         }
     }
 }

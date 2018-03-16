@@ -21,7 +21,7 @@ namespace LostCities
             BindingContext = vm;
 
             stack.BindingContext = vm.AblageStapelVM;
-            stack2.BindingContext = vm.AblageStapelVM2;
+            stack2.BindingContext = vm.HandVM;
         }
     }
 }
