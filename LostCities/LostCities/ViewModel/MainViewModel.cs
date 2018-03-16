@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LostCities.Service;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace LostCities.ViewModel
         {
             AblageStapelVM = new AblagestapelViewModel(null);
             HandVM = new HandViewModel(null);
+            LostCitiesGameLogic lcgl = new LostCitiesGameLogic(HandVM, null);
         }
     }
 }

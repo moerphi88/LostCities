@@ -13,7 +13,6 @@ namespace LostCities
 
         private MainViewModel vm;
 
-
         public MainPage()
         {
             InitializeComponent();

@@ -17,6 +17,13 @@ namespace LostCities.ViewModel
         private string _roterStapelImageUri;
         private string _gruenerStapelImageUri;
 
+        public event EventHandler CountdownCompleted;
+
+        protected virtual void OnCountdownCompleted(EventArgs e)
+        {
+            CountdownCompleted?.Invoke(this, e);
+        }
+
         public HandViewModel(INavigation navigation) : base(navigation)
         {
             OnButtonPressedCommand = new Command<string>(OnButtonPressed);
@@ -31,7 +38,7 @@ namespace LostCities.ViewModel
             var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
             var answer = await App.Current.MainPage.DisplayActionSheet("Initialrunde beendet!", "Was möchtest du mit deiner Karte anstellen?", "Cancel",buttons );
             //todo hier die Antworten des ActionsSheets abfragen und Aktion ausführen.
-
+            OnCountdownCompleted(new EventArgs());
             //switch (value)
             //{
             //    case "0":
