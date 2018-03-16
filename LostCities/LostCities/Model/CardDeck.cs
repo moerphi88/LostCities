@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kartenspiel
+namespace LostCities.Model
 {
 
     // Test eines Kartenstapels. Wie genau kann ich denn nu eigentlich einzelne Elemten in der Liste verändern?
@@ -63,7 +63,7 @@ namespace Kartenspiel
 
             } catch (Exception e)
             {
-                Console.Error.WriteLine(e.Message);
+                //todo
             }
             return null;
         }

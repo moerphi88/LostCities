@@ -1,17 +1,15 @@
-﻿namespace Kartenspiel
+﻿namespace LostCities.Model
 {
-
     public class Card
     {
         private string _name;
+        private string _zahl;
 
         public string Name
         {
             get { return _name; }
             set { _name = value; }
-        }
-
-        private string _zahl;
+        }      
 
         public string Zahl
         {
@@ -24,7 +22,6 @@
             Zahl = Wert.Acht.ToString();
         }
 
-        //Was genau macht man? Benutzt man die Properties oder benutzt man die Variablen?
         public Card(string name, string zahl) {
             Name = name;
             Zahl = zahl;

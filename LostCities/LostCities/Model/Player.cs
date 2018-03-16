@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using LostCities;
 
-namespace Kartenspiel
+namespace LostCities.Model
 {
 
     public class Player
@@ -23,8 +24,11 @@ namespace Kartenspiel
         public bool IsWinner()
         {
             if (handCards[0].Zahl == handCards[1].Zahl)
+            {
                 if (handCards[0].Zahl == "As")
                     return true;
+            }
+
             return false; //Wenn keine der Abfragen wahr ist
         }
 
@@ -45,7 +49,7 @@ namespace Kartenspiel
                     break;
                 default:
                     temp = null;
-                    Console.Error.WriteLine("Dieser Fall sollte nicht eintreten");
+                    //Console.Error.WriteLine("Dieser Fall sollte nicht eintreten");
                 break;
             }
 
@@ -63,7 +67,7 @@ namespace Kartenspiel
                     handCards[1] = c;
                     break;
                 default:
-                    Console.Error.WriteLine("Dieser Fall sollte nicht eintreten");
+                    //Console.Error.WriteLine("Dieser Fall sollte nicht eintreten");
                     break;
             }
         }
