@@ -28,5 +28,6 @@
         <Button WidthRequest="50" HeightRequest="70"  Image="{Binding ZweiteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
         <Button WidthRequest="50" HeightRequest="70"  Image="{Binding DritteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
         </StackLayout>
+    <StackLayout x:Name="stack3"></StackLayout>
     </StackLayout>
 </ContentPage>

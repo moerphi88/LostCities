@@ -45,9 +45,11 @@
     <Compile Include="Model\Card.cs" />
     <Compile Include="Model\CardDeck.cs" />
     <Compile Include="Model\CardEventArgs.cs" />
+    <Compile Include="Model\HandCard.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\LostCitiesGameLogix.cs" />
+    <Compile Include="ViewModel\ObservableHandViewModel.cs" />
     <Compile Include="ViewModel\HandViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\AblagestapelViewModel.cs" />
