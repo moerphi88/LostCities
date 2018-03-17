@@ -62,10 +62,13 @@ namespace LostCities.ViewModel
                     GelberStapelImageUri = Card.ImageUri;
                     break;
                 case "Karo":
+                    BlauerStapelImageUri = Card.ImageUri;
                     break;
                 case "Pik":
+                    GruenerStapelImageUri = Card.ImageUri;
                     break;
                 case "Kreuz":
+                    RoterStapelImageUri = Card.ImageUri;
                     break;
                 default:
                     break;

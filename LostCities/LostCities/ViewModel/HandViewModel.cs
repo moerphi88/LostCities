@@ -8,6 +8,8 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using LostCities;
 using LostCities.Model;
+using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace LostCities.ViewModel
 {
@@ -45,29 +47,42 @@ namespace LostCities.ViewModel
         async void OnButtonPressed(string value)
         {
             var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
-            var answer = await App.Current.MainPage.DisplayActionSheet("Initialrunde beendet!", "Was möchtest du mit deiner Karte anstellen?", "Cancel",buttons );
+            var answer = await App.Current.MainPage.DisplayActionSheet("Initialrunde beendet!", null, "Cancel",buttons );
             //todo hier die Antworten des ActionsSheets abfragen und Aktion ausführen.
 
-            switch (answer)
+            if (null != answer)
             {
-                case "Karte anlegen":
-                    OnKarteAnlegen(new CardEventArgs(null));
-                    break;
-                case "Karte ablegen":
-                    OnKarteAblegen(new CardEventArgs(new Card("Herz", "Dame")));
-                    break;
+                if (answer != "Cancel")
+                {
+                    //Hier muss try-catch etc. noch hin. Und der Index muss überprüft werden
+                    var index = int.Parse(value);
+                    var CardEventArgs = new CardEventArgs(_cardList[index]);
+                    _cardList.RemoveAt(index);
+                    UpdateView(index);
+
+                    switch (answer)
+                    {
+                        case "Karte anlegen":
+                            OnKarteAnlegen(new CardEventArgs(null));
+                            break;
+                        case "Karte ablegen":
+                            OnKarteAblegen(CardEventArgs);
+                            break;
+                    }
+                }
             }
+
             
             //switch (value)
             //{
             //    case "0":
-            //        GelberStapelImageUri = new Card(Farbe.Herz.ToString(), Wert.Dame.ToString()).ImageUri;
+            //        gelberstapelimageuri = new card(farbe.herz.tostring(), wert.dame.tostring()).imageuri;
             //        break;
             //    case "1":
-            //        GruenerStapelImageUri = new Card(Farbe.Karo.ToString(), Wert.Dame.ToString()).ImageUri;
+            //        gruenerstapelimageuri = new card(farbe.karo.tostring(), wert.dame.tostring()).imageuri;
             //        break;
             //    case "2":
-            //        RoterStapelImageUri = new Card(Farbe.Karo.ToString(), Wert.Dame.ToString()).ImageUri;
+            //        roterstapelimageuri = new card(farbe.karo.tostring(), wert.dame.tostring()).imageuri;
             //        break;
             //    default:
             //        break;
@@ -124,9 +139,34 @@ namespace LostCities.ViewModel
 
         private void UpdateViewModel()
         {
-            ErsteHandKarteImageUri = _cardList[0].ImageUri;
-            ZweiteHandKarteImageUri = _cardList[1].ImageUri;
-            DritteHandKarteImageUri = _cardList[2].ImageUri;
+            try
+            {
+                ErsteHandKarteImageUri = _cardList[0].ImageUri;
+                ZweiteHandKarteImageUri = _cardList[1].ImageUri;
+                DritteHandKarteImageUri = _cardList[2].ImageUri;
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+
+        private void UpdateView(int value)
+        {
+            switch (value)
+            {
+                case 0:
+                    ErsteHandKarteImageUri = null;
+                    break;
+                case 1:
+                    ZweiteHandKarteImageUri = null;
+                    break;
+                case 2:
+                    DritteHandKarteImageUri = null;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
