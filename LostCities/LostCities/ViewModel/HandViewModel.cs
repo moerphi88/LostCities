@@ -17,15 +17,17 @@ namespace LostCities.ViewModel
         private string _roterStapelImageUri;
         private string _gruenerStapelImageUri;
 
-        public event EventHandler KarteAnlegen;
-        public event EventHandler KarteAblegen;
+        public delegate void CardEventHandler(object sender, CardEventArgs e);
 
-        protected virtual void OnKarteAnlegen(EventArgs e)
+        public event CardEventHandler KarteAnlegen;
+        public event CardEventHandler KarteAblegen;
+
+        protected virtual void OnKarteAnlegen(CardEventArgs e)
         {
             KarteAnlegen?.Invoke(this, e);
         }
 
-        protected virtual void OnKarteAblegen(EventArgs e)
+        protected virtual void OnKarteAblegen(CardEventArgs e)
         {
             KarteAblegen?.Invoke(this, e);
         }
@@ -48,10 +50,10 @@ namespace LostCities.ViewModel
             switch (answer)
             {
                 case "Karte anlegen":
-                    OnKarteAnlegen(new EventArgs());
+                    OnKarteAnlegen(new CardEventArgs(null));
                     break;
                 case "Karte ablegen":
-                    OnKarteAblegen(new EventArgs());
+                    OnKarteAblegen(new CardEventArgs(new Card("Herz", "Dame")));
                     break;
             }
             

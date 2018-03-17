@@ -19,18 +19,18 @@ namespace LostCities.Service
             _handSpielerEins = HandSpielerEins;
             _ablagestapel = Ablagestapel;
 
-            HandSpielerEins.KarteAnlegen += OnKarteAnlegen;
+            //HandSpielerEins.KarteAnlegen += OnKarteAnlegen;
             HandSpielerEins.KarteAblegen += OnKarteAblegen;
         }
 
-        void OnKarteAnlegen(object sender, EventArgs e)
+        void OnKarteAnlegen(object sender, CardEventArgs e)
         {
             Debug.WriteLine("OnKarteAnlegen");
         }
 
-        void OnKarteAblegen(object sender, EventArgs e)
+        void OnKarteAblegen(object sender, CardEventArgs e)
         {
-            _ablagestapel.KarteAblegen(new Card("Herz","Dame"));
+            _ablagestapel.KarteAblegen(e.Card);
             Debug.WriteLine("OnKarteAblegen");
         }
 
