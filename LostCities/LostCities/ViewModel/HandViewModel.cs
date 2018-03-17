@@ -28,7 +28,7 @@ namespace LostCities.ViewModel
         {
             OnButtonPressedCommand = new Command<string>(OnButtonPressed);
             ErsteHandKarteImageUri = "kartenhindergrund.png";
-            ZweiteHandKarteImageUri = null;
+            ZweiteHandKarteImageUri = "kartenhindergrund.png";
             DritteHandKarteImageUri = "kartenhindergrund.png";
         }
 
@@ -113,12 +113,12 @@ namespace LostCities.ViewModel
         {
             get
             {
-                return _dritteHandKarte;
+                return _zweiteHandKarte;
             }
 
             set
             {
-                _dritteHandKarte = value;
+                _zweiteHandKarte = value;
                 OnPropertyChanged();
             }
         }
@@ -127,12 +127,12 @@ namespace LostCities.ViewModel
         {
             get
             {
-                return _zweiteHandKarte;
+                return _dritteHandKarte;
             }
 
             set
             {
-                _zweiteHandKarte = value;
+                _dritteHandKarte = value;
                 OnPropertyChanged();
             }
         }

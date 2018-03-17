@@ -11,11 +11,11 @@ namespace LostCities.Service
 {
     public class LostCitiesGameLogic
     {
-        ObservableHandViewModel _handSpielerEins;
+        HandViewModel _handSpielerEins;
         AblagestapelViewModel _ablagestapel;
         CardDeck _cardDeck;
 
-        public LostCitiesGameLogic(ObservableHandViewModel HandSpielerEins, AblagestapelViewModel Ablagestapel)
+        public LostCitiesGameLogic(HandViewModel HandSpielerEins, AblagestapelViewModel Ablagestapel)
         {
             _handSpielerEins = HandSpielerEins;
             _ablagestapel = Ablagestapel;

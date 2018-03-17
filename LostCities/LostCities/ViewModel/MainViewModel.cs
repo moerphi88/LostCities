@@ -19,8 +19,7 @@ namespace LostCities.ViewModel
         {
             AblageStapelVM = new AblagestapelViewModel(null);
             HandVM = new HandViewModel(null);
-            var ovm = new ObservableHandViewModel(null);
-            LostCitiesGameLogic lcgl = new LostCitiesGameLogic(ovm, AblageStapelVM);
+            LostCitiesGameLogic lcgl = new LostCitiesGameLogic(HandVM, AblageStapelVM);
         }
     }
 }
