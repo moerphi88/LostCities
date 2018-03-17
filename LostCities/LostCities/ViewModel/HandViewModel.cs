@@ -14,13 +14,21 @@ namespace LostCities.ViewModel
     public class HandViewModel : BaseViewModel
     {
         private string _ersteHandKarte;
-        private string _roterStapelImageUri;
-        private string _gruenerStapelImageUri;
+        private string _zweiteHandKarte;
+        private string _dritteHandKarte;
+        private List<Card> _cardList;
 
         public delegate void CardEventHandler(object sender, CardEventArgs e);
-
         public event CardEventHandler KarteAnlegen;
         public event CardEventHandler KarteAblegen;
+
+        public HandViewModel(INavigation navigation) : base(navigation)
+        {
+            OnButtonPressedCommand = new Command<string>(OnButtonPressed);
+            ErsteHandKarteImageUri = "kartenhindergrund.png";
+            ZweiteHandKarteImageUri = null;
+            DritteHandKarteImageUri = "kartenhindergrund.png";
+        }
 
         protected virtual void OnKarteAnlegen(CardEventArgs e)
         {
@@ -32,13 +40,6 @@ namespace LostCities.ViewModel
             KarteAblegen?.Invoke(this, e);
         }
 
-        public HandViewModel(INavigation navigation) : base(navigation)
-        {
-            OnButtonPressedCommand = new Command<string>(OnButtonPressed);
-            GelberStapelImageUri = "kartenhindergrund.png";            
-            GruenerStapelImageUri = null;
-            RoterStapelImageUri = "kartenhindergrund.png";
-        }
         public ICommand OnButtonPressedCommand { get; }
 
         async void OnButtonPressed(string value)
@@ -72,8 +73,14 @@ namespace LostCities.ViewModel
             //        break;
             //}
         }
+
+        public void GetHandCards(List<Card> cardList)
+        {
+            _cardList = cardList;
+            UpdateViewModel();
+        }
         
-        public String GelberStapelImageUri
+        public String ErsteHandKarteImageUri
         { 
             get
             {
@@ -87,32 +94,39 @@ namespace LostCities.ViewModel
             }
         }        
 
-        public String GruenerStapelImageUri
+        public String ZweiteHandKarteImageUri
         {
             get
             {
-                return _gruenerStapelImageUri;
+                return _dritteHandKarte;
             }
 
             set
             {
-                _gruenerStapelImageUri = value;
+                _dritteHandKarte = value;
                 OnPropertyChanged();
             }
         }
 
-        public String RoterStapelImageUri
+        public String DritteHandKarteImageUri
         {
             get
             {
-                return _roterStapelImageUri;
+                return _zweiteHandKarte;
             }
 
             set
             {
-                _roterStapelImageUri = value;
+                _zweiteHandKarte = value;
                 OnPropertyChanged();
             }
+        }
+
+        private void UpdateViewModel()
+        {
+            ErsteHandKarteImageUri = _cardList[0].ImageUri;
+            ZweiteHandKarteImageUri = _cardList[1].ImageUri;
+            DritteHandKarteImageUri = _cardList[2].ImageUri;
         }
     }
 }

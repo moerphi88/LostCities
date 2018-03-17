@@ -13,11 +13,15 @@ namespace LostCities.Service
     {
         HandViewModel _handSpielerEins;
         AblagestapelViewModel _ablagestapel;
+        CardDeck _cardDeck;
 
         public LostCitiesGameLogic(HandViewModel HandSpielerEins, AblagestapelViewModel Ablagestapel)
         {
             _handSpielerEins = HandSpielerEins;
             _ablagestapel = Ablagestapel;
+            _cardDeck = new CardDeck();
+
+            _handSpielerEins.GetHandCards(_cardDeck.GetXCards(3));
 
             //HandSpielerEins.KarteAnlegen += OnKarteAnlegen;
             HandSpielerEins.KarteAblegen += OnKarteAblegen;
@@ -33,6 +37,5 @@ namespace LostCities.Service
             _ablagestapel.KarteAblegen(e.Card);
             Debug.WriteLine("OnKarteAblegen");
         }
-
     }
 }

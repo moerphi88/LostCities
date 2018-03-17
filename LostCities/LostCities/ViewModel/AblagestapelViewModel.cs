@@ -8,7 +8,6 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using LostCities;
 using LostCities.Model;
-using LostCities;
 
 namespace LostCities.ViewModel
 {
