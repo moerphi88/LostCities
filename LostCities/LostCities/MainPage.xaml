@@ -24,7 +24,7 @@
         Padding="10"
         HorizontalOptions="Start"
         VerticalOptions="Start">
-        <Button WidthRequest="50" HeightRequest="70"  Image="{Binding ErsteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+        <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisible}" Image="{Binding ErsteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
         <Button WidthRequest="50" HeightRequest="70"  Image="{Binding ZweiteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
         <Button WidthRequest="50" HeightRequest="70"  Image="{Binding DritteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
         </StackLayout>

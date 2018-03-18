@@ -20,6 +20,17 @@ namespace LostCities.ViewModel
         private string _dritteHandKarte;
         private List<Card> _cardList;
 
+        private bool _isVisible;
+        public bool IsVisible
+        {
+            get { return _isVisible; }
+            set
+            {
+                _isVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
         public delegate void CardEventHandler(object sender, CardEventArgs e);
         public event CardEventHandler KarteAnlegen;
         public event CardEventHandler KarteAblegen;
@@ -30,6 +41,8 @@ namespace LostCities.ViewModel
             ErsteHandKarteImageUri = "kartenhindergrund.png";
             ZweiteHandKarteImageUri = "kartenhindergrund.png";
             DritteHandKarteImageUri = "kartenhindergrund.png";
+
+            IsVisible = true;
         }
 
         protected virtual void OnKarteAnlegen(CardEventArgs e)
@@ -46,30 +59,37 @@ namespace LostCities.ViewModel
 
         async void OnButtonPressed(string value)
         {
+
+            
             var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
             var answer = await App.Current.MainPage.DisplayActionSheet("Initialrunde beendet!", null, "Cancel",buttons );
-            //todo hier die Antworten des ActionsSheets abfragen und Aktion ausführen.
 
-            if (null != answer)
+            try
             {
-                if (answer != "Cancel")
+                if (null != answer)
                 {
-                    //Hier muss try-catch etc. noch hin. Und der Index muss überprüft werden
-                    var index = int.Parse(value);
-                    var CardEventArgs = new CardEventArgs(_cardList[index]);
-                    _cardList.RemoveAt(index);
-                    UpdateView(index);
-
-                    switch (answer)
+                    if (answer != "Cancel")
                     {
-                        case "Karte anlegen":
-                            OnKarteAnlegen(new CardEventArgs(null));
-                            break;
-                        case "Karte ablegen":
-                            OnKarteAblegen(CardEventArgs);
-                            break;
+                        //Hier muss try-catch etc. noch hin. Und der Index muss überprüft werden
+                        var index = int.Parse(value);
+                        var CardEventArgs = new CardEventArgs(_cardList[index]);
+                        _cardList.RemoveAt(index);
+                        UpdateView(index);
+
+                        switch (answer)
+                        {
+                            case "Karte anlegen":
+                                OnKarteAnlegen(new CardEventArgs(null));
+                                break;
+                            case "Karte ablegen":
+                                OnKarteAblegen(CardEventArgs);
+                                break;
+                        }
                     }
                 }
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
 
             
