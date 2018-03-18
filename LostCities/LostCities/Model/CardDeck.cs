@@ -23,7 +23,7 @@ namespace LostCities.Model
             }
         }
 
-        public void ShuffleCardDeck()
+        private void ShuffleCardDeck()
         {
             List<Card> tempList = new List<Card>();
             tempList.AddRange(_list); 
@@ -47,7 +47,7 @@ namespace LostCities.Model
             ShuffleCardDeck();
         }
 
-        public bool isEmpty()
+        public bool IsEmpty()
         {
             if (_list.Count <= 1) return true; //Wenn nur noch eine Karte im Deck übrig ist, kann keine ganze runde mehr gespielt werden. Darum <= 1 und nicht nur 0.
             else return false;

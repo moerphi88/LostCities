@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using LostCities;
 using LostCities.Model;
 using System.Diagnostics;
-using System.Collections.ObjectModel;
 
 namespace LostCities.ViewModel
 {
     public class HandViewModel : BaseViewModel
     {
+        private int _abgelegteKarteIndex;
+
         private string _ersteHandKarte;
         private string _zweiteHandKarte;
         private string _dritteHandKarte;
@@ -38,6 +34,9 @@ namespace LostCities.ViewModel
             IsVisibleErsteHandKarte = true;
             IsVisibleZweiteHandKarte = true;
             IsVisibleDritteHandKarte = true;
+
+            _abgelegteKarteIndex = -1;
+
         }
 
         protected virtual void OnKarteAnlegen(CardEventArgs e)
@@ -68,6 +67,7 @@ namespace LostCities.ViewModel
                         var CardEventArgs = new CardEventArgs(_cardList[index]);
                         //_cardList.RemoveAt(index);
                         UpdateView(index);
+                        _abgelegteKarteIndex = index;
 
                         switch (answer)
                         {
@@ -105,6 +105,18 @@ namespace LostCities.ViewModel
         {
             _cardList = cardList;
             UpdateViewModel();
+        }
+
+        public void GetHandCard(Card card)
+        {
+            if (null != card)
+            {
+                if (_abgelegteKarteIndex != -1)
+                {
+                    _cardList[_abgelegteKarteIndex] = card;
+                    UpdateViewModel();
+                }
+            }
         }
         
         public String ErsteHandKarteImageUri
@@ -186,6 +198,10 @@ namespace LostCities.ViewModel
                 ErsteHandKarteImageUri = _cardList[0].ImageUri;
                 ZweiteHandKarteImageUri = _cardList[1].ImageUri;
                 DritteHandKarteImageUri = _cardList[2].ImageUri;
+
+                IsVisibleErsteHandKarte = true;
+                IsVisibleZweiteHandKarte = true;
+                IsVisibleDritteHandKarte = true;
             }
             catch (IndexOutOfRangeException e)
             {

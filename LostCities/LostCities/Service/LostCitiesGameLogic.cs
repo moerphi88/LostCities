@@ -10,15 +10,17 @@ namespace LostCities.Service
 {
     public class LostCitiesGameLogic
     {
-        HandViewModel _handSpielerEins;
-        AblagestapelViewModel _ablagestapel;
-        CardDeck _cardDeck;
+        private HandViewModel _handSpielerEins;
+        private AblagestapelViewModel _ablagestapel;
+        private CardDeck _cardDeck;
+        private bool _gameIsOver;
 
         public LostCitiesGameLogic(HandViewModel HandSpielerEins, AblagestapelViewModel Ablagestapel)
         {
             _handSpielerEins = HandSpielerEins;
             _ablagestapel = Ablagestapel;
             _cardDeck = new CardDeck();
+            _gameIsOver = false;
 
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(3));
 
@@ -33,8 +35,18 @@ namespace LostCities.Service
 
         void OnKarteAblegen(object sender, CardEventArgs e)
         {
-            _ablagestapel.KarteAblegen(e.Card);
-            Debug.WriteLine("OnKarteAblegen");
+            if (!_gameIsOver)
+            {
+                _ablagestapel.KarteAblegen(e.Card);
+                _handSpielerEins.GetHandCard(_cardDeck.GetFirstCard());
+                IsGameOver();
+            }
+            Debug.WriteLine("OnKarteAblegen. GameIsOver:{0}",_gameIsOver);
+        }
+
+        private void IsGameOver()
+        {
+            _gameIsOver = _cardDeck.IsEmpty();
         }
     }
 }
