@@ -20,16 +20,9 @@ namespace LostCities.ViewModel
         private string _dritteHandKarte;
         private List<Card> _cardList;
 
-        private bool _isVisible;
-        public bool IsVisible
-        {
-            get { return _isVisible; }
-            set
-            {
-                _isVisible = value;
-                OnPropertyChanged();
-            }
-        }
+        private bool _isVisibleErsteHandKarte;
+        private bool _isVisibleZweiteHandKarte;
+        private bool _isVisibleDritteHandKarte;
 
         public delegate void CardEventHandler(object sender, CardEventArgs e);
         public event CardEventHandler KarteAnlegen;
@@ -42,7 +35,9 @@ namespace LostCities.ViewModel
             ZweiteHandKarteImageUri = "kartenhindergrund.png";
             DritteHandKarteImageUri = "kartenhindergrund.png";
 
-            IsVisible = true;
+            IsVisibleErsteHandKarte = true;
+            IsVisibleZweiteHandKarte = true;
+            IsVisibleDritteHandKarte = true;
         }
 
         protected virtual void OnKarteAnlegen(CardEventArgs e)
@@ -59,8 +54,6 @@ namespace LostCities.ViewModel
 
         async void OnButtonPressed(string value)
         {
-
-            
             var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
             var answer = await App.Current.MainPage.DisplayActionSheet("Initialrunde beendet!", null, "Cancel",buttons );
 
@@ -73,7 +66,7 @@ namespace LostCities.ViewModel
                         //Hier muss try-catch etc. noch hin. Und der Index muss überprüft werden
                         var index = int.Parse(value);
                         var CardEventArgs = new CardEventArgs(_cardList[index]);
-                        _cardList.RemoveAt(index);
+                        //_cardList.RemoveAt(index);
                         UpdateView(index);
 
                         switch (answer)
@@ -91,7 +84,6 @@ namespace LostCities.ViewModel
             {
                 Debug.WriteLine(e.Message);
             }
-
             
             //switch (value)
             //{
@@ -157,6 +149,36 @@ namespace LostCities.ViewModel
             }
         }
 
+        public bool IsVisibleErsteHandKarte
+        {
+            get { return _isVisibleErsteHandKarte; }
+            set
+            {
+                _isVisibleErsteHandKarte = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsVisibleZweiteHandKarte
+        {
+            get { return _isVisibleZweiteHandKarte; }
+            set
+            {
+                _isVisibleZweiteHandKarte = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsVisibleDritteHandKarte
+        {
+            get { return _isVisibleDritteHandKarte; }
+            set
+            {
+                _isVisibleDritteHandKarte = value;
+                OnPropertyChanged();
+            }
+        }
+
         private void UpdateViewModel()
         {
             try
@@ -177,12 +199,15 @@ namespace LostCities.ViewModel
             {
                 case 0:
                     ErsteHandKarteImageUri = null;
+                    IsVisibleErsteHandKarte = false;
                     break;
                 case 1:
                     ZweiteHandKarteImageUri = null;
+                    IsVisibleZweiteHandKarte = false;
                     break;
                 case 2:
                     DritteHandKarteImageUri = null;
+                    IsVisibleDritteHandKarte = false;
                     break;
                 default:
                     break;

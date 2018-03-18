@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using LostCities.ViewModel;
+using LostCities.Model;
+using LostCities.Service;
 
 namespace LostCities
 {
@@ -18,13 +20,8 @@ namespace LostCities
             vm = new MainViewModel(this.Navigation);
             BindingContext = vm;
 
-
-
             stack.BindingContext = vm.AblageStapelVM;
-            stack2.BindingContext = vm.HandVM;
-
-            // ObservableHandViewModel - Test
-
+            stack2.BindingContext = vm.HandVM;            
         }
     }
 }
