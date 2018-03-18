@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using LostCities;
 using LostCities.Model;
+using System.Diagnostics;
 
 namespace LostCities.ViewModel
 {
@@ -18,6 +19,14 @@ namespace LostCities.ViewModel
         private string _gruenerStapelImageUri;
         private string _blauerStapelImageUri;
         private string _weißerStapelImageUri;
+
+        public delegate void CardEventHandler(object sender, CardEventArgs e);
+        public event CardEventHandler KarteAbheben;
+        
+        protected virtual void OnKarteAbheben(CardEventArgs e)
+        {
+            KarteAbheben?.Invoke(this, e);
+        }
 
         public AblagestapelViewModel(INavigation navigation) : base(navigation)
         {
@@ -30,27 +39,21 @@ namespace LostCities.ViewModel
         }
         public ICommand OnButtonPressedCommand { get; }
 
-        void OnButtonPressed(string value)
+        async void OnButtonPressed(string value)
         {
-            switch (value)
+            var answer = await App.Current.MainPage.DisplayAlert(null,"Wollen Sie die Karte wirklich aufnehmen?", "Ja", "Nein");
+
+            try
             {
-                case "0":
-                    GelberStapelImageUri = new Card(Farbe.Herz.ToString(), Wert.Dame.ToString()).ImageUri;
-                    break;
-                case "1":
-                    BlauerStapelImageUri = new Card(Farbe.Kreuz.ToString(), Wert.Acht.ToString()).ImageUri;
-                    break;
-                case "2":
-                    GruenerStapelImageUri = new Card(Farbe.Karo.ToString(), Wert.Dame.ToString()).ImageUri;
-                    break;
-                case "3":
-                    RoterStapelImageUri = new Card(Farbe.Karo.ToString(), Wert.Dame.ToString()).ImageUri;
-                    break;
-                case "4":
-                    WeißerStapelImageUri = new Card(Farbe.Karo.ToString(), Wert.Dame.ToString()).ImageUri;
-                    break;
-                default:
-                    break;
+                if (answer)
+                {
+                    var CardEventArgs = new CardEventArgs(new Card());
+                        OnKarteAbheben(CardEventArgs);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
         }
 

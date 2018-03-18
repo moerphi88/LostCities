@@ -25,7 +25,14 @@ namespace LostCities.Service
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(3));
 
             //HandSpielerEins.KarteAnlegen += OnKarteAnlegen;
-            HandSpielerEins.KarteAblegen += OnKarteAblegen;
+            _handSpielerEins.KarteAblegen += OnKarteAblegen;
+            _ablagestapel.KarteAbheben += OnKarteAbheben;
+        }
+
+        void OnKarteAbheben(object sender, CardEventArgs e)
+        {
+            _handSpielerEins.GetHandCard(e.Card);
+            Debug.WriteLine(nameof(OnKarteAbheben));
         }
 
         void OnKarteAnlegen(object sender, CardEventArgs e)
