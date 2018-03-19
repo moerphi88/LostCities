@@ -41,7 +41,6 @@ namespace LostCities.ViewModel
             _ablagestapel.Add(Farbe.Kreuz, new List<Card>());
             _ablagestapel.Add(Farbe.Pik, new List<Card>());
 
-
             GelberStapelImageUri = "kartenhindergrund.png";
             BlauerStapelImageUri = "kartenhindergrund.png";
             GruenerStapelImageUri = "kartenhindergrund.png";
@@ -53,7 +52,7 @@ namespace LostCities.ViewModel
 
         async void OnButtonPressed(string value)
         {
-            var answer = await App.Current.MainPage.DisplayAlert(null,"Wollen Sie die Karte wirklich aufnehmen?", "Ja", "Nein");
+            var answer = await App.Current.MainPage.DisplayAlert(null,"Willst Du die Karte wirklich aufnehmen?", "Ja", "Nein");
 
             try
             {

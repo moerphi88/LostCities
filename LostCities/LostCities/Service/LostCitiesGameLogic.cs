@@ -10,29 +10,48 @@ namespace LostCities.Service
 {
     public class LostCitiesGameLogic
     {
-        private HandViewModel _handSpielerEins;
+        private HandViewModel _handSpielerEins, _handSpielerZwei;
         private AblagestapelViewModel _ablagestapel;
         private CardDeck _cardDeck;
         private bool _gameIsOver;
+        private int _activePlayer = 0;
 
-        public LostCitiesGameLogic(HandViewModel HandSpielerEins, AblagestapelViewModel Ablagestapel)
+        public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, AblagestapelViewModel ablagestapel)
         {
-            _handSpielerEins = HandSpielerEins;
-            _ablagestapel = Ablagestapel;
+            _handSpielerEins = handSpielerEins;
+            _handSpielerZwei = handSpielerZwei;
+            _ablagestapel = ablagestapel;
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(3));
+            _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(3));
 
             //HandSpielerEins.KarteAnlegen += OnKarteAnlegen;
             _handSpielerEins.KarteAblegen += OnKarteAblegen;
+            _handSpielerZwei.KarteAblegen += OnKarteAblegen;
+
             _ablagestapel.KarteAbheben += OnKarteAbheben;
         }
 
         void OnKarteAbheben(object sender, CardEventArgs e)
         {
-            _handSpielerEins.GetHandCard(e.Card);
-            Debug.WriteLine(nameof(OnKarteAbheben));
+            switch (_activePlayer)
+            {
+                case 0: //Spieler 1
+                    _handSpielerEins.GetHandCard(e.Card);
+                    _activePlayer = 1;
+                    break;
+                case 1:
+                    _handSpielerZwei.GetHandCard(e.Card);
+                    _activePlayer = 0;
+                    break;
+                default:
+                    //Do nothing
+                    break;
+            }
+            
+            Debug.WriteLine(nameof(OnKarteAbheben) );
         }
 
         void OnKarteAnlegen(object sender, CardEventArgs e)
@@ -45,10 +64,23 @@ namespace LostCities.Service
             if (!_gameIsOver)
             {
                 _ablagestapel.KarteAblegen(e.Card);
-                _handSpielerEins.GetHandCard(_cardDeck.GetFirstCard());
+                switch (_activePlayer)
+                {
+                    case 0: //Spieler 1
+                        _handSpielerEins.GetHandCard(_cardDeck.GetFirstCard());
+                        _activePlayer = 1;
+                        break;
+                    case 1:
+                        _handSpielerZwei.GetHandCard(_cardDeck.GetFirstCard());
+                        _activePlayer = 0;
+                        break;
+                    default:
+                        //Do nothing
+                        break;
+                }           
                 IsGameOver();
             }
-            Debug.WriteLine("OnKarteAblegen. GameIsOver:{0}",_gameIsOver);
+            Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
         }
 
         private void IsGameOver()

@@ -14,12 +14,14 @@ namespace LostCities.ViewModel
     {
         public AblagestapelViewModel AblageStapelVM { get; set; }
         public HandViewModel HandVM { get; set; }
+        public HandViewModel HandVM2 { get; set; }
 
         public MainViewModel(INavigation navigation) : base(navigation)
         {
             AblageStapelVM = new AblagestapelViewModel(null);
             HandVM = new HandViewModel(null);
-            LostCitiesGameLogic lcgl = new LostCitiesGameLogic(HandVM, AblageStapelVM);
+            HandVM2 = new HandViewModel(null);
+            LostCitiesGameLogic lcgl = new LostCitiesGameLogic(HandVM, HandVM2, AblageStapelVM);
         }
     }
 }

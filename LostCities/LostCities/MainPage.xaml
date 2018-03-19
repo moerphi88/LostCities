@@ -19,7 +19,7 @@
         <Button WidthRequest="50" HeightRequest="70"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
     </StackLayout>
     <StackLayout 
-        x:Name="stack2"
+        x:Name="HandSpielerEins"
         Orientation="Horizontal"
         Padding="10"
         HorizontalOptions="Start"
@@ -28,6 +28,15 @@
             <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleZweiteHandKarte}" Image="{Binding ZweiteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
             <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleDritteHandKarte}" Image="{Binding DritteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
         </StackLayout>
-    <StackLayout x:Name="stack3"></StackLayout>
+        <StackLayout 
+        x:Name="HandSpielerZwei"
+        Orientation="Horizontal"
+        Padding="10"
+        HorizontalOptions="Start"
+        VerticalOptions="Start">
+            <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleErsteHandKarte}" Image="{Binding ErsteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+            <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleZweiteHandKarte}" Image="{Binding ZweiteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
+            <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleDritteHandKarte}" Image="{Binding DritteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
+        </StackLayout>
     </StackLayout>
 </ContentPage>
