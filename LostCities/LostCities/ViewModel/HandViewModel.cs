@@ -65,9 +65,9 @@ namespace LostCities.ViewModel
                         //Hier muss try-catch etc. noch hin. Und der Index muss überprüft werden
                         var index = int.Parse(value);
                         var CardEventArgs = new CardEventArgs(_cardList[index]);
-                        //_cardList.RemoveAt(index);
-                        UpdateView(index);
+                        //_cardList.RemoveAt(index);                        
                         _abgelegteKarteIndex = index;
+                        //UpdateView(index); Erst wieder reinnehmen, sobald der Spieler auch manuell wieder KArten aufnehmen soll.
 
                         switch (answer)
                         {
@@ -77,28 +77,13 @@ namespace LostCities.ViewModel
                             case "Karte ablegen":
                                 OnKarteAblegen(CardEventArgs);
                                 break;
-                        }
+                        }                        
                     }
                 }
             } catch (Exception e)
             {
                 Debug.WriteLine("HandViewModel" + e.Message);
             }
-            
-            //switch (value)
-            //{
-            //    case "0":
-            //        gelberstapelimageuri = new card(farbe.herz.tostring(), wert.dame.tostring()).imageuri;
-            //        break;
-            //    case "1":
-            //        gruenerstapelimageuri = new card(farbe.karo.tostring(), wert.dame.tostring()).imageuri;
-            //        break;
-            //    case "2":
-            //        roterstapelimageuri = new card(farbe.karo.tostring(), wert.dame.tostring()).imageuri;
-            //        break;
-            //    default:
-            //        break;
-            //}
         }
 
         public void GetHandCards(List<Card> cardList)

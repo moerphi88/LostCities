@@ -20,7 +20,6 @@ namespace LostCities.ViewModel
         private string _blauerStapelImageUri;
         private string _weißerStapelImageUri;
         //TODO Hier könnte ich ein dict einführen. Key wäre die Farbe. und value eine Liste von Cards. Nur die oberste würde angezeigt werden.
-        private List<Card> _cardList;
         private Dictionary<Farbe, List<Card>> _ablagestapel;
 
         public delegate void CardEventHandler(object sender, CardEventArgs e);
