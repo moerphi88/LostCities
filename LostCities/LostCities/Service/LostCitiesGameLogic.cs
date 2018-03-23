@@ -68,11 +68,11 @@ namespace LostCities.Service
                 {
                     case 0: //Spieler 1
                         _handSpielerEins.GetHandCard(_cardDeck.GetFirstCard());
-                        _activePlayer = 1;
+                        SwitchActivePlayer();
                         break;
                     case 1:
                         _handSpielerZwei.GetHandCard(_cardDeck.GetFirstCard());
-                        _activePlayer = 0;
+                        SwitchActivePlayer();
                         break;
                     default:
                         //Do nothing
@@ -81,6 +81,25 @@ namespace LostCities.Service
                 IsGameOver();
             }
             Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
+        }
+       
+        private void SwitchActivePlayer()
+        {
+            _activePlayer = _activePlayer == 0 ? 1 : 0;
+            switch (_activePlayer)
+            {
+                case 0:
+                    _handSpielerEins.EnableHand();
+                    _handSpielerZwei.DisableHand();
+                    break;
+                case 1:
+                    _handSpielerEins.DisableHand();
+                    _handSpielerZwei.EnableHand();
+                    break;
+                default:
+                    //Shall not happen!
+                    throw new Exception();
+            }
         }
 
         private void IsGameOver()

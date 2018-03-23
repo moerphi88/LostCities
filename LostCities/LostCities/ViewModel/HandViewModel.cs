@@ -95,5 +95,23 @@ namespace LostCities.ViewModel
         {
             HandCards[value].IsVisible = false;            
         }
+
+        public void DisableHand()
+        {
+            DisableEnableAllButtons(false);
+        }
+
+        public void EnableHand()
+        {
+            DisableEnableAllButtons(true);
+        }
+
+        private void DisableEnableAllButtons(bool val)
+        {
+            foreach(HandCard handCard in HandCards)
+            {
+                handCard.IsEnabled = val;
+            }
+        }
     }
 }
