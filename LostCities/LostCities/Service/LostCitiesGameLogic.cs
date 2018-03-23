@@ -12,24 +12,28 @@ namespace LostCities.Service
     {
         private HandViewModel _handSpielerEins, _handSpielerZwei;
         private AblagestapelViewModel _ablagestapel;
+        private IStapel _anlegestapel;
         private CardDeck _cardDeck;
         private bool _gameIsOver;
         private int _activePlayer = 0;
 
-        public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, AblagestapelViewModel ablagestapel)
+        public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, AblagestapelViewModel ablagestapel, IStapel anlegestapel)
         {
             _handSpielerEins = handSpielerEins;
             _handSpielerZwei = handSpielerZwei;
             _ablagestapel = ablagestapel;
+            _anlegestapel = anlegestapel;
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(3));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(3));
 
-
             _handSpielerEins.KarteAblegen += OnKarteAblegen;
             _handSpielerZwei.KarteAblegen += OnKarteAblegen;
+
+            _handSpielerEins.KarteAnlegen += OnKarteAnlegen;
+            _handSpielerZwei.KarteAnlegen += OnKarteAnlegen;
 
             _ablagestapel.KarteAbheben += OnKarteAbheben;
         }
@@ -56,7 +60,13 @@ namespace LostCities.Service
 
         void OnKarteAnlegen(object sender, CardEventArgs e)
         {
-            Debug.WriteLine("OnKarteAnlegen");
+            if (!_gameIsOver)
+            {
+                _anlegestapel.KarteAnlegen(e.Card);
+                GiveNewHandCard();
+                IsGameOver();
+            }            
+            Debug.WriteLine("OnKarteAnlegen. Card: {0}",e.Card.ToString());
         }
 
         void OnKarteAblegen(object sender, CardEventArgs e)
@@ -64,23 +74,28 @@ namespace LostCities.Service
             if (!_gameIsOver)
             {
                 _ablagestapel.KarteAblegen(e.Card);
-                switch (_activePlayer)
-                {
-                    case 0: //Spieler 1
-                        _handSpielerEins.GetHandCard(_cardDeck.GetFirstCard());
-                        SwitchActivePlayer();
-                        break;
-                    case 1:
-                        _handSpielerZwei.GetHandCard(_cardDeck.GetFirstCard());
-                        SwitchActivePlayer();
-                        break;
-                    default:
-                        //Do nothing
-                        break;
-                }           
+                GiveNewHandCard();      
                 IsGameOver();
             }
             Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
+        }
+
+        private void GiveNewHandCard()
+        {
+            switch (_activePlayer)
+            {
+                case 0: //Spieler 1
+                    _handSpielerEins.GetHandCard(_cardDeck.GetFirstCard());
+                    SwitchActivePlayer();
+                    break;
+                case 1:
+                    _handSpielerZwei.GetHandCard(_cardDeck.GetFirstCard());
+                    SwitchActivePlayer();
+                    break;
+                default:
+                    //Do nothing
+                    break;
+            }
         }
        
         private void SwitchActivePlayer()

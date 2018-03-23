@@ -21,12 +21,12 @@ namespace LostCities
             BindingContext = vm;
 
             stack.BindingContext = vm.AblageStapelVM;
+            Anlegestapel.BindingContext = vm.AnlegeStapelVM;
             HandSpielerEins.BindingContext = vm.HandVM;
             HandSpielerZwei.BindingContext = vm.HandVM2;
 
             CreateHandView(HandSpielerEins, vm.HandVM);
             CreateHandView(HandSpielerZwei, vm.HandVM2);
-
         }
 
         private void CreateHandView(StackLayout layout, HandViewModel handViewModel)

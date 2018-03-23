@@ -5,38 +5,53 @@
              xmlns:viewModel="clr-namespace:LostCities.ViewModel;assembly=LostCities"
              x:Class="LostCities.MainPage">
     <StackLayout>
-    <StackLayout 
-        x:Name="stack"
-        Orientation="Horizontal"
-        Padding="10"
-        HorizontalOptions="Start"
-        VerticalOptions="Start"> 
-        <!-- Hier kann ich mit Rotation die Buttons drehen -->
-        <Button WidthRequest="50" HeightRequest="70"  Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-        <Button WidthRequest="50" HeightRequest="70"  Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-        <Button WidthRequest="50" HeightRequest="70"  Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-        <Button WidthRequest="50" HeightRequest="70"  Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-        <Button WidthRequest="50" HeightRequest="70"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
-    </StackLayout>
-    <StackLayout 
-        x:Name="HandSpielerEins"
-        Orientation="Horizontal"
-        Padding="10"
-        HorizontalOptions="Start"
-        VerticalOptions="Start">
-            <!-- <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleErsteHandKarte}" Image="{Binding ErsteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-            <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleZweiteHandKarte}" Image="{Binding ZweiteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-            <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleDritteHandKarte}" Image="{Binding DritteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/> -->
+        <StackLayout>
+            <Label Text="Ablagestapel" FontSize="Large"></Label>
+            <StackLayout 
+                x:Name="stack"
+                Orientation="Horizontal"
+                Padding="10"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"> 
+                <!-- Hier kann ich mit Rotation die Buttons drehen -->
+                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
+                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
+                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
+                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
+            </StackLayout>
         </StackLayout>
-        <StackLayout 
-        x:Name="HandSpielerZwei"
-        Orientation="Horizontal"
-        Padding="10"
-        HorizontalOptions="Start"
-        VerticalOptions="Start">
-            <!-- <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleErsteHandKarte}" Image="{Binding ErsteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-            <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleZweiteHandKarte}" Image="{Binding ZweiteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-            <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleDritteHandKarte}" Image="{Binding DritteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/> -->
+        <StackLayout>
+            <Label Text="Anlegestapel" FontSize="Large"></Label>
+            <StackLayout 
+                x:Name="Anlegestapel"
+                Orientation="Horizontal"
+                Padding="10"
+                HorizontalOptions="Start"
+                VerticalOptions="Start">
+                <!-- Hier kann ich mit Rotation die Buttons drehen -->
+                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding ShownCardImageUri}" IsEnabled="False"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout>
+            <Label Text="Spieler 1 Hand" FontSize="Large"></Label>
+            <StackLayout 
+                x:Name="HandSpielerEins"
+                Orientation="Horizontal"
+                Padding="10"
+                HorizontalOptions="Start"
+                VerticalOptions="Start">
+            </StackLayout>
+        </StackLayout>
+        <StackLayout>
+            <Label Text="Spieler 2 Hand" FontSize="Large"></Label>
+            <StackLayout 
+                x:Name="HandSpielerZwei"
+                Orientation="Horizontal"
+                Padding="10"
+                HorizontalOptions="Start"
+                VerticalOptions="Start">
+            </StackLayout>
         </StackLayout>
     </StackLayout>
 </ContentPage>

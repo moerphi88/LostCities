@@ -58,7 +58,7 @@ namespace LostCities.ViewModel
                         switch (answer)
                         {
                             case "Karte anlegen":
-                                OnKarteAnlegen(new CardEventArgs(null));
+                                OnKarteAnlegen(CardEventArgs);
                                 break;
                             case "Karte ablegen":
                                 OnKarteAblegen(CardEventArgs);
