@@ -19,6 +19,7 @@ namespace LostCities.ViewModel
         private string _gruenerStapelImageUri;
         private string _blauerStapelImageUri;
         private string _weißerStapelImageUri;
+
         //TODO Hier könnte ich ein dict einführen. Key wäre die Farbe. und value eine Liste von Cards. Nur die oberste würde angezeigt werden.
         private Dictionary<Farbe, List<Card>> _ablagestapel;
 
@@ -51,34 +52,36 @@ namespace LostCities.ViewModel
 
         async void OnButtonPressed(string value)
         {
-            var answer = await App.Current.MainPage.DisplayAlert(null,"Willst Du die Karte wirklich aufnehmen?", "Ja", "Nein");
-
             try
             {
+                var answer = false;
+                var farbe = Farbe.Herz;
+                switch (value)
+                {
+                case "0":
+                    farbe = Farbe.Herz;
+                    break;
+                case "1":
+                    farbe = Farbe.Karo;
+                    break;
+                case "2":
+                    farbe = Farbe.Pik;
+                    break;
+                case "3":
+                    farbe = Farbe.Kreuz;
+                    break;
+                }
+
+                if (_ablagestapel[farbe].Count != 0)
+                {
+                    answer = await App.Current.MainPage.DisplayAlert(null, "Willst Du die Karte wirklich aufnehmen?", "Ja", "Nein");
+                }
+            
                 if (answer)
                 {
-                    var farbe = Farbe.Herz;
-                    switch (value)
-                    {
-                        case "0":
-                            farbe = Farbe.Herz;
-                            break;
-                        case "1":
-                            farbe = Farbe.Karo;
-                            break;
-                        case "2":
-                            farbe = Farbe.Pik;
-                            break;
-                        case "3":
-                            farbe = Farbe.Kreuz;
-                            break;
-                    }
-                    if (_ablagestapel[farbe].Count != 0)
-                    {
-                        OnKarteAbheben(CreateCardEventArgs(farbe));
-                        _ablagestapel[farbe].RemoveAt(_ablagestapel[farbe].Count-1);
-                        UpdateImageUri(farbe);
-                    }
+                    OnKarteAbheben(CreateCardEventArgs(farbe));
+                    _ablagestapel[farbe].RemoveAt(_ablagestapel[farbe].Count-1);
+                    UpdateImageUri(farbe);
                 }
             }
             catch (Exception e)
@@ -191,6 +194,7 @@ namespace LostCities.ViewModel
             else return "kartenhindergrund.png";
         }
 
+        //TODO Dank neuer Erkenntnis, kann ich CardEventArgs auch weg rationalisieren und einfach eine Card übergeben
         private CardEventArgs CreateCardEventArgs(Farbe farbe)
         {
             var card = _ablagestapel[farbe].ElementAt(_ablagestapel[farbe].Count - 1);
