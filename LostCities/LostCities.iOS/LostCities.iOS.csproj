@@ -139,6 +139,105 @@
       <Name>LostCities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\herzacht.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\herzas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\herzbube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\herzdame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\herzkoenig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\herzneun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\herzsieben.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\herzzehn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\karoacht.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\karoas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\karobube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\KaroDame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\karokoenig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\karoneun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\karosieben.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\karozehn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kartenhindergrund.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kreuzacht.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kreuzas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kreuzbube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kreuzdame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kreuzkoenig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kreuzneun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kreuzsieben.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kreuzzehn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pikacht.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pikas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pikbube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pikdame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pikkoenig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pikneun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\piksieben.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pikzehn.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
