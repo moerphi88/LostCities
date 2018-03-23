@@ -19,8 +19,8 @@ namespace LostCities.ViewModel
         private string _gruenerStapelImageUri;
         private string _blauerStapelImageUri;
         private string _weißerStapelImageUri;
+        private bool _isEnabled;
 
-        //TODO Hier könnte ich ein dict einführen. Key wäre die Farbe. und value eine Liste von Cards. Nur die oberste würde angezeigt werden.
         private Dictionary<Farbe, List<Card>> _ablagestapel;
 
         public delegate void CardEventHandler(object sender, CardEventArgs e);
@@ -47,8 +47,6 @@ namespace LostCities.ViewModel
             RoterStapelImageUri = "kartenhindergrund.png";
             WeißerStapelImageUri = "kartenhindergrund.png";
         }
-
-        public ICommand OnButtonPressedCommand { get; }
 
         async void OnButtonPressed(string value)
         {
@@ -114,7 +112,67 @@ namespace LostCities.ViewModel
                     break;
             }
         }
-        
+
+        private String SetImageUri(Farbe farbe)
+        {
+            if (_ablagestapel[farbe].Count != 0)
+            {
+                return _ablagestapel[farbe].ElementAt(_ablagestapel[farbe].Count - 1).ImageUri;
+            }
+            else return "kartenhindergrund.png";
+        }
+
+        //TODO Dank neuer Erkenntnis, kann ich CardEventArgs auch weg rationalisieren und einfach eine Card übergeben
+        private CardEventArgs CreateCardEventArgs(Farbe farbe)
+        {
+            var card = _ablagestapel[farbe].ElementAt(_ablagestapel[farbe].Count - 1);
+            return new CardEventArgs(card);
+        }
+
+        private void UpdateImageUri(Farbe farbe)
+        {
+            switch (farbe)
+            {
+                case Farbe.Herz:
+                    GelberStapelImageUri = SetImageUri(Farbe.Herz);
+                    break;
+                case Farbe.Karo:
+                    BlauerStapelImageUri = SetImageUri(Farbe.Karo);
+                    break;
+                case Farbe.Pik:
+                    GruenerStapelImageUri = SetImageUri(Farbe.Pik);
+                    break;
+                case Farbe.Kreuz:
+                    RoterStapelImageUri = SetImageUri(Farbe.Kreuz);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void DisableDrawing()
+        {
+            IsEnabled = false;
+        }
+
+        public void EnableDrawing()
+        {
+            IsEnabled = true;
+        }
+
+        #region Properties
+
+        public bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set {
+                _isEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand OnButtonPressedCommand { get; }
+
         public String GelberStapelImageUri
         { 
             get
@@ -185,42 +243,9 @@ namespace LostCities.ViewModel
             }
         }
 
-        private String SetImageUri(Farbe farbe)
-        {
-            if (_ablagestapel[farbe].Count != 0)
-            {
-                return _ablagestapel[farbe].ElementAt(_ablagestapel[farbe].Count - 1).ImageUri;
-            }
-            else return "kartenhindergrund.png";
-        }
+        #endregion
 
-        //TODO Dank neuer Erkenntnis, kann ich CardEventArgs auch weg rationalisieren und einfach eine Card übergeben
-        private CardEventArgs CreateCardEventArgs(Farbe farbe)
-        {
-            var card = _ablagestapel[farbe].ElementAt(_ablagestapel[farbe].Count - 1);
-            return new CardEventArgs(card);
-        }
 
-        private void UpdateImageUri(Farbe farbe)
-        {
-            switch (farbe)
-            {
-                case Farbe.Herz:
-                    GelberStapelImageUri = SetImageUri(Farbe.Herz);
-                    break;
-                case Farbe.Karo:
-                    BlauerStapelImageUri = SetImageUri(Farbe.Karo);
-                    break;
-                case Farbe.Pik:
-                    GruenerStapelImageUri = SetImageUri(Farbe.Pik);
-                    break;
-                case Farbe.Kreuz:
-                    RoterStapelImageUri = SetImageUri(Farbe.Kreuz);
-                    break;
-                default:
-                    break;
-            }
-        }
 
     }
 }

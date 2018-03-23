@@ -37,33 +37,8 @@ namespace LostCities.Service
 
         void OnKarteAbheben(object sender, CardEventArgs e)
         {
-            switch (_activePlayer)
-            {
-                case 0: //Spieler 1
-                    _handSpielerEins.GetHandCard(e.Card);
-                    _activePlayer = 1;
-                    break;
-                case 1:
-                    _handSpielerZwei.GetHandCard(e.Card);
-                    _activePlayer = 0;
-                    break;
-                default:
-                    //Do nothing
-                    break;
-            }
-            
+            GiveNewHandCard(e.Card);
             Debug.WriteLine(nameof(OnKarteAbheben));
-        }
-
-        void OnKarteAnlegen(object sender, CardEventArgs e)
-        {
-            if (!_gameIsOver)
-            {
-                _anlegestapel.KarteAnlegen(e.Card);
-                GiveNewHandCard();
-                IsGameOver();
-            }            
-            Debug.WriteLine("OnKarteAnlegen. Card: {0}",e.Card.ToString());
         }
 
         async void OnPlayCard(object sender, CardEventArgs e)
@@ -72,8 +47,8 @@ namespace LostCities.Service
             {
                 if (!_gameIsOver)
                 {
-                    //var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
-                    var buttons = new String[] { "Karte anlegen" };
+                    var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
+                    //var buttons = new String[] { "Karte anlegen" };
                     var spieler = _activePlayer == 0 ? "Eins" : "Zwei";
                     var text = "Spieler " + spieler + " ist am Zug.";
                     var answer = await App.Current.MainPage.DisplayActionSheet(text, null, "Cancel", buttons);
@@ -91,7 +66,8 @@ namespace LostCities.Service
                                     _anlegestapel.KarteAnlegen(e.Card);
                                     break;
                             }
-                            GiveNewHandCard();
+                            AnnounceNextStepDrawCard();
+                            //GiveNewHandCard();
                         } else
                         {
                             CancelCardTransfer(e.Card);
@@ -107,20 +83,30 @@ namespace LostCities.Service
             Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
         }
 
-        private void GiveNewHandCard()
+        async private void AnnounceNextStepDrawCard()
+        {
+            await App.Current.MainPage.DisplayAlert("Ziehe jetzt eine neue Karte", null , "Cancel");
+            _handSpielerEins.DisableHand();
+            _handSpielerZwei.DisableHand();
+            _ablagestapel.EnableDrawing();
+        }
+
+        public void DrawHandCard()
+        {
+            GiveNewHandCard(_cardDeck.GetFirstCard());
+        }
+
+        private void GiveNewHandCard(Card card)
         {
             switch (_activePlayer)
             {
                 case 0: //Spieler 1
-                    _handSpielerEins.GetHandCard(_cardDeck.GetFirstCard());
+                    _handSpielerEins.GetHandCard(card);
                     SwitchActivePlayer();
                     break;
                 case 1:
-                    _handSpielerZwei.GetHandCard(_cardDeck.GetFirstCard());
+                    _handSpielerZwei.GetHandCard(card);
                     SwitchActivePlayer();
-                    break;
-                default:
-                    //Do nothing
                     break;
             }
         }
@@ -134,9 +120,6 @@ namespace LostCities.Service
                     break;
                 case 1:
                     _handSpielerZwei.GetHandCard(card);
-                    break;
-                default:
-                    //Do nothing
                     break;
             }
         }
@@ -154,10 +137,8 @@ namespace LostCities.Service
                     _handSpielerEins.DisableHand();
                     _handSpielerZwei.EnableHand();
                     break;
-                default:
-                    //Shall not happen!
-                    throw new Exception();
             }
+            _ablagestapel.DisableDrawing();
         }
 
         private void IsGameOver()

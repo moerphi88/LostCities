@@ -5,7 +5,8 @@
              xmlns:viewModel="clr-namespace:LostCities.ViewModel;assembly=LostCities"
              x:Class="LostCities.MainPage">
     <StackLayout>
-        <!--<StackLayout>
+        <StackLayout>
+            <Button Text="Karte ziehen" Command="{Binding OnButtonPressedCommand}" ></Button>
             <Label Text="Ablagestapel" FontSize="Large"></Label>
             <StackLayout 
                 x:Name="stack"
@@ -13,14 +14,14 @@
                 Padding="10"
                 HorizontalOptions="Start"
                 VerticalOptions="Start"> 
-                --><!-- Hier kann ich mit Rotation die Buttons drehen --><!--
-                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-                <Button WidthRequest="50" HeightRequest="70"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
+                 <!-- Hier kann ich mit Rotation die Buttons drehen -->
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
             </StackLayout>
-        </StackLayout>-->
+        </StackLayout>
         <StackLayout>
             <Label Text="Anlegestapel" FontSize="Large"></Label>
             <StackLayout 
