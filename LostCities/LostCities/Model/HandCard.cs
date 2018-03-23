@@ -10,22 +10,59 @@ namespace LostCities.Model
 {
     public class HandCard : INotifyPropertyChanged
     {
-        private string _imageUri;
+        private Card _card;
+        private bool _isVisible;
+        private bool _isEnabled;
+
+        public HandCard()
+        {
+            Card = new Card();
+            IsVisible = true;
+            IsEnabled = true;
+        }
+
+        public Card Card
+        {
+            get
+            {
+                return _card;
+            }
+
+            set
+            {
+                _card = value;
+                //Todo Muss ich an dieser Stelle wirklich _card.ImageUri setzen? Oder könnte ich einfach OnPropertyChanged("ImageUri") auslösen?
+                ImageUri = _card.ImageUri;
+            }
+        }
+
         public string ImageUri
         {
             get
             {
-                return _imageUri;
+                return _card.ImageUri;
             }
             set
             {
-                _imageUri = value;
+                _card.ImageUri = value;
                 OnPropertyChanged();
             }
         }
-        
-        private bool _isVisible;
+
         public bool IsVisible
+        {
+            get
+            {
+                return _isVisible;
+            }
+            set
+            {
+                _isVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsEnabled
         {
             get
             {

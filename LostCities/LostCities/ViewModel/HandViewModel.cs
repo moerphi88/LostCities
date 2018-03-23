@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using LostCities.Model;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace LostCities.ViewModel
 {
@@ -15,6 +16,8 @@ namespace LostCities.ViewModel
         private string _zweiteHandKarte;
         private string _dritteHandKarte;
         private List<Card> _cardList;
+
+        public ObservableCollection<HandCard> HandCards { get; set; }
 
         private bool _isVisibleErsteHandKarte;
         private bool _isVisibleZweiteHandKarte;
@@ -36,6 +39,13 @@ namespace LostCities.ViewModel
             IsVisibleDritteHandKarte = true;
 
             _abgelegteKarteIndex = -1;
+
+            //Todo Am Anfang muss diese List nur inititalisiert werden. Über die Funktion GetHandCards werden dann die Handkarten abgerufen und angezeigt.
+            HandCards = new ObservableCollection<HandCard>();
+            for (int i = 0; i < 3; i++)
+            {
+                HandCards.Add(new HandCard());
+            }
 
         }
 
