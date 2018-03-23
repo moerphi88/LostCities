@@ -11,8 +11,8 @@ namespace LostCities.Model
     public class HandCard : INotifyPropertyChanged
     {
         private Card _card;
-        private bool _isVisible;
         private bool _isEnabled;
+        private bool _isVisible;
 
         public HandCard()
         {
@@ -33,6 +33,7 @@ namespace LostCities.Model
                 _card = value;
                 //Todo Muss ich an dieser Stelle wirklich _card.ImageUri setzen? Oder könnte ich einfach OnPropertyChanged("ImageUri") auslösen?
                 ImageUri = _card.ImageUri;
+                IsVisible = true;
             }
         }
 
@@ -66,11 +67,11 @@ namespace LostCities.Model
         {
             get
             {
-                return _isVisible;
+                return _isEnabled;
             }
             set
             {
-                _isVisible = value;
+                _isEnabled = value;
                 OnPropertyChanged();
             }
         }
