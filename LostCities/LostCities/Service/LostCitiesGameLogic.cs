@@ -29,11 +29,8 @@ namespace LostCities.Service
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(3));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(3));
 
-            _handSpielerEins.KarteAblegen += OnKarteAblegen;
-            _handSpielerZwei.KarteAblegen += OnKarteAblegen;
-
-            _handSpielerEins.KarteAnlegen += OnKarteAnlegen;
-            _handSpielerZwei.KarteAnlegen += OnKarteAnlegen;
+            _handSpielerEins.PlayCard += OnPlayCard;
+            _handSpielerZwei.PlayCard += OnPlayCard;
 
             _ablagestapel.KarteAbheben += OnKarteAbheben;
         }
@@ -55,7 +52,7 @@ namespace LostCities.Service
                     break;
             }
             
-            Debug.WriteLine(nameof(OnKarteAbheben) );
+            Debug.WriteLine(nameof(OnKarteAbheben));
         }
 
         void OnKarteAnlegen(object sender, CardEventArgs e)
@@ -69,13 +66,43 @@ namespace LostCities.Service
             Debug.WriteLine("OnKarteAnlegen. Card: {0}",e.Card.ToString());
         }
 
-        void OnKarteAblegen(object sender, CardEventArgs e)
+        async void OnPlayCard(object sender, CardEventArgs e)
         {
-            if (!_gameIsOver)
+            try
             {
-                _ablagestapel.KarteAblegen(e.Card);
-                GiveNewHandCard();      
-                IsGameOver();
+                if (!_gameIsOver)
+                {
+                    //var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
+                    var buttons = new String[] { "Karte anlegen" };
+                    var spieler = _activePlayer == 0 ? "Eins" : "Zwei";
+                    var text = "Spieler " + spieler + " ist am Zug.";
+                    var answer = await App.Current.MainPage.DisplayActionSheet(text, null, "Cancel", buttons);
+
+                    if (null != answer)
+                    {
+                        if (answer != "Cancel")
+                        {
+                            switch (answer)
+                            {
+                                case "Karte ablegen":
+                                    _ablagestapel.KarteAblegen(e.Card);
+                                    break;
+                                case "Karte anlegen":
+                                    _anlegestapel.KarteAnlegen(e.Card);
+                                    break;
+                            }
+                            GiveNewHandCard();
+                        } else
+                        {
+                            CancelCardTransfer(e.Card);
+                        }
+                    }                    
+                    IsGameOver();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("LostCitiesGameLogic. ObKarteAblegen. " + ex.Message);
             }
             Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
         }
@@ -97,7 +124,23 @@ namespace LostCities.Service
                     break;
             }
         }
-       
+
+        private void CancelCardTransfer(Card card)
+        {
+            switch (_activePlayer)
+            {
+                case 0: //Spieler 1
+                    _handSpielerEins.GetHandCard(card);
+                    break;
+                case 1:
+                    _handSpielerZwei.GetHandCard(card);
+                    break;
+                default:
+                    //Do nothing
+                    break;
+            }
+        }
+
         private void SwitchActivePlayer()
         {
             _activePlayer = _activePlayer == 0 ? 1 : 0;

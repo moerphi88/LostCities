@@ -20,7 +20,7 @@ namespace LostCities
             vm = new MainViewModel(this.Navigation);
             BindingContext = vm;
 
-            stack.BindingContext = vm.AblageStapelVM;
+            //stack.BindingContext = vm.AblageStapelVM;
             Anlegestapel.BindingContext = vm.AnlegeStapelVM;
             HandSpielerEins.BindingContext = vm.HandVM;
             HandSpielerZwei.BindingContext = vm.HandVM2;

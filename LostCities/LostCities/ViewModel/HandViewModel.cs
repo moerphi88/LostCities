@@ -11,12 +11,11 @@ namespace LostCities.ViewModel
     public class HandViewModel : BaseViewModel
     {
         private int _abgelegteKarteIndex;
-
+        
         public ObservableCollection<HandCard> HandCards { get; set; }
 
         public delegate void CardEventHandler(object sender, CardEventArgs e);
-        public event CardEventHandler KarteAnlegen;
-        public event CardEventHandler KarteAblegen;
+        public event CardEventHandler PlayCard;
 
         public HandViewModel(INavigation navigation) : base(navigation)
         {
@@ -27,49 +26,21 @@ namespace LostCities.ViewModel
             HandCards = new ObservableCollection<HandCard>();
         }
 
-        protected virtual void OnKarteAnlegen(CardEventArgs e)
+        protected virtual void OnPlayCard(CardEventArgs e)
         {
-            KarteAnlegen?.Invoke(this, e);
-        }
-
-        protected virtual void OnKarteAblegen(CardEventArgs e)
-        {
-            KarteAblegen?.Invoke(this, e);
+            PlayCard?.Invoke(this, e);
         }
 
         public ICommand OnButtonPressedCommand { get; }
 
-        async void OnButtonPressed(string value)
+        void OnButtonPressed(string value)
         {
-            var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
-            var answer = await App.Current.MainPage.DisplayActionSheet("Initialrunde beendet!", null, "Cancel",buttons );
+            var index = int.Parse(value);
+            var CardEventArgs = new CardEventArgs(HandCards[index].Card);
+            _abgelegteKarteIndex = index;
+            UpdateView(index);
 
-            try
-            {
-                if (null != answer)
-                {
-                    if (answer != "Cancel")
-                    {
-                        var index = int.Parse(value);
-                        var CardEventArgs = new CardEventArgs(HandCards[index].Card);                      
-                        _abgelegteKarteIndex = index;
-                        UpdateView(index); //Erst wieder reinnehmen, sobald der Spieler auch manuell wieder KArten aufnehmen soll.
-
-                        switch (answer)
-                        {
-                            case "Karte anlegen":
-                                OnKarteAnlegen(CardEventArgs);
-                                break;
-                            case "Karte ablegen":
-                                OnKarteAblegen(CardEventArgs);
-                                break;
-                        }                        
-                    }
-                }
-            } catch (Exception e)
-            {
-                Debug.WriteLine("HandViewModel" + e.Message);
-            }
+            OnPlayCard(CardEventArgs);
         }
 
         public void GetHandCards(List<Card> cardList)
