@@ -34,8 +34,10 @@ namespace LostCities
             var i = 0;
             foreach(HandCard handCard in handViewModel.HandCards)
             {
-                var btn = new Button();
-                btn.BindingContext = handCard;
+                var btn = new Button
+                {
+                    BindingContext = handCard
+                };
                 btn.SetBinding(IsEnabledProperty, "IsEnabled");
                 btn.SetBinding(IsVisibleProperty, "IsVisible");
                 btn.SetBinding(Button.ImageProperty, "ImageUri");

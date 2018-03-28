@@ -25,11 +25,13 @@ namespace LostCities.ViewModel
 
         public AnlegestapelViewModel(INavigation navigation) : base(navigation)
         {
-            _stapel = new Dictionary<Farbe, List<Card>>();
-            _stapel.Add(Farbe.Herz, new List<Card>());
-            _stapel.Add(Farbe.Karo, new List<Card>());
-            _stapel.Add(Farbe.Kreuz, new List<Card>());
-            _stapel.Add(Farbe.Pik, new List<Card>());
+            _stapel = new Dictionary<Farbe, List<Card>>
+            {
+                { Farbe.Herz, new List<Card>() },
+                { Farbe.Karo, new List<Card>() },
+                { Farbe.Kreuz, new List<Card>() },
+                { Farbe.Pik, new List<Card>() }
+            };
 
             GelberStapelImageUri = "kartenhindergrund.png";
             BlauerStapelImageUri = "kartenhindergrund.png";
@@ -65,11 +67,13 @@ namespace LostCities.ViewModel
 
         public List<Card> GetTopCards()
         {
-            var list = new List<Card>();
-            list.Add(_stapel[Farbe.Herz][_stapel[Farbe.Herz].Count - 1]);
-            list.Add(_stapel[Farbe.Kreuz][_stapel[Farbe.Herz].Count - 1]);
-            list.Add(_stapel[Farbe.Pik][_stapel[Farbe.Herz].Count - 1]);
-            list.Add(_stapel[Farbe.Karo][_stapel[Farbe.Herz].Count - 1]);
+            var list = new List<Card>
+            {
+                _stapel[Farbe.Herz][_stapel[Farbe.Herz].Count - 1],
+                _stapel[Farbe.Kreuz][_stapel[Farbe.Herz].Count - 1],
+                _stapel[Farbe.Pik][_stapel[Farbe.Herz].Count - 1],
+                _stapel[Farbe.Karo][_stapel[Farbe.Herz].Count - 1]
+            };
             return list;
         }
 

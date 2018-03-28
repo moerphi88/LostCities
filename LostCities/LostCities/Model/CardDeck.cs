@@ -16,7 +16,7 @@ namespace LostCities.Model
         {
             foreach(var value in Enum.GetNames(typeof(Farbe)))
                 {
-                foreach (var value2 in Enum.GetNames(typeof(Wert)))
+                foreach (int value2 in Enum.GetValues(typeof(Wert)))
                 {
                     _list.Add(new Card(value, value2));
                 }

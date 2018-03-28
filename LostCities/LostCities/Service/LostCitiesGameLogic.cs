@@ -104,7 +104,7 @@ namespace LostCities.Service
                 if(card.Name != topCard[0].Name)
                 {
                     return new String[] { "Karte ablegen" };
-                } else if(int.Parse(card.Zahl) < int.Parse(topCard[0].Zahl)) //TODO Umwandlung für As, Koenig, Herz etc.
+                } else if((int)card.Zahl < (int)topCard[0].Zahl)
                 {
                     return new String[] { "Karte ablegen" };
                 } else

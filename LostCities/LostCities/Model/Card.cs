@@ -3,7 +3,7 @@
     public class Card
     {
         private string _name;
-        private string _zahl;
+        private Wert _zahl;
         private string _imageUri;
 
         public string ImageUri
@@ -18,7 +18,7 @@
             set { _name = value; }
         }      
 
-        public string Zahl
+        public Wert Zahl
         {
             get { return _zahl; }
             set { _zahl = value; }
@@ -26,13 +26,20 @@
 
         public Card() {
             Name = Farbe.Herz.ToString();
-            Zahl = Wert.Acht.ToString();
+            Zahl = Wert.Acht;
             ImageUri = this.ToString().ToLower() + ".png";
         }
 
         public Card(string name, string zahl) {
             Name = name;
-            Zahl = zahl;
+            Zahl = (Wert)int.Parse(zahl);
+            ImageUri = this.ToString().ToLower() + ".png";
+        }
+
+        public Card(string name, int zahl)
+        {
+            Name = name;
+            Zahl = (Wert)zahl;
             ImageUri = this.ToString().ToLower() + ".png";
         }
 

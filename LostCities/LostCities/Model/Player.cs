@@ -14,9 +14,11 @@ namespace LostCities.Model
 
         public Player(string name, Card _c1, Card _c2)
         {
-            handCards = new List<Card>();
-            handCards.Add(_c1);
-            handCards.Add(_c2);
+            handCards = new List<Card>
+            {
+                _c1,
+                _c2
+            };
             Name = name;
         }
 
@@ -25,7 +27,7 @@ namespace LostCities.Model
         {
             if (handCards[0].Zahl == handCards[1].Zahl)
             {
-                if (handCards[0].Zahl == "As")
+                if (handCards[0].Zahl == Wert.As)
                     return true;
             }
 
