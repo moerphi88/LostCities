@@ -19,17 +19,21 @@ namespace LostCities.ViewModel
         //TODO Hier könnte ich ein dict einführen. Key wäre die Farbe. und value eine Liste von Cards. Nur die oberste würde angezeigt werden.
         private List<Card> _stapel;
 
-        public Card GetTopCard()
-        {
-            return _stapel[_stapel.Count - 1];
-        }
-
         public MauMauViewModel(INavigation navigation) : base(navigation)
         {
             _stapel = new List<Card>();
             ShownCardImageUri = "kartenhindergrund.png";
         }
-        
+
+        public List<Card> GetTopCards()
+        {
+            var list = new List<Card>();
+            if (_stapel.Count != 0) {                
+                list.Add(_stapel[_stapel.Count - 1]);
+                return list;
+            } return list;
+        }
+
         public void KarteAnlegen(Card card)
         {
             _stapel.Add(card);

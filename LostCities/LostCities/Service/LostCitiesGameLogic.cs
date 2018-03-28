@@ -47,40 +47,74 @@ namespace LostCities.Service
             {
                 if (!_gameIsOver)
                 {
-                    var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
-                    //var buttons = new String[] { "Karte anlegen" };
-                    var spieler = _activePlayer == 0 ? "Eins" : "Zwei";
-                    var text = "Spieler " + spieler + " ist am Zug.";
-                    var answer = await App.Current.MainPage.DisplayActionSheet(text, null, "Cancel", buttons);
+                    // GameLogik für MauMau
+                    var buttons = EvaluatePossibilities(e.Card);
 
-                    if (null != answer)
+                    if (null != buttons)
                     {
-                        if (answer != "Cancel")
+                        //var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
+                        var spieler = _activePlayer == 0 ? "Eins" : "Zwei";
+                        var text = "Spieler " + spieler + " ist am Zug.";
+                        var answer = await App.Current.MainPage.DisplayActionSheet(text, null, "Cancel", buttons);
+
+                        if (null != answer)
                         {
-                            switch (answer)
+                            if (answer != "Cancel")
                             {
-                                case "Karte ablegen":
-                                    _ablagestapel.KarteAblegen(e.Card);
-                                    break;
-                                case "Karte anlegen":
-                                    _anlegestapel.KarteAnlegen(e.Card);
-                                    break;
+                                switch (answer)
+                                {
+                                    case "Karte ablegen":
+                                        _ablagestapel.KarteAblegen(e.Card);
+                                        break;
+                                    case "Karte anlegen":
+                                        _anlegestapel.KarteAnlegen(e.Card);
+                                        break;
+                                }
+                                AnnounceNextStepDrawCard();
                             }
-                            AnnounceNextStepDrawCard();
-                            //GiveNewHandCard();
-                        } else
+                            else
+                            {
+                                CancelCardTransfer(e.Card);
+                            }
+                        }
+                        else
                         {
                             CancelCardTransfer(e.Card);
                         }
-                    }                    
+                    }
+                    else
+                    {
+                        CancelCardTransfer(e.Card);
+                    }
                     IsGameOver();
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("LostCitiesGameLogic. ObKarteAblegen. " + ex.Message);
+                Debug.WriteLine("LostCitiesGameLogic. OnKarteAblegen. " + ex.Message);
             }
             Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
+        }
+
+        private String[] EvaluatePossibilities(Card card)
+        {
+            var topCard = _anlegestapel.GetTopCards();
+            if (topCard.Count != 0)
+            {
+                if(card.Name != topCard[0].Name)
+                {
+                    return new String[] { "Karte ablegen" };
+                } else if(int.Parse(card.Zahl) < int.Parse(topCard[0].Zahl)) //TODO Umwandlung für As, Koenig, Herz etc.
+                {
+                    return new String[] { "Karte ablegen" };
+                } else
+                {
+                    return new String[] { "Karte ablegen", "Karte anlegen" };
+                }              
+            }
+            else { //Spieler kann alles legen
+                return new String[] { "Karte ablegen", "Karte anlegen" };
+            }
         }
 
         async private void AnnounceNextStepDrawCard()

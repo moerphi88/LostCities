@@ -10,5 +10,6 @@ namespace LostCities.ViewModel
     public interface IStapel
     {
         void KarteAnlegen(Card card);
+        List<Card> GetTopCards();
     }
 }

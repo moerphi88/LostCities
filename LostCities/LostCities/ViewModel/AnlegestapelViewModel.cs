@@ -63,6 +63,16 @@ namespace LostCities.ViewModel
             }
         }
 
+        public List<Card> GetTopCards()
+        {
+            var list = new List<Card>();
+            list.Add(_stapel[Farbe.Herz][_stapel[Farbe.Herz].Count - 1]);
+            list.Add(_stapel[Farbe.Kreuz][_stapel[Farbe.Herz].Count - 1]);
+            list.Add(_stapel[Farbe.Pik][_stapel[Farbe.Herz].Count - 1]);
+            list.Add(_stapel[Farbe.Karo][_stapel[Farbe.Herz].Count - 1]);
+            return list;
+        }
+
         private String SetImageUri(Farbe farbe)
         {
             if (_stapel[farbe].Count != 0)
