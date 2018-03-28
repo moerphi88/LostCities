@@ -99,11 +99,17 @@ namespace LostCities.Service
         private String[] EvaluatePossibilities(Card card)
         {
             var topCard = _anlegestapel.GetTopCards();
+
             if (topCard.Count != 0)
             {
                 if(card.Name != topCard[0].Name)
                 {
-                    return new String[] { "Karte ablegen" };
+                    if ((int)card.Zahl == (int)topCard[0].Zahl)
+                    {
+                        return new String[] { "Karte ablegen", "Karte anlegen" };
+                    }
+                    else return new String[] { "Karte ablegen" };
+
                 } else if((int)card.Zahl < (int)topCard[0].Zahl)
                 {
                     return new String[] { "Karte ablegen" };
