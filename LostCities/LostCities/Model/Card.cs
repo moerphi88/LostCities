@@ -25,7 +25,7 @@
         }
 
         public Card() {
-            Name = Farbe.Herz.ToString();
+            Name = Farbe.Weiss.ToString();
             Zahl = Wert.Acht;
             ImageUri = this.ToString().ToLower() + ".png";
         }

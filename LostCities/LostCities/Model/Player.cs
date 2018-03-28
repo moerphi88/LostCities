@@ -27,7 +27,7 @@ namespace LostCities.Model
         {
             if (handCards[0].Zahl == handCards[1].Zahl)
             {
-                if (handCards[0].Zahl == Wert.As)
+                if (handCards[0].Zahl == Wert.Zehn)
                     return true;
             }
 

@@ -140,100 +140,139 @@
     <AndroidResource Include="Resources\drawable\kartenhindergrund.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\herzacht.png" />
+    <AndroidResource Include="Resources\drawable\blauacht.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\herzas.png" />
+    <AndroidResource Include="Resources\drawable\blaudrei.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\herzbube.png" />
+    <AndroidResource Include="Resources\drawable\blaufuenf.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\herzdame.png" />
+    <AndroidResource Include="Resources\drawable\blauneun.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\herzkoenig.png" />
+    <AndroidResource Include="Resources\drawable\blausechs.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\herzneun.png" />
+    <AndroidResource Include="Resources\drawable\blausieben.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\herzsieben.png" />
+    <AndroidResource Include="Resources\drawable\blauvier.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\herzzehn.png" />
+    <AndroidResource Include="Resources\drawable\blauzehn.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\karoacht.png" />
+    <AndroidResource Include="Resources\drawable\blauzwei.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\karoas.png" />
+    <AndroidResource Include="Resources\drawable\gelbacht.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\karobube.png" />
+    <AndroidResource Include="Resources\drawable\gelbdrei.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\karodame.png" />
+    <AndroidResource Include="Resources\drawable\gelbfuenf.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\karokoenig.png" />
+    <AndroidResource Include="Resources\drawable\gelbneun.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\karoneun.png" />
+    <AndroidResource Include="Resources\drawable\gelbsechs.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\karosieben.png" />
+    <AndroidResource Include="Resources\drawable\gelbsieben.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\karozehn.png" />
+    <AndroidResource Include="Resources\drawable\gelbvier.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\kreuzacht.png" />
+    <AndroidResource Include="Resources\drawable\gelbzehn.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\kreuzas.png" />
+    <AndroidResource Include="Resources\drawable\gelbzwei.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\kreuzbube.png" />
+    <AndroidResource Include="Resources\drawable\gruenacht.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\kreuzdame.png" />
+    <AndroidResource Include="Resources\drawable\gruendrei.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\kreuzkoenig.png" />
+    <AndroidResource Include="Resources\drawable\gruenfuenf.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\kreuzneun.png" />
+    <AndroidResource Include="Resources\drawable\gruenneun.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\kreuzsieben.png" />
+    <AndroidResource Include="Resources\drawable\gruensechs.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\kreuzzehn.png" />
+    <AndroidResource Include="Resources\drawable\gruensieben.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\pikacht.png" />
+    <AndroidResource Include="Resources\drawable\gruenvier.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\pikas.png" />
+    <AndroidResource Include="Resources\drawable\gruenzehn.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\pikbube.png" />
+    <AndroidResource Include="Resources\drawable\gruenzwei.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\pikdame.png" />
+    <AndroidResource Include="Resources\drawable\rotacht.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\pikkoenig.png" />
+    <AndroidResource Include="Resources\drawable\rotdrei.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\pikneun.png" />
+    <AndroidResource Include="Resources\drawable\rotfuenf.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\piksieben.png" />
+    <AndroidResource Include="Resources\drawable\rotneun.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\pikzehn.png" />
+    <AndroidResource Include="Resources\drawable\rotsechs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\rotsieben.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\rotvier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\rotzehn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\rotzwei.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weissacht.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weissdrei.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weissfuenf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weissneun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weisssechs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weisssieben.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weissvier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weisszehn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weisszwei.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

@@ -27,10 +27,11 @@ namespace LostCities.ViewModel
         {
             _stapel = new Dictionary<Farbe, List<Card>>
             {
-                { Farbe.Herz, new List<Card>() },
-                { Farbe.Karo, new List<Card>() },
-                { Farbe.Kreuz, new List<Card>() },
-                { Farbe.Pik, new List<Card>() }
+                { Farbe.Weiss, new List<Card>() },
+                { Farbe.Gruen, new List<Card>() },
+                { Farbe.Blau, new List<Card>() },
+                { Farbe.Gelb, new List<Card>() },
+                { Farbe.Rot, new List<Card>()  }
             };
 
             GelberStapelImageUri = "kartenhindergrund.png";
@@ -40,25 +41,30 @@ namespace LostCities.ViewModel
             WeißerStapelImageUri = "kartenhindergrund.png";
         }
         
+        //TODO An dieser Stelle muss ich das enum Farbe auswerten anstatt einen string. Refactoring
         public void KarteAnlegen(Card card)
         {
             switch (card.Name)
             {
-                case "Herz":
-                    _stapel[Farbe.Herz].Add(card);
-                    GelberStapelImageUri = SetImageUri(Farbe.Herz);
+                case "Weiß":
+                    _stapel[Farbe.Weiss].Add(card);
+                    WeißerStapelImageUri = SetImageUri(Farbe.Weiss);
                     break;
-                case "Karo":
-                    _stapel[Farbe.Karo].Add(card);
-                    BlauerStapelImageUri = SetImageUri(Farbe.Karo);
+                case "Gruen":
+                    _stapel[Farbe.Gruen].Add(card);
+                    GruenerStapelImageUri = SetImageUri(Farbe.Gruen);
                     break;
-                case "Pik":
-                    _stapel[Farbe.Pik].Add(card);
-                    GruenerStapelImageUri = SetImageUri(Farbe.Pik);
+                case "Blau":
+                    _stapel[Farbe.Blau].Add(card);
+                    BlauerStapelImageUri = SetImageUri(Farbe.Blau);
                     break;
-                case "Kreuz":
-                    _stapel[Farbe.Kreuz].Add(card);
-                    RoterStapelImageUri = SetImageUri(Farbe.Kreuz);
+                case "Gelb":
+                    _stapel[Farbe.Gelb].Add(card);
+                    GelberStapelImageUri = SetImageUri(Farbe.Gelb);
+                    break;
+                case "Rot":
+                    _stapel[Farbe.Rot].Add(card);
+                    RoterStapelImageUri = SetImageUri(Farbe.Rot);
                     break;
                 default:
                     break;
@@ -67,14 +73,16 @@ namespace LostCities.ViewModel
 
         public List<Card> GetTopCards()
         {
-            var list = new List<Card>
-            {
-                _stapel[Farbe.Herz][_stapel[Farbe.Herz].Count - 1],
-                _stapel[Farbe.Kreuz][_stapel[Farbe.Herz].Count - 1],
-                _stapel[Farbe.Pik][_stapel[Farbe.Herz].Count - 1],
-                _stapel[Farbe.Karo][_stapel[Farbe.Herz].Count - 1]
-            };
-            return list;
+
+            throw new NotImplementedException();
+            //var list = new List<Card>
+            //{
+            //    _stapel[Farbe.Weiß][_stapel[Farbe.Herz].Count - 1],
+            //    _stapel[Farbe.Gruen][_stapel[Farbe.Herz].Count - 1],
+            //    _stapel[Farbe.Blau][_stapel[Farbe.Herz].Count - 1],
+            //    _stapel[Farbe.Gelb][_stapel[Farbe.Herz].Count - 1]
+            //};
+            //return list;
         }
 
         private String SetImageUri(Farbe farbe)
@@ -90,17 +98,20 @@ namespace LostCities.ViewModel
         {
             switch (farbe)
             {
-                case Farbe.Herz:
-                    GelberStapelImageUri = SetImageUri(Farbe.Herz);
+                case Farbe.Weiss:
+                    WeißerStapelImageUri = SetImageUri(Farbe.Weiss);
                     break;
-                case Farbe.Karo:
-                    BlauerStapelImageUri = SetImageUri(Farbe.Karo);
+                case Farbe.Gruen:
+                    GruenerStapelImageUri = SetImageUri(Farbe.Gruen);
                     break;
-                case Farbe.Pik:
-                    GruenerStapelImageUri = SetImageUri(Farbe.Pik);
+                case Farbe.Blau:
+                    BlauerStapelImageUri = SetImageUri(Farbe.Blau);
                     break;
-                case Farbe.Kreuz:
-                    RoterStapelImageUri = SetImageUri(Farbe.Kreuz);
+                case Farbe.Gelb:
+                    GelberStapelImageUri = SetImageUri(Farbe.Gelb);
+                    break;
+                case Farbe.Rot:
+                    RoterStapelImageUri = SetImageUri(Farbe.Rot);
                     break;
                 default:
                     break;
