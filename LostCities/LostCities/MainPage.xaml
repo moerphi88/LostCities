@@ -6,8 +6,8 @@
              x:Class="LostCities.MainPage">
     <StackLayout>
         <StackLayout>
-            <Button Text="Karte ziehen" Command="{Binding OnButtonPressedCommand}" ></Button>
-            <Label Text="Ablagestapel" FontSize="Large"></Label>
+            <Button x:Name="KarteZiehenButton" Text="{Binding KarteZiehenButtonText}" Command="{Binding OnButtonPressedCommand}" ></Button>
+            <Label x:Name="AblagestapelTitleLabel" Text="{Binding AblagestapelTitleLabelText}" FontSize="Large"></Label>
             <StackLayout 
                 x:Name="Ablegestapel"
                 Orientation="Horizontal"
@@ -23,7 +23,7 @@
             </StackLayout>
         </StackLayout>
         <StackLayout>
-            <Label Text="Anlegestapel" FontSize="Large"></Label>
+            <Label x:Name="AnlegestapelTitleLabel" Text="{Binding AnlegestapelTitleLabelText}" FontSize="Large"></Label>
             <StackLayout 
                 x:Name="Anlegestapel"
                 Orientation="Horizontal"
@@ -40,7 +40,7 @@
             </StackLayout>
         </StackLayout>
         <StackLayout>
-            <Label Text="Spieler 1 Hand" FontSize="Large"></Label>
+            <Label x:Name="HandEinsTitleLabel" Text="{Binding HandEinsTitleLabelText}" FontSize="Large"></Label>
             <StackLayout 
                 x:Name="HandSpielerEins"
                 Orientation="Horizontal"
@@ -50,7 +50,7 @@
             </StackLayout>
         </StackLayout>
         <StackLayout>
-            <Label Text="Spieler 2 Hand" FontSize="Large"></Label>
+            <Label x:Name="HandZweiTitleLabel" Text="{Binding HandZweiTitleLabelText}" FontSize="Large"></Label>
             <StackLayout 
                 x:Name="HandSpielerZwei"
                 Orientation="Horizontal"

@@ -47,7 +47,7 @@ namespace LostCities.ViewModel
             //TODO Diese Logik gehört ins Model
             switch (card.Name)
             {
-                case "Weiß":
+                case "Weiss":
                     _stapel[Farbe.Weiss].Add(card);
                     WeißerStapelImageUri = SetImageUri(Farbe.Weiss);
                     break;

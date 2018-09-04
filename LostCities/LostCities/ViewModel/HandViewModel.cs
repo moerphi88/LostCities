@@ -38,11 +38,12 @@ namespace LostCities.ViewModel
             var index = int.Parse(value);
             var CardEventArgs = new CardEventArgs(HandCards[index].Card);
             _abgelegteKarteIndex = index;
-            UpdateView(index);
+            HideDrawnCard(index);
 
             OnPlayCard(CardEventArgs);
         }
 
+        //Adds a list of cards to the ObservableCollection
         public void GetHandCards(List<Card> cardList)
         {
             foreach(Card card in cardList)
@@ -51,6 +52,7 @@ namespace LostCities.ViewModel
             }
         }
 
+        //Adds a new card to the ObservableCollection. Exactly to that spot where the last card has been drawn
         public void GetHandCard(Card card)
         {
             if (null != card)
@@ -62,9 +64,9 @@ namespace LostCities.ViewModel
             }
         }        
 
-        private void UpdateView(int value)
+        private void HideDrawnCard(int idx)
         {
-            HandCards[value].IsVisible = false;            
+            HandCards[idx].IsVisible = false;            
         }
 
         public void DisableHand()
@@ -77,11 +79,11 @@ namespace LostCities.ViewModel
             DisableEnableAllButtons(true);
         }
 
-        private void DisableEnableAllButtons(bool val)
+        private void DisableEnableAllButtons(bool value)
         {
             foreach(HandCard handCard in HandCards)
             {
-                handCard.IsEnabled = val;
+                handCard.IsEnabled = value;
             }
         }
     }

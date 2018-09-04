@@ -23,14 +23,15 @@ namespace LostCities
 
             Ablegestapel.BindingContext = _mainViewModel.AblageStapelVM;
             Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
-            HandSpielerEins.BindingContext = _mainViewModel.HandVM;
-            HandSpielerZwei.BindingContext = _mainViewModel.HandVM2;
 
+            HandSpielerEins.BindingContext = _mainViewModel.HandVM;
             CreateHandView(HandSpielerEins, _mainViewModel.HandVM);
+
+            HandSpielerZwei.BindingContext = _mainViewModel.HandVM2;           
             CreateHandView(HandSpielerZwei, _mainViewModel.HandVM2);
         }
 
-        // Creates a button for each 
+        // Creates a button for each handcard on a players hand and adds it to the stacklayout
         private void CreateHandView(StackLayout layout, HandViewModel handViewModel)
         {
             var i = 0;
@@ -45,8 +46,8 @@ namespace LostCities
                 btn.SetBinding(Button.ImageProperty, "ImageUri");
                 btn.Command = handViewModel.OnButtonPressedCommand;
                 btn.CommandParameter = i.ToString();
-                btn.WidthRequest = 50;
-                btn.HeightRequest = 70;
+                btn.WidthRequest = 40;
+                btn.HeightRequest = 60;
                 i++;
                 // <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleDritteHandKarte}" Image="{Binding DritteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
                 layout.Children.Add(btn);
