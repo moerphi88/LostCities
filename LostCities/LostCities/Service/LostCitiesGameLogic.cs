@@ -17,7 +17,7 @@ namespace LostCities.Service
         private bool _gameIsOver;
         private int _activePlayer = 0;
 
-        private readonly int HandCards = 8;
+        private readonly int HandCards = 5;
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, AblagestapelViewModel ablagestapel, IStapel anlegestapel)
         {
