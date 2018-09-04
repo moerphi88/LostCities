@@ -44,6 +44,7 @@ namespace LostCities.ViewModel
         //TODO An dieser Stelle muss ich das enum Farbe auswerten anstatt einen string. Refactoring
         public void KarteAnlegen(Card card)
         {
+            //TODO Diese Logik gehört ins Model
             switch (card.Name)
             {
                 case "Weiß":
@@ -73,16 +74,14 @@ namespace LostCities.ViewModel
 
         public List<Card> GetTopCards()
         {
-
-            throw new NotImplementedException();
-            //var list = new List<Card>
-            //{
-            //    _stapel[Farbe.Weiß][_stapel[Farbe.Herz].Count - 1],
-            //    _stapel[Farbe.Gruen][_stapel[Farbe.Herz].Count - 1],
-            //    _stapel[Farbe.Blau][_stapel[Farbe.Herz].Count - 1],
-            //    _stapel[Farbe.Gelb][_stapel[Farbe.Herz].Count - 1]
-            //};
-            //return list;
+            var list = new List<Card>();
+            foreach (Farbe farbe in Enum.GetValues(typeof(Farbe))) {
+                if (_stapel[farbe].Count != 0)
+                {
+                    list.Add(_stapel[farbe][_stapel[farbe].Count - 1]);
+                }
+            }
+            return list;
         }
 
         private String SetImageUri(Farbe farbe)
@@ -96,6 +95,7 @@ namespace LostCities.ViewModel
 
         private void UpdateImageUri(Farbe farbe)
         {
+            //TODO Diese Logik gehört ins Model
             switch (farbe)
             {
                 case Farbe.Weiss:

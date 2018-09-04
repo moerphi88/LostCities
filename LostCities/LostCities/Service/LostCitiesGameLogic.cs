@@ -17,6 +17,8 @@ namespace LostCities.Service
         private bool _gameIsOver;
         private int _activePlayer = 0;
 
+        private readonly int HandCards = 8;
+
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, AblagestapelViewModel ablagestapel, IStapel anlegestapel)
         {
             _handSpielerEins = handSpielerEins;
@@ -26,9 +28,10 @@ namespace LostCities.Service
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
-            _handSpielerEins.GetHandCards(_cardDeck.GetXCards(3));
-            _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(3));
+            _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
+            _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
 
+            //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Konstruktor?!
             _handSpielerEins.PlayCard += OnPlayCard;
             _handSpielerZwei.PlayCard += OnPlayCard;
 
@@ -100,32 +103,32 @@ namespace LostCities.Service
         {
             var topCard = _anlegestapel.GetTopCards();
 
-            if (topCard.Count != 0)
+            //Wenn es mindestens eine angelegte Karte gibt,...
+            if(topCard.Count != 0)
             {
-                if(card.Name != topCard[0].Name)
+                foreach (var c in topCard)
                 {
-                    if ((int)card.Zahl == (int)topCard[0].Zahl)
+                    //Liegt auf dem Farbstapel der ausgewählten Karte bereits eine Karte?
+                    if(card.Name == c.Name)
                     {
-                        return new String[] { "Karte ablegen", "Karte anlegen" };
-                    }
-                    else return new String[] { "Karte ablegen" };
-
-                } else if((int)card.Zahl < (int)topCard[0].Zahl)
-                {
-                    return new String[] { "Karte ablegen" };
-                } else
-                {
-                    return new String[] { "Karte ablegen", "Karte anlegen" };
-                }              
+                        //Wenn ja, ist die ausgewählte Karte höher als die die schon liegt
+                        if(card.Zahl > c.Zahl)
+                        {
+                            return new String[] { "Karte ablegen", "Karte anlegen" }; //Ja, dann kann der Nutzer frei entscheiden
+                        }
+                        return new String[] { "Karte ablegen" }; //Wenn nicht, dann kann er die Karte nur ablegen
+                    }                    
+                }
+                return new String[] { "Karte ablegen", "Karte anlegen" };//Es liegt noch keine Karte der ausgewählten Farbe auf dem Anlegestapel
             }
-            else { //Spieler kann alles legen
+            else { //Spieler kann alles legen, weil noch keine Karte angelegt wurde
                 return new String[] { "Karte ablegen", "Karte anlegen" };
             }
         }
 
-        async private void AnnounceNextStepDrawCard()
+        private void AnnounceNextStepDrawCard()
         {
-            await App.Current.MainPage.DisplayAlert("Ziehe jetzt eine neue Karte", null , "Cancel");
+            //await App.Current.MainPage.DisplayAlert("Ziehe jetzt eine neue Karte", null , "Cancel");
             _handSpielerEins.DisableHand();
             _handSpielerZwei.DisableHand();
             _ablagestapel.EnableDrawing();

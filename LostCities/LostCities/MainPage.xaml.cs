@@ -12,23 +12,25 @@ namespace LostCities
 {
     public partial class MainPage : ContentPage
     {
-        private MainViewModel vm;
+        private MainViewModel _mainViewModel;
 
         public MainPage()
         {
             InitializeComponent();
-            vm = new MainViewModel(this.Navigation);
-            BindingContext = vm;
 
-            stack.BindingContext = vm.AblageStapelVM;
-            Anlegestapel.BindingContext = vm.AnlegeStapelVM;
-            HandSpielerEins.BindingContext = vm.HandVM;
-            HandSpielerZwei.BindingContext = vm.HandVM2;
+            _mainViewModel = new MainViewModel(this.Navigation);
+            BindingContext = _mainViewModel;
 
-            CreateHandView(HandSpielerEins, vm.HandVM);
-            CreateHandView(HandSpielerZwei, vm.HandVM2);
+            Ablegestapel.BindingContext = _mainViewModel.AblageStapelVM;
+            Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
+            HandSpielerEins.BindingContext = _mainViewModel.HandVM;
+            HandSpielerZwei.BindingContext = _mainViewModel.HandVM2;
+
+            CreateHandView(HandSpielerEins, _mainViewModel.HandVM);
+            CreateHandView(HandSpielerZwei, _mainViewModel.HandVM2);
         }
 
+        // Creates a button for each 
         private void CreateHandView(StackLayout layout, HandViewModel handViewModel)
         {
             var i = 0;

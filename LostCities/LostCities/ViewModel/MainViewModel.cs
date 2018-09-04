@@ -21,7 +21,8 @@ namespace LostCities.ViewModel
         public MainViewModel(INavigation navigation) : base(navigation)
         {
             AblageStapelVM = new AblagestapelViewModel(null);
-            AnlegeStapelVM = new MauMauViewModel(null);
+            //AnlegeStapelVM = new MauMauViewModel(null);
+            AnlegeStapelVM = new AnlegestapelViewModel(null);
             HandVM = new HandViewModel(null);
             HandVM2 = new HandViewModel(null);
             _lcgl = new LostCitiesGameLogic(HandVM, HandVM2, AblageStapelVM, AnlegeStapelVM);
