@@ -17,8 +17,7 @@ namespace LostCities.ViewModel
         public HandViewModel HandVM { get; set; }
         public HandViewModel HandVM2 { get; set; }
         private LostCitiesGameLogic _lcgl;
-
-       
+        private String _anweisungsText;
 
         public MainViewModel(INavigation navigation) : base(navigation)
         {
@@ -34,6 +33,7 @@ namespace LostCities.ViewModel
             AnlegestapelTitleLabelText = "Anlegestapel Binding";
             HandEinsTitleLabelText = "Hand Spieler 1";
             HandZweiTitleLabelText = "Hand Spieler 2";
+            AnweisungsLabelText = "Spieler 1 ist am Zug. Bitt lege eine Karte ab oder an, indem Du eine Karte von deiner Hand anklickst";
 
             OnButtonPressedCommand = new Command(OnButtonPressed);
         }
@@ -54,6 +54,19 @@ namespace LostCities.ViewModel
         public String AnlegestapelTitleLabelText { get; set; }
         public String HandEinsTitleLabelText { get; set; }
         public String HandZweiTitleLabelText { get; set; }
+        public String AnweisungsLabelText
+        {
+            get
+            {
+                return _anweisungsText;
+            }
+            set
+            {
+                _anweisungsText = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
     }

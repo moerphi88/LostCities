@@ -31,20 +31,27 @@ namespace LostCities.Service
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
 
-            //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Konstruktor?!
+            //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
             _handSpielerEins.PlayCard += OnPlayCard;
             _handSpielerZwei.PlayCard += OnPlayCard;
 
             _ablagestapel.KarteAbheben += OnKarteAbheben;
+
+            InitGame();
         }
 
-        void OnKarteAbheben(object sender, CardEventArgs e)
+        public void DrawHandCard()
+        {
+            GiveNewHandCard(_cardDeck.GetFirstCard());
+        }
+
+        private void OnKarteAbheben(object sender, CardEventArgs e)
         {
             GiveNewHandCard(e.Card);
             Debug.WriteLine(nameof(OnKarteAbheben));
         }
 
-        async void OnPlayCard(object sender, CardEventArgs e)
+        private async void OnPlayCard(object sender, CardEventArgs e)
         {
             try
             {
@@ -134,10 +141,7 @@ namespace LostCities.Service
             _ablagestapel.EnableDrawing();
         }
 
-        public void DrawHandCard()
-        {
-            GiveNewHandCard(_cardDeck.GetFirstCard());
-        }
+       
 
         private void GiveNewHandCard(Card card)
         {
@@ -165,6 +169,13 @@ namespace LostCities.Service
                     _handSpielerZwei.GetHandCard(card);
                     break;
             }
+        }
+
+        private void InitGame()
+        {
+            _handSpielerEins.EnableHand();
+            _handSpielerZwei.DisableHand();
+            _ablagestapel.DisableDrawing();
         }
 
         private void SwitchActivePlayer()

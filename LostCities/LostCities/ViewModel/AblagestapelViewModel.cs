@@ -23,6 +23,7 @@ namespace LostCities.ViewModel
 
         private Dictionary<Farbe, List<Card>> _ablagestapel;
 
+        //TODO Ich muss nicht ein eigenes delegate definieren. Es gibt EventHandler, die man benutzen kann. Suche nach Raise and Handle Events at mdns https://docs.microsoft.com/de-de/dotnet/standard/events/ 
         public delegate void CardEventHandler(object sender, CardEventArgs e);
         public event CardEventHandler KarteAbheben;
         
@@ -49,7 +50,7 @@ namespace LostCities.ViewModel
             WeißerStapelImageUri = "kartenhindergrund.png";
         }
 
-        async void OnButtonPressed(string value)
+        private async void OnButtonPressed(string value)
         {
             try
             {

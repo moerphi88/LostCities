@@ -7,6 +7,7 @@
     <StackLayout>
         <StackLayout>
             <Button x:Name="KarteZiehenButton" Text="{Binding KarteZiehenButtonText}" Command="{Binding OnButtonPressedCommand}" ></Button>
+            <Label x:Name="SpielAnweisung" Text="{Binding AnweisungsLabelText}" FontSize="Small"></Label>
             <Label x:Name="AblagestapelTitleLabel" Text="{Binding AblagestapelTitleLabelText}" FontSize="Large"></Label>
             <StackLayout 
                 x:Name="Ablegestapel"
@@ -15,11 +16,11 @@
                 HorizontalOptions="Start"
                 VerticalOptions="Start"> 
                  <!-- Hier kann ich mit Rotation die Buttons drehen -->
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
             </StackLayout>
         </StackLayout>
         <StackLayout>
@@ -32,11 +33,11 @@
                 VerticalOptions="Start">
                 <!-- Hier kann ich mit Rotation die Buttons drehen -->
                 <!-- <Button WidthRequest="50" HeightRequest="70"  Image="{Binding ShownCardImageUri}" IsEnabled="False"/> -->
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
+                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
             </StackLayout>
         </StackLayout>
         <StackLayout>
