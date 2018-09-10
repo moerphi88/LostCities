@@ -7,6 +7,8 @@ using System.Text;
 using LostCities.Model;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace LostCities.Service
 {
@@ -19,6 +21,7 @@ namespace LostCities.Service
         private bool _gameIsOver;
         private int _activePlayer = 0;
         private String _anweisungsText;
+        private bool _buttonIsEnabeld;
 
         public String AnweisungsLabelText
         {
@@ -32,6 +35,28 @@ namespace LostCities.Service
                 OnPropertyChanged();
             }
         }
+        public String KarteZiehenButtonText { get; set; }
+
+        // ToDo Die Mischung Methodenaufrufe und Events gefällt mir nicht. Das sollte einmal überarbeitet werden. Für den Nachziehstapel muss ich auch ein eigenes ViewModel machen! 
+        public ICommand OnButtonPressedCommand { get; }
+
+        public bool ButtonIsEnabled
+        {
+            get
+            {
+                return _buttonIsEnabeld;
+            }
+            set
+            {
+                _buttonIsEnabeld = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void OnButtonPressed()
+        {
+            DrawHandCard();
+        }
 
         private readonly int HandCards = 5;
 
@@ -44,7 +69,13 @@ namespace LostCities.Service
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
-            AnweisungsLabelText = "Spieler 1 ist am Zug. Bitt lege eine Karte ab oder an, indem Du eine Karte von deiner Hand anklickst";
+            AnweisungsLabelText = "Spieler 1 ist am Zug. Bitte lege eine Karte ab oder an, indem Du eine Karte von deiner Hand anklickst";
+            KarteZiehenButtonText = "Karte ziehen Binding";
+            OnButtonPressedCommand = new Command(OnButtonPressed);
+            
+
+            // Eventbinding
+
 
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
@@ -157,9 +188,8 @@ namespace LostCities.Service
             _handSpielerEins.DisableHand();
             _handSpielerZwei.DisableHand();
             _ablagestapel.EnableDrawing();
+            ButtonIsEnabled = true;
         }
-
-       
 
         private void GiveNewHandCard(Card card)
         {
@@ -194,6 +224,7 @@ namespace LostCities.Service
             _handSpielerEins.EnableHand();
             _handSpielerZwei.DisableHand();
             _ablagestapel.DisableDrawing();
+            ButtonIsEnabled = false;
         }
 
         private void SwitchActivePlayer()
@@ -211,6 +242,7 @@ namespace LostCities.Service
                     break;
             }
             _ablagestapel.DisableDrawing();
+            ButtonIsEnabled = false;
         }
 
         private void IsGameOver()

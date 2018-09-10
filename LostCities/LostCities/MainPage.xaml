@@ -6,7 +6,7 @@
              x:Class="LostCities.MainPage">
     <StackLayout>
         <StackLayout>
-            <Button x:Name="KarteZiehenButton" Text="{Binding KarteZiehenButtonText}" Command="{Binding OnButtonPressedCommand}" ></Button>
+            <Button x:Name="KarteZiehenButton" Text="{Binding KarteZiehenButtonText}" Command="{Binding OnButtonPressedCommand}" IsEnabled="{Binding ButtonIsEnabled}" ></Button>
             <Label x:Name="SpielAnweisung" Text="{Binding AnweisungsLabelText}" FontSize="Small"></Label>
             <Label x:Name="AblagestapelTitleLabel" Text="{Binding AblagestapelTitleLabelText}" FontSize="Large"></Label>
             <StackLayout 
