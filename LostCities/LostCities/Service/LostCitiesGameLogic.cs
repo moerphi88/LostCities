@@ -5,10 +5,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using LostCities.Model;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace LostCities.Service
 {
-    public class LostCitiesGameLogic
+    public class LostCitiesGameLogic : INotifyPropertyChanged
     {
         private HandViewModel _handSpielerEins, _handSpielerZwei;
         private AblagestapelViewModel _ablagestapel;
@@ -16,6 +18,20 @@ namespace LostCities.Service
         private CardDeck _cardDeck;
         private bool _gameIsOver;
         private int _activePlayer = 0;
+        private String _anweisungsText;
+
+        public String AnweisungsLabelText
+        {
+            get
+            {
+                return _anweisungsText;
+            }
+            set
+            {
+                _anweisungsText = value;
+                OnPropertyChanged();
+            }
+        }
 
         private readonly int HandCards = 5;
 
@@ -27,6 +43,8 @@ namespace LostCities.Service
             _anlegestapel = anlegestapel;
             _cardDeck = new CardDeck();
             _gameIsOver = false;
+
+            AnweisungsLabelText = "Spieler 1 ist am Zug. Bitt lege eine Karte ab oder an, indem Du eine Karte von deiner Hand anklickst";
 
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
@@ -199,5 +217,13 @@ namespace LostCities.Service
         {
             _gameIsOver = _cardDeck.IsEmpty();
         }
+
+        #region INotifyPropertyChanges Handler
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName]string propertyName = "") =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        #endregion
     }
 }

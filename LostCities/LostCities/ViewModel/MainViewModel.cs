@@ -16,8 +16,8 @@ namespace LostCities.ViewModel
         public IStapel AnlegeStapelVM { get; set; }
         public HandViewModel HandVM { get; set; }
         public HandViewModel HandVM2 { get; set; }
-        private LostCitiesGameLogic _lcgl;
-        private String _anweisungsText;
+        public LostCitiesGameLogic Lcgl { get; set; }
+
 
         public MainViewModel(INavigation navigation) : base(navigation)
         {
@@ -26,14 +26,14 @@ namespace LostCities.ViewModel
             AnlegeStapelVM = new AnlegestapelViewModel(null);
             HandVM = new HandViewModel(null);
             HandVM2 = new HandViewModel(null);
-            _lcgl = new LostCitiesGameLogic(HandVM, HandVM2, AblageStapelVM, AnlegeStapelVM);
+            Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, AblageStapelVM, AnlegeStapelVM);
 
             KarteZiehenButtonText = "Karte ziehen Binding";
             AblagestapelTitleLabelText = "Ablagestapel Binding";
             AnlegestapelTitleLabelText = "Anlegestapel Binding";
             HandEinsTitleLabelText = "Hand Spieler 1";
             HandZweiTitleLabelText = "Hand Spieler 2";
-            AnweisungsLabelText = "Spieler 1 ist am Zug. Bitt lege eine Karte ab oder an, indem Du eine Karte von deiner Hand anklickst";
+            
 
             OnButtonPressedCommand = new Command(OnButtonPressed);
         }
@@ -43,7 +43,7 @@ namespace LostCities.ViewModel
 
         private void OnButtonPressed()
         {
-            _lcgl.DrawHandCard();
+            Lcgl.DrawHandCard();
             HandEinsTitleLabelText = "Hand Spieler 1 + ButtonClicked";
         }
 
@@ -54,18 +54,7 @@ namespace LostCities.ViewModel
         public String AnlegestapelTitleLabelText { get; set; }
         public String HandEinsTitleLabelText { get; set; }
         public String HandZweiTitleLabelText { get; set; }
-        public String AnweisungsLabelText
-        {
-            get
-            {
-                return _anweisungsText;
-            }
-            set
-            {
-                _anweisungsText = value;
-                OnPropertyChanged();
-            }
-        }
+       
 
         #endregion
 

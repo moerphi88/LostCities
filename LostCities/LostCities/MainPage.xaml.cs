@@ -23,7 +23,7 @@ namespace LostCities
 
             Ablegestapel.BindingContext = _mainViewModel.AblageStapelVM;
             Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
-
+            SpielAnweisung.BindingContext = _mainViewModel.Lcgl;
             HandSpielerEins.BindingContext = _mainViewModel.HandVM;
             CreateHandView(HandSpielerEins, _mainViewModel.HandVM);
 

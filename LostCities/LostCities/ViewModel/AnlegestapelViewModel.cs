@@ -44,7 +44,7 @@ namespace LostCities.ViewModel
         //TODO An dieser Stelle muss ich das enum Farbe auswerten anstatt einen string. Refactoring
         public void KarteAnlegen(Card card)
         {
-            //TODO Diese Logik gehört ins Model
+            //TODO Diese Logik gehört ins Model bzw, in eine Base
             switch (card.Name)
             {
                 case "Weiss":
