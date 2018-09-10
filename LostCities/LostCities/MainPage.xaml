@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:LostCities"
              xmlns:viewModel="clr-namespace:LostCities.ViewModel;assembly=LostCities"
              x:Class="LostCities.MainPage">
+    <ScrollView>
     <StackLayout>
         <StackLayout>
             <Button x:Name="KarteZiehenButton" Text="{Binding KarteZiehenButtonText}" Command="{Binding OnButtonPressedCommand}" IsEnabled="{Binding ButtonIsEnabled}" ></Button>
@@ -61,4 +62,5 @@
             </StackLayout>
         </StackLayout>
     </StackLayout>
+    </ScrollView>
 </ContentPage>
