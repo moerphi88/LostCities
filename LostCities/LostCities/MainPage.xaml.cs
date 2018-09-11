@@ -23,6 +23,7 @@ namespace LostCities
 
             DiscardPile.BindingContext = _mainViewModel.DiscardPileVM;
             Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
+            Anlegestapel2.BindingContext = _mainViewModel.AnlegeStapel2VM;
 
             SpielAnweisung.BindingContext = _mainViewModel.Lcgl;
             KarteZiehenButton.BindingContext = _mainViewModel.Lcgl;
