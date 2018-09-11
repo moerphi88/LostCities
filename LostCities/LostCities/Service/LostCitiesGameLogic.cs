@@ -15,7 +15,7 @@ namespace LostCities.Service
     public class LostCitiesGameLogic : INotifyPropertyChanged
     {
         private HandViewModel _handSpielerEins, _handSpielerZwei;
-        private AblagestapelViewModel _ablagestapel;
+        private DiscardPileViewModel _ablagestapel;
         private IStapel _anlegestapel;
         private CardDeck _cardDeck;
         private bool _gameIsOver;
@@ -62,7 +62,7 @@ namespace LostCities.Service
         private const string PlayerNeedsToPlayACard = "Spieler {0}. Bitte spiele eine Karte, indem Du eine Karte von deiner Hand anklickst.";
         private const string PlayerNeedsToDrawACard = "Spieler {0}. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel.";
 
-        public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, AblagestapelViewModel ablagestapel, IStapel anlegestapel)
+        public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel)
         {
             _handSpielerEins = handSpielerEins;
             _handSpielerZwei = handSpielerZwei;

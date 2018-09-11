@@ -7,11 +7,11 @@
     <ScrollView>
     <StackLayout>
         <StackLayout>
-                <Button x:Name="KarteZiehenButton" Text="{Binding KarteZiehenButtonText}" Command="{Binding OnKarteZiehenButtonPressedCommand}" IsEnabled="{Binding KarteZiehenButtonIsEnabled}" ></Button>
+            <Button x:Name="KarteZiehenButton" Text="{Binding KarteZiehenButtonText}" Command="{Binding OnKarteZiehenButtonPressedCommand}" IsEnabled="{Binding KarteZiehenButtonIsEnabled}" ></Button>
             <Label x:Name="SpielAnweisung" Text="{Binding AnweisungsLabelText}" FontSize="Small"></Label>
-            <Label x:Name="AblagestapelTitleLabel" Text="{Binding AblagestapelTitleLabelText}" FontSize="Large"></Label>
+            <Label x:Name="DiscardPileTitleLabel" Text="{Binding DiscardPileTitleLabelText}" FontSize="Large"></Label>
             <StackLayout 
-                x:Name="Ablegestapel"
+                x:Name="DiscardPile"
                 Orientation="Horizontal"
                 Padding="10"
                 HorizontalOptions="Start"

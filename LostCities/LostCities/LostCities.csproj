@@ -53,7 +53,7 @@
     <Compile Include="ViewModel\AnlegestapelViewModel.cs" />
     <Compile Include="ViewModel\HandViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\AblagestapelViewModel.cs" />
+    <Compile Include="ViewModel\DiscardPileViewModel.cs" />
     <Compile Include="ViewModel\IStapel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
   </ItemGroup>

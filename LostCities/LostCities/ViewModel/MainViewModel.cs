@@ -12,7 +12,7 @@ namespace LostCities.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-        public AblagestapelViewModel AblageStapelVM { get; set; }
+        public DiscardPileViewModel DiscardPileVM { get; set; }
         public IStapel AnlegeStapelVM { get; set; }
         public HandViewModel HandVM { get; set; }
         public HandViewModel HandVM2 { get; set; }
@@ -21,15 +21,15 @@ namespace LostCities.ViewModel
 
         public MainViewModel(INavigation navigation) : base(navigation)
         {
-            AblageStapelVM = new AblagestapelViewModel(null);
+            DiscardPileVM = new DiscardPileViewModel(null);
             //AnlegeStapelVM = new MauMauViewModel(null);
             AnlegeStapelVM = new AnlegestapelViewModel(null);
             HandVM = new HandViewModel(null);
             HandVM2 = new HandViewModel(null);
-            Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, AblageStapelVM, AnlegeStapelVM);
+            Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, DiscardPileVM, AnlegeStapelVM);
 
-            
-            AblagestapelTitleLabelText = "Ablagestapel Binding";
+
+            DiscardPileTitleLabelText = "Ablagestapel Binding";
             AnlegestapelTitleLabelText = "Anlegestapel Binding";
             HandEinsTitleLabelText = "Hand Spieler 1";
             HandZweiTitleLabelText = "Hand Spieler 2";
@@ -43,7 +43,7 @@ namespace LostCities.ViewModel
         // Muss ich wirklich die Set Methode implementieren und OnPropertyCHanged aufrufen, oder gibt es eine andere Möglichkeit den Wert zu aktualisieren?! 
         #region Properties
 
-        public String AblagestapelTitleLabelText { get; set; }
+        public String DiscardPileTitleLabelText { get; set; }
         public String AnlegestapelTitleLabelText { get; set; }
         public String HandEinsTitleLabelText { get; set; }
         public String HandZweiTitleLabelText { get; set; }

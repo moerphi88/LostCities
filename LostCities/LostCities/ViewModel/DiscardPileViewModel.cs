@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace LostCities.ViewModel
 {
-    public class AblagestapelViewModel : BaseViewModel
+    public class DiscardPileViewModel : BaseViewModel
     {
         private string _gelberStapelImageUri;
         private string _roterStapelImageUri;
@@ -32,7 +32,7 @@ namespace LostCities.ViewModel
             KarteAbheben?.Invoke(this, e);
         }
 
-        public AblagestapelViewModel(INavigation navigation) : base(navigation)
+        public DiscardPileViewModel(INavigation navigation) : base(navigation)
         {
             OnButtonPressedCommand = new Command<string>(OnButtonPressed);
 

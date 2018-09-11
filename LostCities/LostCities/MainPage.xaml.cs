@@ -21,7 +21,7 @@ namespace LostCities
             _mainViewModel = new MainViewModel(this.Navigation);
             BindingContext = _mainViewModel;
 
-            Ablegestapel.BindingContext = _mainViewModel.AblageStapelVM;
+            DiscardPile.BindingContext = _mainViewModel.DiscardPileVM;
             Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
 
             SpielAnweisung.BindingContext = _mainViewModel.Lcgl;
