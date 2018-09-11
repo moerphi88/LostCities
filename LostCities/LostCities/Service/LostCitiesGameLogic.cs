@@ -20,6 +20,7 @@ namespace LostCities.Service
         private CardDeck _cardDeck;
         private bool _gameIsOver;
         private int _activePlayer = 0;
+
         private String _anweisungsText;
         private bool _karteZiehenButtonIsEnabeld;
 
@@ -58,6 +59,8 @@ namespace LostCities.Service
         }
 
         private readonly int HandCards = 5;
+        private const string PlayerNeedsToPlayACard = "Spieler {0} ist am Zug. Bitte lege eine Karte ab oder an, indem Du eine Karte von deiner Hand anklickst und den Dialog bestätigst";
+        private const string PlayerNeedsToDrawACard = "Spieler {0} ist am Zug. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel, wenn dort bereits eine Karte abgelegt wurde";
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, AblagestapelViewModel ablagestapel, IStapel anlegestapel)
         {
@@ -68,17 +71,14 @@ namespace LostCities.Service
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
-            AnweisungsLabelText = "Spieler 1 ist am Zug. Bitte lege eine Karte ab oder an, indem Du eine Karte von deiner Hand anklickst";
+            AnweisungsLabelText = String.Format(PlayerNeedsToPlayACard, _activePlayer == 0 ? "1" : "2");
             KarteZiehenButtonText = "Karte ziehen Binding";
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
-            
-
-            // Eventbinding
-
-
+                                  
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
 
+            // Eventbinding
             //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
             _handSpielerEins.PlayCard += OnPlayCard;
             _handSpielerZwei.PlayCard += OnPlayCard;
@@ -188,6 +188,7 @@ namespace LostCities.Service
             _handSpielerZwei.DisableHand();
             _ablagestapel.EnableDrawing();
             KarteZiehenButtonIsEnabled = true;
+            AnweisungsLabelText = String.Format(PlayerNeedsToDrawACard, _activePlayer == 0 ? "1" : "2");
         }
 
         private void GiveNewHandCard(Card card)
@@ -242,6 +243,7 @@ namespace LostCities.Service
             }
             _ablagestapel.DisableDrawing();
             KarteZiehenButtonIsEnabled = false;
+            AnweisungsLabelText = String.Format(PlayerNeedsToPlayACard, _activePlayer == 0 ? "1" : "2");
         }
 
         private void IsGameOver()
