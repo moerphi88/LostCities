@@ -21,7 +21,7 @@ namespace LostCities.Service
         private bool _gameIsOver;
         private int _activePlayer = 0;
         private String _anweisungsText;
-        private bool _buttonIsEnabeld;
+        private bool _karteZiehenButtonIsEnabeld;
 
         public String AnweisungsLabelText
         {
@@ -37,18 +37,17 @@ namespace LostCities.Service
         }
         public String KarteZiehenButtonText { get; set; }
 
-        // ToDo Die Mischung Methodenaufrufe und Events gefällt mir nicht. Das sollte einmal überarbeitet werden. Für den Nachziehstapel muss ich auch ein eigenes ViewModel machen! 
-        public ICommand OnButtonPressedCommand { get; }
+        public ICommand OnKarteZiehenButtonPressedCommand { get; }
 
-        public bool ButtonIsEnabled
+        public bool KarteZiehenButtonIsEnabled
         {
             get
             {
-                return _buttonIsEnabeld;
+                return _karteZiehenButtonIsEnabeld;
             }
             set
             {
-                _buttonIsEnabeld = value;
+                _karteZiehenButtonIsEnabeld = value;
                 OnPropertyChanged();
             }
         }
