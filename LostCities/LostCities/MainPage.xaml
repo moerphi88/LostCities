@@ -69,11 +69,12 @@
                     <StackLayout>
                         <Label x:Name="HandEinsTitleLabel" Text="{Binding HandEinsTitleLabelText}" FontSize="Large"></Label>
                         <StackLayout 
-                x:Name="HandSpielerEins"
-                Orientation="Horizontal"
-                Padding="10"
-                HorizontalOptions="Start"
-                VerticalOptions="Start">
+                            x:Name="HandSpielerEins"
+                            Orientation="Horizontal"
+                            Padding="-10"
+                            Margin="20"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start">
                         </StackLayout>
                     </StackLayout>
                     <StackLayout>

@@ -51,7 +51,7 @@ namespace LostCities
                 btn.Command = handViewModel.OnButtonPressedCommand;
                 btn.CommandParameter = i.ToString();
                 btn.WidthRequest = 50;
-                btn.HeightRequest = 70;
+                btn.HeightRequest = 70 ;
                 i++;
                 // <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleDritteHandKarte}" Image="{Binding DritteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
                 layout.Children.Add(btn);

@@ -16,7 +16,7 @@ namespace LostCities.Service
     {
         private HandViewModel _handSpielerEins, _handSpielerZwei;
         private DiscardPileViewModel _ablagestapel;
-        private IStapel _anlegestapel;
+        private IStapel _anlegestapel, _anlegestapel2;
         private CardDeck _cardDeck;
         private bool _gameIsOver;
         private int _activePlayer = 0;
@@ -62,12 +62,13 @@ namespace LostCities.Service
         private const string PlayerNeedsToPlayACard = "Spieler {0}. Bitte spiele eine Karte, indem Du eine Karte von deiner Hand anklickst.";
         private const string PlayerNeedsToDrawACard = "Spieler {0}. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel.";
 
-        public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel)
+        public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {
             _handSpielerEins = handSpielerEins;
             _handSpielerZwei = handSpielerZwei;
             _ablagestapel = ablagestapel;
             _anlegestapel = anlegestapel;
+            _anlegestapel2 = anlegestapel2;
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
@@ -125,7 +126,7 @@ namespace LostCities.Service
                                         _ablagestapel.KarteAblegen(e.Card);
                                         break;
                                     case "Karte anlegen":
-                                        _anlegestapel.KarteAnlegen(e.Card);
+                                        GetActiveAnlegestapel().KarteAnlegen(e.Card);
                                         break;
                                 }
                                 AnnounceNextStepDrawCard();
@@ -154,9 +155,16 @@ namespace LostCities.Service
             Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
         }
 
+        private IStapel GetActiveAnlegestapel()
+        {
+            var anlegestapel = _activePlayer == 0 ? _anlegestapel : _anlegestapel2;
+            return anlegestapel;
+        }
+
         private String[] EvaluatePossibilities(Card card)
         {
-            var topCard = _anlegestapel.GetTopCards();
+
+            var topCard = GetActiveAnlegestapel().GetTopCards();
 
             //Wenn es mindestens eine angelegte Karte gibt,...
             if(topCard.Count != 0)
@@ -181,10 +189,10 @@ namespace LostCities.Service
             }
         }
 
-        private async void AnnounceNextStepDrawCard()
+        private void AnnounceNextStepDrawCard()
         {
             AnweisungsLabelText = String.Format(PlayerNeedsToDrawACard, _activePlayer == 0 ? "1" : "2");
-            await App.Current.MainPage.DisplayAlert(AnweisungsLabelText, null , "Ok");
+            //await App.Current.MainPage.DisplayAlert(AnweisungsLabelText, null , "Ok");
 
             _handSpielerEins.DisableHand();
             _handSpielerZwei.DisableHand();
