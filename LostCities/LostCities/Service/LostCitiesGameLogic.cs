@@ -59,8 +59,8 @@ namespace LostCities.Service
         }
 
         private readonly int HandCards = 5;
-        private const string PlayerNeedsToPlayACard = "Spieler {0} ist am Zug. Bitte lege eine Karte ab oder an, indem Du eine Karte von deiner Hand anklickst und den Dialog bestätigst";
-        private const string PlayerNeedsToDrawACard = "Spieler {0} ist am Zug. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel, wenn dort bereits eine Karte abgelegt wurde";
+        private const string PlayerNeedsToPlayACard = "Spieler {0}. Bitte spiele eine Karte, indem Du eine Karte von deiner Hand anklickst.";
+        private const string PlayerNeedsToDrawACard = "Spieler {0}. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel.";
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, AblagestapelViewModel ablagestapel, IStapel anlegestapel)
         {
@@ -181,14 +181,15 @@ namespace LostCities.Service
             }
         }
 
-        private void AnnounceNextStepDrawCard()
+        private async void AnnounceNextStepDrawCard()
         {
-            //await App.Current.MainPage.DisplayAlert("Ziehe jetzt eine neue Karte", null , "Cancel");
+            AnweisungsLabelText = String.Format(PlayerNeedsToDrawACard, _activePlayer == 0 ? "1" : "2");
+            await App.Current.MainPage.DisplayAlert(AnweisungsLabelText, null , "Ok");
+
             _handSpielerEins.DisableHand();
             _handSpielerZwei.DisableHand();
             _ablagestapel.EnableDrawing();
             KarteZiehenButtonIsEnabled = true;
-            AnweisungsLabelText = String.Format(PlayerNeedsToDrawACard, _activePlayer == 0 ? "1" : "2");
         }
 
         private void GiveNewHandCard(Card card)
