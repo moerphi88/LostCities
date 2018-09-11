@@ -21,7 +21,7 @@ namespace LostCities.ViewModel
         private string _weißerStapelImageUri;
         private bool _isEnabled;
 
-        private Dictionary<Farbe, List<Card>> _ablagestapel;
+        private Dictionary<Farbe, List<Card>> _discardPileDict;
 
         //TODO Ich muss nicht ein eigenes delegate definieren. Es gibt EventHandler, die man benutzen kann. Suche nach Raise and Handle Events at mdns https://docs.microsoft.com/de-de/dotnet/standard/events/ 
         public delegate void CardEventHandler(object sender, CardEventArgs e);
@@ -36,12 +36,17 @@ namespace LostCities.ViewModel
         {
             OnButtonPressedCommand = new Command<string>(OnButtonPressed);
 
-            _ablagestapel = new Dictionary<Farbe, List<Card>>();
-            _ablagestapel.Add(Farbe.Weiss, new List<Card>());
-            _ablagestapel.Add(Farbe.Gruen, new List<Card>());
-            _ablagestapel.Add(Farbe.Blau, new List<Card>());
-            _ablagestapel.Add(Farbe.Gelb, new List<Card>());
-            _ablagestapel.Add(Farbe.Rot, new List<Card>());
+            Init();
+        }
+
+        private void Init()
+        {
+            _discardPileDict = new Dictionary<Farbe, List<Card>>();
+            _discardPileDict.Add(Farbe.Weiss, new List<Card>());
+            _discardPileDict.Add(Farbe.Gruen, new List<Card>());
+            _discardPileDict.Add(Farbe.Blau, new List<Card>());
+            _discardPileDict.Add(Farbe.Gelb, new List<Card>());
+            _discardPileDict.Add(Farbe.Rot, new List<Card>());
 
             GelberStapelImageUri = "kartenhindergrund.png";
             BlauerStapelImageUri = "kartenhindergrund.png";
@@ -50,32 +55,15 @@ namespace LostCities.ViewModel
             WeißerStapelImageUri = "kartenhindergrund.png";
         }
 
+
         private async void OnButtonPressed(string value)
         {
             try
             {
                 var answer = false;
-                var farbe = Farbe.Weiss;
-                switch (value)
-                {
-                case "0":
-                    farbe = Farbe.Weiss;
-                    break;
-                case "1":
-                    farbe = Farbe.Gruen;
-                    break;
-                case "2":
-                    farbe = Farbe.Blau;
-                    break;
-                case "3":
-                    farbe = Farbe.Gelb;
-                    break;
-                case "4":
-                    farbe = Farbe.Rot;
-                    break;
-                }
+                var farbe = (Farbe) Enum.Parse(typeof(Farbe), value);
 
-                if (_ablagestapel[farbe].Count != 0)
+                if (_discardPileDict[farbe].Count != 0)
                 {
                     answer = await App.Current.MainPage.DisplayAlert(null, "Willst Du die Karte wirklich aufnehmen?", "Ja", "Nein");
                 }
@@ -83,7 +71,7 @@ namespace LostCities.ViewModel
                 if (answer)
                 {
                     OnKarteAbheben(CreateCardEventArgs(farbe));
-                    _ablagestapel[farbe].RemoveAt(_ablagestapel[farbe].Count-1);
+                    _discardPileDict[farbe].RemoveAt(_discardPileDict[farbe].Count-1);
                     UpdateImageUri(farbe);
                 }
             }
@@ -98,23 +86,23 @@ namespace LostCities.ViewModel
             switch (card.Name)
             {
                 case "Weiss":
-                    _ablagestapel[Farbe.Weiss].Add(card);
+                    _discardPileDict[Farbe.Weiss].Add(card);
                     WeißerStapelImageUri = SetImageUri(Farbe.Weiss);
                     break;
                 case "Gruen":
-                    _ablagestapel[Farbe.Gruen].Add(card);
+                    _discardPileDict[Farbe.Gruen].Add(card);
                     GruenerStapelImageUri = SetImageUri(Farbe.Gruen);
                     break;
                 case "Blau":
-                    _ablagestapel[Farbe.Blau].Add(card);
+                    _discardPileDict[Farbe.Blau].Add(card);
                     BlauerStapelImageUri = SetImageUri(Farbe.Blau);
                     break;
                 case "Gelb":
-                    _ablagestapel[Farbe.Gelb].Add(card);
+                    _discardPileDict[Farbe.Gelb].Add(card);
                     GelberStapelImageUri = SetImageUri(Farbe.Gelb);
                     break;
                 case "Rot":
-                    _ablagestapel[Farbe.Rot].Add(card);
+                    _discardPileDict[Farbe.Rot].Add(card);
                     RoterStapelImageUri = SetImageUri(Farbe.Rot);
                     break;
                 default:
@@ -124,9 +112,9 @@ namespace LostCities.ViewModel
 
         private String SetImageUri(Farbe farbe)
         {
-            if (_ablagestapel[farbe].Count != 0)
+            if (_discardPileDict[farbe].Count != 0)
             {
-                return _ablagestapel[farbe].ElementAt(_ablagestapel[farbe].Count - 1).ImageUri;
+                return _discardPileDict[farbe].ElementAt(_discardPileDict[farbe].Count - 1).ImageUri;
             }
             else return "kartenhindergrund.png";
         }
@@ -134,7 +122,7 @@ namespace LostCities.ViewModel
         //TODO Dank neuer Erkenntnis, kann ich CardEventArgs auch weg rationalisieren und einfach eine Card übergeben
         private CardEventArgs CreateCardEventArgs(Farbe farbe)
         {
-            var card = _ablagestapel[farbe].ElementAt(_ablagestapel[farbe].Count - 1);
+            var card = _discardPileDict[farbe].ElementAt(_discardPileDict[farbe].Count - 1);
             return new CardEventArgs(card);
         }
 
