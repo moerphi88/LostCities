@@ -70,7 +70,7 @@ namespace LostCities.Service
 
             AnweisungsLabelText = "Spieler 1 ist am Zug. Bitte lege eine Karte ab oder an, indem Du eine Karte von deiner Hand anklickst";
             KarteZiehenButtonText = "Karte ziehen Binding";
-            OnButtonPressedCommand = new Command(OnButtonPressed);
+            OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
             
 
             // Eventbinding
@@ -187,7 +187,7 @@ namespace LostCities.Service
             _handSpielerEins.DisableHand();
             _handSpielerZwei.DisableHand();
             _ablagestapel.EnableDrawing();
-            ButtonIsEnabled = true;
+            KarteZiehenButtonIsEnabled = true;
         }
 
         private void GiveNewHandCard(Card card)
@@ -223,7 +223,7 @@ namespace LostCities.Service
             _handSpielerEins.EnableHand();
             _handSpielerZwei.DisableHand();
             _ablagestapel.DisableDrawing();
-            ButtonIsEnabled = false;
+            KarteZiehenButtonIsEnabled = false;
         }
 
         private void SwitchActivePlayer()
@@ -241,7 +241,7 @@ namespace LostCities.Service
                     break;
             }
             _ablagestapel.DisableDrawing();
-            ButtonIsEnabled = false;
+            KarteZiehenButtonIsEnabled = false;
         }
 
         private void IsGameOver()
