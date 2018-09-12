@@ -38,6 +38,7 @@ namespace LostCities.ViewModel
 
 
 
+
         // Muss ich wirklich die Set Methode implementieren und OnPropertyCHanged aufrufen, oder gibt es eine andere Möglichkeit den Wert zu aktualisieren?! 
         #region Properties
 
