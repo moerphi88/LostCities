@@ -21,6 +21,7 @@
                 HorizontalOptions="Start"
                 VerticalOptions="Start">
                         <!-- Hier kann ich mit Rotation die Buttons drehen -->
+                        <!--<Image x:Name="WeißerStapel" Source="{Binding WeißerStapelImageUri}"></Image>-->
                         <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
                         <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
                         <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
