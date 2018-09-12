@@ -13,6 +13,8 @@ namespace LostCities
     public partial class MainPage : ContentPage
     {
         private MainViewModel _mainViewModel;
+        private double _cardWidth = 100.0;
+        private double _cardHeight = 140.0;
 
         public MainPage()
         {
@@ -35,6 +37,41 @@ namespace LostCities
             CreateHandView(HandSpielerZwei, _mainViewModel.HandVM2);
         }
 
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+            //Hier kommen die Werte abhängig von landscape und portrait rein. Wie kann ich das ändern bzw. die Werte normieren? 1288 * 776
+            var screenWidth = width;
+            var screenHeight = height;
+
+            _cardWidth = screenWidth / 3 / 8;
+            _cardHeight = _cardWidth * 1.4;
+
+            var stackWidth = _cardWidth * 8 + 20; //cardWidth * no. Cards * Padding left and right
+            var handStackHeight = _cardHeight;
+            var discardStackHeight = _cardWidth;
+            var pointStackHeight = _cardHeight + 9 * _cardHeight / 10;
+
+            UpdateSize(HandSpielerEins);
+            UpdateSize(HandSpielerZwei);
+        }
+
+        private void UpdateSize(StackLayout stack)
+        {
+            foreach(var child in stack.Children)
+            {
+                Image image = (Image)child;
+
+                image.WidthRequest = _cardWidth;
+                child.HeightRequest = _cardHeight;
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
+
         // Creates a button for each handcard on a players hand and adds it to the stacklayout
         private void CreateHandView(StackLayout layout, HandViewModel handViewModel)
         {
@@ -48,8 +85,8 @@ namespace LostCities
                 img.SetBinding(IsEnabledProperty, "IsEnabled");
                 img.SetBinding(IsVisibleProperty, "IsVisible");
                 img.SetBinding(Image.SourceProperty, "ImageUri");
-                img.WidthRequest = 100;
-                img.HeightRequest = 140;
+                img.WidthRequest = _cardWidth;
+                img.HeightRequest = _cardHeight;
                 //Creating TapGestureRecognizers https://www.c-sharpcorner.com/UploadFile/e04e9a/xamarin-forms-image-button-recipe/   
                 var tapImage = new TapGestureRecognizer
                 {

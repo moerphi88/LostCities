@@ -12,9 +12,7 @@
                     <Label Text="DrawPile" FontSize="Large"></Label>
                     <Image x:Name="KarteZiehenButton" Source="kartenhindergrund.png" IsEnabled="{Binding KarteZiehenButtonIsEnabled}">
                         <Image.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                Command="{Binding OnKarteZiehenButtonPressedCommand}"
-                                />
+                            <TapGestureRecognizer Command="{Binding OnKarteZiehenButtonPressedCommand}"></TapGestureRecognizer>
                         </Image.GestureRecognizers>
                     </Image>
                 </StackLayout>
@@ -72,7 +70,7 @@
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
-            <StackLayout x:Name="handStack" Orientation="Horizontal">
+            <StackLayout x:Name="handStack" Orientation="Vertical" Padding="10">
                     <StackLayout>
                         <Label x:Name="HandEinsTitleLabel" Text="{Binding HandEinsTitleLabelText}" FontSize="Large"></Label>
                         <StackLayout 
@@ -80,18 +78,20 @@
                             Orientation="Horizontal"
                             Padding="10"
                             HorizontalOptions="Start"
-                            VerticalOptions="Start">
+                            VerticalOptions="Start"
+                            BackgroundColor="Aqua">
                         </StackLayout>
                     </StackLayout>
                     <StackLayout>
                         <Label  x:Name="HandZweiTitleLabel" Text="{Binding HandZweiTitleLabelText}" FontSize="Large"></Label>
-                        <StackLayout 
-                x:Name="HandSpielerZwei"
-                Orientation="Horizontal"
-                Padding="10"
-                HorizontalOptions="Start"
-                VerticalOptions="Start">
-                        </StackLayout>
+                    <StackLayout 
+                            x:Name="HandSpielerZwei"
+                            Orientation="Horizontal"
+                            Padding="10"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            BackgroundColor="DarkOrange">   
+                    </StackLayout>
                     </StackLayout>
             </StackLayout>            
         </StackLayout>
