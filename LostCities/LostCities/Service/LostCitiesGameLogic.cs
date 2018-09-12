@@ -21,6 +21,10 @@ namespace LostCities.Service
         private bool _gameIsOver;
         private int _activePlayer = 0;
 
+        private const int HandCards = 8;
+        private const string PlayerNeedsToPlayACard = "Spieler {0}. Bitte spiele eine Karte, indem Du eine Karte von deiner Hand anklickst.";
+        private const string PlayerNeedsToDrawACard = "Spieler {0}. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel.";
+
         private String _anweisungsText;
         private bool _karteZiehenButtonIsEnabeld;
 
@@ -58,9 +62,7 @@ namespace LostCities.Service
             DrawHandCard();
         }
 
-        private readonly int HandCards = 5;
-        private const string PlayerNeedsToPlayACard = "Spieler {0}. Bitte spiele eine Karte, indem Du eine Karte von deiner Hand anklickst.";
-        private const string PlayerNeedsToDrawACard = "Spieler {0}. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel.";
+
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {

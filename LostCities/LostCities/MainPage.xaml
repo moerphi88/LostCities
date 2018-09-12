@@ -10,7 +10,13 @@
             <StackLayout x:Name="upperStack" Orientation="Horizontal">
                 <StackLayout>
                     <Label Text="DrawPile" FontSize="Large"></Label>
-                    <Button x:Name="KarteZiehenButton" Text="{Binding KarteZiehenButtonText}" Command="{Binding OnKarteZiehenButtonPressedCommand}" IsEnabled="{Binding KarteZiehenButtonIsEnabled}" ></Button>
+                    <Image x:Name="KarteZiehenButton" Source="kartenhindergrund.png" IsEnabled="{Binding KarteZiehenButtonIsEnabled}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding OnKarteZiehenButtonPressedCommand}"
+                                />
+                        </Image.GestureRecognizers>
+                    </Image>
                 </StackLayout>
                 <StackLayout>
                     <Label x:Name="DiscardPileTitleLabel" Text="{Binding DiscardPileTitleLabelText}" FontSize="Large"></Label>
@@ -72,8 +78,7 @@
                         <StackLayout 
                             x:Name="HandSpielerEins"
                             Orientation="Horizontal"
-                            Padding="-10"
-                            Margin="20"
+                            Padding="10"
                             HorizontalOptions="Start"
                             VerticalOptions="Start">
                         </StackLayout>

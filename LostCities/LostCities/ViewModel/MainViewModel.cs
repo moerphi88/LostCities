@@ -33,7 +33,7 @@ namespace LostCities.ViewModel
             DiscardPileTitleLabelText = "Ablagestapel";
             AnlegestapelTitleLabelText = "Anlegestapel";
             HandEinsTitleLabelText = "Hand Spieler 1";
-            HandZweiTitleLabelText = "Hand Spieler 2";            
+            HandZweiTitleLabelText = "Hand Spieler 2";
         }
 
 
