@@ -47,17 +47,21 @@ namespace LostCities
                 };
                 img.SetBinding(IsEnabledProperty, "IsEnabled");
                 img.SetBinding(IsVisibleProperty, "IsVisible");
-                //img.SetBinding(, "ImageUri");
-                img.Source = handCard.ImageUri;               
+                img.SetBinding(Image.SourceProperty, "ImageUri");
 
                 img.WidthRequest = 100;
-                img.HeightRequest = 140 ;
+                img.HeightRequest = 140;
                 //Creating TapGestureRecognizers https://www.c-sharpcorner.com/UploadFile/e04e9a/xamarin-forms-image-button-recipe/   
-                var tapImage = new TapGestureRecognizer();
-                //Binding events    
-                tapImage.Tapped += handViewModel.tapImage_Tapped;
+                var tapImage = new TapGestureRecognizer
+                {
+                    Command = handViewModel.OnButtonPressedCommand,
+                    CommandParameter = i.ToString(),
+                    //BindingContext = handCard
+                };
+                //tapImage.SetBinding(IsEnabledProperty, "IsEnabled");
                 //Associating tap events to the image buttons    
                 img.GestureRecognizers.Add(tapImage);
+                i++;
                 layout.Children.Add(img);
 
                 //var btn = new Button
@@ -70,7 +74,7 @@ namespace LostCities
                 //btn.Command = handViewModel.OnButtonPressedCommand;
                 //btn.CommandParameter = i.ToString();
                 //btn.WidthRequest = 50;
-                //btn.HeightRequest = 70 ;
+                //btn.HeightRequest = 70;
                 //i++;
                 //// <Button WidthRequest="50" HeightRequest="70" IsVisible="{Binding IsVisibleDritteHandKarte}" Image="{Binding DritteHandKarteImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
                 //layout.Children.Add(btn);

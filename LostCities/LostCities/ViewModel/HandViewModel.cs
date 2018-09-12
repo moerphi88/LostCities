@@ -17,12 +17,6 @@ namespace LostCities.ViewModel
         public delegate void CardEventHandler(object sender, CardEventArgs e);
         public event CardEventHandler PlayCard;
 
-        public void tapImage_Tapped(object sender, EventArgs e)
-        {
-            e.
-            OnButtonPressed("1");
-        }
-
         public HandViewModel(INavigation navigation) : base(navigation)
         {
             OnButtonPressedCommand = new Command<string>(OnButtonPressed);
