@@ -4,25 +4,118 @@
              xmlns:local="clr-namespace:LostCities"
              xmlns:viewModel="clr-namespace:LostCities.ViewModel;assembly=LostCities"
              x:Class="LostCities.MainPage">
-    <RelativeLayout>
-        <BoxView x:Name="Box1"
-                 BackgroundColor="Black"
-                 WidthRequest="640"
-                 HeightRequest="112"
-                 RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=.15, Constant=0}"
-                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=0}"
-                 RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=.8, Constant=0}"
-                 />
-        <BoxView x:Name="Box2"
-                 BackgroundColor="Red"
-                 WidthRequest="640"
-                 HeightRequest="220"         
-                 RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,ElementName=Box1,Property=Y,Factor=1,Constant=20}"
-                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView,ElementName=Box1,Property=X,Factor=1,Constant=20}"
-                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=.5,Constant=0}"
-                 RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=.5,Constant=0}" />
-        <BoxView x:Name="Box3" BackgroundColor="Green" WidthRequest="640" HeightRequest="80"></BoxView>
-        <BoxView x:Name="Box4" BackgroundColor="Blue" WidthRequest="640" HeightRequest="220"></BoxView>
-        <BoxView x:Name="Box5" BackgroundColor="Yellow" WidthRequest="640" HeightRequest="112"></BoxView>        
-    </RelativeLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackLayout    x:Name="HandSpielerEins"
+                            Orientation="Horizontal"
+                            Padding = "10 10 10 10"
+                            Spacing="5"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="Start"
+                            BackgroundColor="Blue"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            Rotation="180">
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+        </StackLayout>
+        <StackLayout    x:Name="HandSpielerZwei"
+                            Orientation="Horizontal"
+                            Padding = "10"
+                            Spacing="5"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="End"
+                            BackgroundColor="DarkOrange"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2">
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+            <Image Source="kartenhindergrund.png"></Image>
+        </StackLayout>
+        <StackLayout x:Name="DiscardPile"
+                BackgroundColor="AntiqueWhite"
+                Orientation="Horizontal"
+                Padding="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Spacing="20"
+                Grid.Column="1"
+                Grid.Row="1"
+                Grid.ColumnSpan="2">
+            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
+            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
+            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
+            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
+        </StackLayout>
+        <StackLayout    x:Name="Anlegestapel"
+                            Orientation="Horizontal"
+                            Padding="10"
+                            Spacing="20"
+                            BackgroundColor="Green"
+                            HorizontalOptions="Center"
+                            VerticalOptions="End"
+                            Rotation="180"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2">
+            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
+            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
+            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
+            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
+        </StackLayout>
+        <StackLayout    x:Name="Anlegestapel2"
+                            Orientation="Horizontal"
+                            Padding="10"
+                            Spacing="20"
+                            BackgroundColor="Green"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Start"
+                            Rotation="0"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2">
+            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
+            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
+            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
+            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
+        </StackLayout>
+        <BoxView Grid.Row="0" Grid.Column="0" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="0" Grid.Column="1" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="0" Grid.Column="2" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="0" Grid.Column="3" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="1" Grid.Column="2" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="1" Grid.Column="3" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="2" Grid.Column="0" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="2" Grid.Column="1" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="2" Grid.Column="2" BackgroundColor="Accent" Opacity=".1"></BoxView>
+        <BoxView Grid.Row="2" Grid.Column="3" BackgroundColor="Accent" Opacity=".1"></BoxView>
+    </Grid>
 </ContentPage>
