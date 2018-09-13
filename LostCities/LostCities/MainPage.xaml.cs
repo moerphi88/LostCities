@@ -41,7 +41,6 @@ namespace LostCities
         private void btnPopupButton_Clicked(object sender, EventArgs e)
         {
             popupLoadingView.IsVisible = true;
-            activityIndicator.IsRunning = true;
         }
 
         protected override void OnSizeAllocated(double width, double height)
