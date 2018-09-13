@@ -56,39 +56,37 @@
                     <TapGestureRecognizer Command="{Binding OnKarteZiehenButtonPressedCommand}"></TapGestureRecognizer>
                 </Image.GestureRecognizers>
             </Image>
-            <StackLayout x:Name="DiscardPile"
-                Orientation="Horizontal"
-                Spacing="35">
+            <StackLayout x:Name="DiscardPile" Orientation="Horizontal"   Spacing="35">
+                
                 <Image Rotation="90" Source="{Binding WeißerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="0"></TapGestureRecognizer>
                     </Image.GestureRecognizers>
                 </Image>
+                
                 <Image Rotation="90" Source="{Binding GruenerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="1"></TapGestureRecognizer>
                     </Image.GestureRecognizers>
                 </Image>
+                
                 <Image Rotation="90" Source="{Binding BlauerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="2"></TapGestureRecognizer>
                     </Image.GestureRecognizers>
                 </Image>
+                
                 <Image Rotation="90" Source="{Binding GelberStapelImageUri}" IsEnabled="{Binding IsEnabled}">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="3"></TapGestureRecognizer>
                     </Image.GestureRecognizers>
                 </Image>
+                
                 <Image Rotation="90" Source="{Binding RoterStapelImageUri}" IsEnabled="{Binding IsEnabled}">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="4"></TapGestureRecognizer>
                     </Image.GestureRecognizers>
                 </Image>
-                <!--<Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>-->
         </StackLayout>
         </StackLayout>
         <StackLayout    x:Name="Anlegestapel"
