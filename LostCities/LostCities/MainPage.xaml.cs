@@ -23,18 +23,18 @@ namespace LostCities
             _mainViewModel = new MainViewModel(this.Navigation);
             BindingContext = _mainViewModel;
 
-            //DiscardPile.BindingContext = _mainViewModel.DiscardPileVM;
-            //Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
-            //Anlegestapel2.BindingContext = _mainViewModel.AnlegeStapel2VM;
+            DiscardPile.BindingContext = _mainViewModel.DiscardPileVM;
+            Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
+            Anlegestapel2.BindingContext = _mainViewModel.AnlegeStapel2VM;
 
             //SpielAnweisung.BindingContext = _mainViewModel.Lcgl;
-            //KarteZiehenButton.BindingContext = _mainViewModel.Lcgl;
+            KarteZiehenButton.BindingContext = _mainViewModel.Lcgl;
 
-            //HandSpielerEins.BindingContext = _mainViewModel.HandVM;
-            //CreateHandView(HandSpielerEins, _mainViewModel.HandVM);
+            HandSpielerEins.BindingContext = _mainViewModel.HandVM;
+            CreateHandView(HandSpielerEins, _mainViewModel.HandVM);
 
-            //HandSpielerZwei.BindingContext = _mainViewModel.HandVM2;           
-            //CreateHandView(HandSpielerZwei, _mainViewModel.HandVM2);
+            HandSpielerZwei.BindingContext = _mainViewModel.HandVM2;
+            CreateHandView(HandSpielerZwei, _mainViewModel.HandVM2);
         }
 
         protected override void OnSizeAllocated(double width, double height)
@@ -45,7 +45,7 @@ namespace LostCities
             var screenHeight = height;
             var orientation = width > height ? "landscape" : "portrait";
 
-            _cardWidth = orientation == "landscape" ? (screenWidth / 2 / 8) : (screenWidth / 8);
+            _cardWidth = ((screenWidth / 2) - 55) / 8;//orientation == "landscape" ? ((screenWidth) / 2 / 8) : ((screenWidth) / 8);
             _cardHeight = _cardWidth * 1.4;
 
             var stackWidth = _cardWidth * 8 + 20; //cardWidth * no. Cards * Padding left and right
@@ -53,23 +53,12 @@ namespace LostCities
             var discardStackHeight = _cardWidth;
             var pointStackHeight = _cardHeight + 9 * _cardHeight / 10;
 
-            //UpdateSize(HandSpielerEins);
-            //UpdateSize(HandSpielerZwei);
+            UpdateSize(HandSpielerEins);
+            UpdateSize(HandSpielerZwei);
+            UpdateSize(DiscardPile);
 
-            //Box1.WidthRequest = stackWidth;
-            //Box1.HeightRequest = handStackHeight;
-
-            //Box2.WidthRequest = stackWidth;
-            //Box2.HeightRequest = pointStackHeight;
-
-            //Box3.WidthRequest = stackWidth;
-            //Box3.HeightRequest = _cardWidth;
-
-            //Box4.WidthRequest = stackWidth;
-            //Box4.HeightRequest = pointStackHeight;
-
-            //Box5.WidthRequest = stackWidth;
-            //Box5.HeightRequest = handStackHeight;
+            KarteZiehenButton.WidthRequest = _cardWidth;
+            KarteZiehenButton.HeightRequest = _cardHeight;
         }
 
         private void UpdateSize(StackLayout stack)
@@ -79,7 +68,7 @@ namespace LostCities
                 Image image = (Image)child;
 
                 image.WidthRequest = _cardWidth;
-                child.HeightRequest = _cardHeight;
+                image.HeightRequest = _cardHeight;
             }
         }
 

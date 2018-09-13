@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:LostCities"
              xmlns:viewModel="clr-namespace:LostCities.ViewModel;assembly=LostCities"
-             x:Class="LostCities.MainPage">
-    <Grid>
+             x:Class="LostCities.MainPage"
+             BackgroundColor="LightSeaGreen">
+    <Grid
+        RowSpacing="0" ColumnSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -17,65 +19,81 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackLayout    x:Name="HandSpielerEins"
-                            Orientation="Horizontal"
-                            Padding = "10 10 10 10"
-                            Spacing="5"
-                            HorizontalOptions="CenterAndExpand"
-                            VerticalOptions="Start"
-                            BackgroundColor="Blue"
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2"
-                            Rotation="180">
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
+                        BackgroundColor="Brown"
+                        Orientation="Horizontal"
+                        Padding = "10 10 0 10"
+                        Spacing="5"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="Start"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Rotation="180">
         </StackLayout>
         <StackLayout    x:Name="HandSpielerZwei"
-                            Orientation="Horizontal"
-                            Padding = "10"
-                            Spacing="5"
-                            HorizontalOptions="CenterAndExpand"
-                            VerticalOptions="End"
-                            BackgroundColor="DarkOrange"
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2">
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
-            <Image Source="kartenhindergrund.png"></Image>
+                        BackgroundColor="Brown"
+                        Orientation="Horizontal"
+                        Padding = "10 10 0 10"
+                        Spacing="5"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="End"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2">
         </StackLayout>
-        <StackLayout x:Name="DiscardPile"
-                BackgroundColor="AntiqueWhite"
+        <StackLayout x:Name="MiddleStack"
                 Orientation="Horizontal"
-                Padding="10"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Spacing="20"
                 Grid.Column="1"
                 Grid.Row="1"
-                Grid.ColumnSpan="2">
-            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+                Grid.ColumnSpan="2"
+                Spacing="50"
+                Padding="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+            <Image Rotation="0" x:Name="KarteZiehenButton" Source="kartenhindergrund.png" IsEnabled="{Binding KarteZiehenButtonIsEnabled}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnKarteZiehenButtonPressedCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <StackLayout x:Name="DiscardPile"
+                Orientation="Horizontal"
+                Spacing="35">
+                <Image Rotation="90" Source="{Binding WeißerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="0"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Rotation="90" Source="{Binding GruenerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="1"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Rotation="90" Source="{Binding BlauerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="2"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Rotation="90" Source="{Binding GelberStapelImageUri}" IsEnabled="{Binding IsEnabled}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="3"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Rotation="90" Source="{Binding RoterStapelImageUri}" IsEnabled="{Binding IsEnabled}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="4"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <!--<Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
             <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
             <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
             <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
+            <Button Rotation="90" WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>-->
+        </StackLayout>
         </StackLayout>
         <StackLayout    x:Name="Anlegestapel"
                             Orientation="Horizontal"
                             Padding="10"
                             Spacing="20"
-                            BackgroundColor="Green"
                             HorizontalOptions="Center"
                             VerticalOptions="End"
                             Rotation="180"
@@ -92,7 +110,6 @@
                             Orientation="Horizontal"
                             Padding="10"
                             Spacing="20"
-                            BackgroundColor="Green"
                             HorizontalOptions="Center"
                             VerticalOptions="Start"
                             Rotation="0"
@@ -105,17 +122,5 @@
             <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
             <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
         </StackLayout>
-        <BoxView Grid.Row="0" Grid.Column="0" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="0" Grid.Column="1" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="0" Grid.Column="2" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="0" Grid.Column="3" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="1" Grid.Column="2" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="1" Grid.Column="3" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="2" Grid.Column="0" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="2" Grid.Column="1" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="2" Grid.Column="2" BackgroundColor="Accent" Opacity=".1"></BoxView>
-        <BoxView Grid.Row="2" Grid.Column="3" BackgroundColor="Accent" Opacity=".1"></BoxView>
     </Grid>
 </ContentPage>
