@@ -37,6 +37,13 @@ namespace LostCities
             CreateHandView(HandSpielerZwei, _mainViewModel.HandVM2);
         }
 
+        //https://dzone.com/articles/xamarinforms-custom-popup
+        private void btnPopupButton_Clicked(object sender, EventArgs e)
+        {
+            popupLoadingView.IsVisible = true;
+            activityIndicator.IsRunning = true;
+        }
+
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
@@ -72,10 +79,7 @@ namespace LostCities
             }
         }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-        }
+        
 
         // Creates a button for each handcard on a players hand and adds it to the stacklayout
         private void CreateHandView(StackLayout layout, HandViewModel handViewModel)
