@@ -4,96 +4,25 @@
              xmlns:local="clr-namespace:LostCities"
              xmlns:viewModel="clr-namespace:LostCities.ViewModel;assembly=LostCities"
              x:Class="LostCities.MainPage">
-    <ScrollView>
-        <StackLayout>
-            <Label x:Name="SpielAnweisung" Text="{Binding AnweisungsLabelText}" FontSize="Small"></Label>
-            <StackLayout x:Name="upperStack" Orientation="Horizontal">
-                <StackLayout>
-                    <Label Text="DrawPile" FontSize="Large"></Label>
-                    <Image x:Name="KarteZiehenButton" Source="kartenhindergrund.png" IsEnabled="{Binding KarteZiehenButtonIsEnabled}">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OnKarteZiehenButtonPressedCommand}"></TapGestureRecognizer>
-                        </Image.GestureRecognizers>
-                    </Image>
-                </StackLayout>
-                <StackLayout>
-                    <Label x:Name="DiscardPileTitleLabel" Text="{Binding DiscardPileTitleLabelText}" FontSize="Large"></Label>
-                    <StackLayout 
-                x:Name="DiscardPile"
-                Orientation="Horizontal"
-                Padding="10"
-                HorizontalOptions="Start"
-                VerticalOptions="Start">
-                        <!-- Hier kann ich mit Rotation die Buttons drehen -->
-                        <!--<Image x:Name="WeißerStapel" Source="{Binding WeißerStapelImageUri}"></Image>-->
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
-                    </StackLayout>
-                </StackLayout>
-            </StackLayout>
-            <StackLayout x:Name="pointStack" Orientation="Horizontal">
-                <StackLayout>
-                    <!--<Label x:Name="AnlegestapelTitleLabel" Text="{Binding AnlegestapelTitleLabelText}" FontSize="Large"></Label>-->
-                    <StackLayout 
-                x:Name="Anlegestapel"
-                Orientation="Horizontal"
-                Padding="10"
-                HorizontalOptions="Start"
-                VerticalOptions="Start">
-                        <!-- Hier kann ich mit Rotation die Buttons drehen -->
-                        <!-- <Button WidthRequest="50" HeightRequest="70"  Image="{Binding ShownCardImageUri}" IsEnabled="False"/> -->
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
-                    </StackLayout>
-                </StackLayout>
-                <StackLayout>
-                    <!--<Label x:Name="AnlegestapelTitleLabel2" Text="{Binding AnlegestapelTitleLabelText}" FontSize="Large"></Label>-->
-                    <StackLayout 
-                x:Name="Anlegestapel2"
-                Orientation="Horizontal"
-                Padding="10"
-                HorizontalOptions="Start"
-                VerticalOptions="Start">
-                        <!-- Hier kann ich mit Rotation die Buttons drehen -->
-                        <!-- <Button WidthRequest="50" HeightRequest="70"  Image="{Binding ShownCardImageUri}" IsEnabled="False"/> -->
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-                        <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
-                    </StackLayout>
-                </StackLayout>
-            </StackLayout>
-            <StackLayout x:Name="handStack" Orientation="Vertical" Padding="10">
-                    <StackLayout>
-                        <Label x:Name="HandEinsTitleLabel" Text="{Binding HandEinsTitleLabelText}" FontSize="Large"></Label>
-                        <StackLayout 
-                            x:Name="HandSpielerEins"
-                            Orientation="Horizontal"
-                            Padding="10"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Start"
-                            BackgroundColor="Aqua">
-                        </StackLayout>
-                    </StackLayout>
-                    <StackLayout>
-                        <Label  x:Name="HandZweiTitleLabel" Text="{Binding HandZweiTitleLabelText}" FontSize="Large"></Label>
-                    <StackLayout 
-                            x:Name="HandSpielerZwei"
-                            Orientation="Horizontal"
-                            Padding="10"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Start"
-                            BackgroundColor="DarkOrange">   
-                    </StackLayout>
-                    </StackLayout>
-            </StackLayout>            
-        </StackLayout>
-    </ScrollView>
+    <RelativeLayout>
+        <BoxView x:Name="Box1"
+                 BackgroundColor="Black"
+                 WidthRequest="640"
+                 HeightRequest="112"
+                 RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=.15, Constant=0}"
+                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=0}"
+                 RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=.8, Constant=0}"
+                 />
+        <BoxView x:Name="Box2"
+                 BackgroundColor="Red"
+                 WidthRequest="640"
+                 HeightRequest="220"         
+                 RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,ElementName=Box1,Property=Y,Factor=1,Constant=20}"
+                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView,ElementName=Box1,Property=X,Factor=1,Constant=20}"
+                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=.5,Constant=0}"
+                 RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=.5,Constant=0}" />
+        <BoxView x:Name="Box3" BackgroundColor="Green" WidthRequest="640" HeightRequest="80"></BoxView>
+        <BoxView x:Name="Box4" BackgroundColor="Blue" WidthRequest="640" HeightRequest="220"></BoxView>
+        <BoxView x:Name="Box5" BackgroundColor="Yellow" WidthRequest="640" HeightRequest="112"></BoxView>        
+    </RelativeLayout>
 </ContentPage>
