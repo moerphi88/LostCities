@@ -4,7 +4,8 @@
              xmlns:local="clr-namespace:LostCities"
              xmlns:viewModel="clr-namespace:LostCities.ViewModel;assembly=LostCities"
              x:Class="LostCities.MainPage"
-             BackgroundColor="LightSeaGreen">
+             BackgroundColor="LightSeaGreen"
+             BackgroundImage="lostcitiesbackground.jpg">
     <Grid
         RowSpacing="0" ColumnSpacing="0">
         <Grid.RowDefinitions>
