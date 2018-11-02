@@ -104,7 +104,7 @@
                 <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
                 <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
             </StackLayout>
-            <StackLayout    x:Name="Anlegestapel2"
+                <StackLayout    x:Name="Anlegestapel2"
                             Orientation="Horizontal"
                             Padding="10"
                             Spacing="20"
@@ -114,13 +114,18 @@
                             Grid.Row="2"
                             Grid.Column="1"
                             Grid.ColumnSpan="2">
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-                <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
-            </StackLayout>
-        </Grid>
+                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
+                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
+                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
+                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
+                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
+                </StackLayout>
+
+                <AbsoluteLayout  Grid.Column="0" Grid.Row="1" HeightRequest="200" WidthRequest="100">
+                    <Image Source="blauacht.png" AbsoluteLayout.LayoutBounds=".1,.1,1,1" AbsoluteLayout.LayoutFlags="All"></Image>
+                    <Image Source="blauneun.png"  AbsoluteLayout.LayoutBounds=".5,.5,1,1" AbsoluteLayout.LayoutFlags="All"></Image>
+                </AbsoluteLayout>
+            </Grid>
 
         <!--Popup Area-->
         <ContentView x:Name="popupLoadingView"  Padding="10, 0" IsVisible="true" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
@@ -128,13 +133,12 @@
                 <StackLayout Orientation="Vertical" HeightRequest="150" WidthRequest="200" BackgroundColor="White">
                     <Label x:Name="lblTitleText" LineBreakMode="CharacterWrap"  FontSize="Large" TextColor="Black" VerticalOptions="Start" HorizontalOptions="Start" VerticalTextAlignment="Center" Text="Spieler 1 ist am Zug."></Label>
                     <Label x:Name="lblLoadingText" FontSize="Small" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Start" VerticalTextAlignment="Center" Text="Loading..."></Label>
-                    <Button Margin="0" Padding="0"  Text="Karte ablegen" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start"></Button>
+                    <Button Text="Karte ablegen" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start"></Button>
                     <Button Text="Karte ablegen" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start"></Button>
                     <Button Text="Cacel" BackgroundColor="Transparent" TextColor="Violet" HorizontalOptions="Start"></Button>
                 </StackLayout>
             </StackLayout>
         </ContentView>
-        
-    </AbsoluteLayout>
-</ContentPage.Content>
+            </AbsoluteLayout>
+    </ContentPage.Content>
 </ContentPage>
