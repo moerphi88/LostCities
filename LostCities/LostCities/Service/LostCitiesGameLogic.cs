@@ -77,7 +77,9 @@ namespace LostCities.Service
             AnweisungsLabelText = String.Format(PlayerNeedsToPlayACard, _activePlayer == 0 ? "1" : "2");
             KarteZiehenButtonText = "Karte ziehen Binding";
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
-                                  
+
+            var z = _cardDeck.GetXCards(23); //DO not check in!!! Used for testing purposes
+            
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
 
@@ -148,6 +150,10 @@ namespace LostCities.Service
                         CancelCardTransfer(e.Card);
                     }
                     IsGameOver();
+                    if (_gameIsOver)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Das Spiel ist zu Ende", ShowWinnerWithPoints(), "Ok");
+                    }
                 }
             }
             catch (Exception ex)
@@ -155,6 +161,22 @@ namespace LostCities.Service
                 Debug.WriteLine("LostCitiesGameLogic. OnKarteAblegen. " + ex.Message);
             }
             Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
+        }
+
+        private String ShowWinnerWithPoints()
+        {
+            var pointsPlayer1 = _anlegestapel.CountPoints();
+            var pointsPlayer2 = _anlegestapel2.CountPoints();
+            if (pointsPlayer1 > pointsPlayer2)
+            {
+                return $"Herzlich Glückwunsch, Spieler 1 du hast gewonnen mit {pointsPlayer1} Punkten. Spieler 2 hat {pointsPlayer2} Punkte. Bitte startet die App neu, um ein neues Spiel zu beginnen";
+            } else if (pointsPlayer1 < pointsPlayer2)
+            {
+                return $"Herzlich Glückwunsch, Spieler 2 du hast gewonnen mit {pointsPlayer2} Punkten. Spieler 1 hat {pointsPlayer1} Punkte. Bitte startet die App neu, um ein neues Spiel zu beginnen ";
+            } else
+            {
+                return $"Unentschieden. Herzlich Glückwunsch. Spieler 1 hat {pointsPlayer1} Punkte und Spieler 2 {pointsPlayer2} Punkte. Bitte startet die App neu, um ein neues Spiel zu beginnen";
+            }
         }
 
         private IStapel GetActiveAnlegestapel()
