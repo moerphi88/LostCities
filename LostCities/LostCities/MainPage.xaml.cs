@@ -28,6 +28,9 @@ namespace LostCities
             Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
             Anlegestapel2.BindingContext = _mainViewModel.AnlegeStapel2VM;
 
+            _mainViewModel.AnlegeStapelVM.AddedCardToStack += OnAddedCardToStack;
+            _mainViewModel.AnlegeStapel2VM.AddedCardToStack += OnAddedCardToStack;
+
             //SpielAnweisung.BindingContext = _mainViewModel.Lcgl;
             KarteZiehenButton.BindingContext = _mainViewModel.Lcgl;
 
@@ -73,7 +76,16 @@ namespace LostCities
             }
         }
 
-        
+        private void OnAddedCardToStack(object sender, EventArgs e)
+        {
+            //Hier muss das UI neu aufgebaut werden.
+            CreateAnlegeStapelView();
+        }
+
+        private void CreateAnlegeStapelView() { 
+
+        }
+
 
         // Creates a button for each handcard on a players hand and adds it to the stacklayout
         private void CreateHandView(StackLayout layout, HandViewModel handViewModel)

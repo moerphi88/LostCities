@@ -23,6 +23,8 @@ namespace LostCities.ViewModel
         //TODO Hier könnte ich ein dict einführen. Key wäre die Farbe. und value eine Liste von Cards. Nur die oberste würde angezeigt werden.
         private Dictionary<Farbe, List<Card>> _stapel;
 
+        public event EventHandler AddedCardToStack;
+
         public AnlegestapelViewModel(INavigation navigation) : base(navigation)
         {
             _stapel = new Dictionary<Farbe, List<Card>>
@@ -70,6 +72,8 @@ namespace LostCities.ViewModel
                 default:
                     break;
             }
+
+            AddedCardToStack?.Invoke(this,null);
         }
 
         public List<Card> GetTopCards()
