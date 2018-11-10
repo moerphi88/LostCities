@@ -14,8 +14,8 @@ namespace LostCities
     public partial class MainPage : ContentPage
     {
         private MainViewModel _mainViewModel;
-        private double _cardWidth = 100.0;
-        private double _cardHeight = 140.0;
+        private double _cardWidth = 75.0;
+        private double _cardHeight = 105.0;
 
         public MainPage()
         {
