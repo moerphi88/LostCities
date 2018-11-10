@@ -78,7 +78,6 @@ namespace LostCities.Service
             KarteZiehenButtonText = "Karte ziehen Binding";
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
 
-            var z = _cardDeck.GetXCards(23); //DO not check in!!! Used for testing purposes
             
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
