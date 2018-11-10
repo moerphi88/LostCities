@@ -78,12 +78,34 @@ namespace LostCities
 
         private void OnAddedCardToStack(object sender, EventArgs e)
         {
-            //Hier muss das UI neu aufgebaut werden.
             CreateAnlegeStapelView();
         }
 
-        private void CreateAnlegeStapelView() { 
+        private void CreateAnlegeStapelView()
+        {
+            var vm = (AnlegestapelViewModel)_mainViewModel.AnlegeStapelVM;
+            AddCardsToStapelView(AbsoluteLayoutName, (AnlegestapelViewModel)_mainViewModel.AnlegeStapelVM);
+        }
 
+        private void AddCardsToStapelView(AbsoluteLayout layout, AnlegestapelViewModel vm)
+        {
+            //https://docs.microsoft.com/de-de/xamarin/xamarin-forms/user-interface/layouts/absolute-layout 
+
+            double horizontalExtraSpacing = _cardWidth + 50;
+
+            var horizontalOffsetCnt = 0;
+            foreach (KeyValuePair<Farbe, List<Card>> entry in vm.Stapel)
+            {
+                var verticalOffsetCnt = 0;
+                foreach (var c in entry.Value)
+                {
+                    var image = new Image { Source = c.ImageUri };
+                    AbsoluteLayout.SetLayoutBounds(image, new Rectangle(horizontalExtraSpacing + (horizontalOffsetCnt * _cardWidth) + 5, verticalOffsetCnt * .17 * _cardHeight, _cardWidth, _cardHeight));
+                    layout.Children.Add(image);
+                    verticalOffsetCnt++;
+                }
+                horizontalOffsetCnt++;
+            }
         }
 
 
