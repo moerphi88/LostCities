@@ -31,6 +31,9 @@ namespace LostCities
 
             KarteZiehenButton.BindingContext = _mainViewModel.Lcgl;
 
+            HideHandButton1.BindingContext = _mainViewModel.HandVM;
+            HideHandButton2.BindingContext = _mainViewModel.HandVM2;
+
             HandSpielerEins.BindingContext = _mainViewModel.HandVM;
             CreateHandView(HandSpielerEins, _mainViewModel.HandVM);
 

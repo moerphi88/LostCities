@@ -96,6 +96,8 @@
                                  Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2">
                 </AbsoluteLayout>
             </Grid>
+            <Button x:Name="HideHandButton1" Command="{Binding OnHideHandCommand}" Text="Hide Hand" Rotation="180" AbsoluteLayout.LayoutBounds="0,0,100,50" AbsoluteLayout.LayoutFlags="PositionProportional"></Button>
+            <Button x:Name="HideHandButton2" Command="{Binding OnHideHandCommand}" Text="Hide Hand" AbsoluteLayout.LayoutBounds="1,1,100,50" AbsoluteLayout.LayoutFlags="PositionProportional"></Button>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
