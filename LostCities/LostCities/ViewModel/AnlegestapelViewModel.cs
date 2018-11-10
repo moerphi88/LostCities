@@ -21,13 +21,14 @@ namespace LostCities.ViewModel
         private string _weißerStapelImageUri;
 
         //TODO Hier könnte ich ein dict einführen. Key wäre die Farbe. und value eine Liste von Cards. Nur die oberste würde angezeigt werden.
-        private Dictionary<Farbe, List<Card>> _stapel;
+
+        public Dictionary<Farbe, List<Card>> Stapel { get; set; }
 
         public event EventHandler AddedCardToStack;
 
         public AnlegestapelViewModel(INavigation navigation) : base(navigation)
         {
-            _stapel = new Dictionary<Farbe, List<Card>>
+            Stapel = new Dictionary<Farbe, List<Card>>
             {
                 { Farbe.Weiss, new List<Card>() },
                 { Farbe.Gruen, new List<Card>() },
@@ -50,23 +51,23 @@ namespace LostCities.ViewModel
             switch (card.Name)
             {
                 case "Weiss":
-                    _stapel[Farbe.Weiss].Add(card);
+                    Stapel[Farbe.Weiss].Add(card);
                     WeißerStapelImageUri = SetImageUri(Farbe.Weiss);
                     break;
                 case "Gruen":
-                    _stapel[Farbe.Gruen].Add(card);
+                    Stapel[Farbe.Gruen].Add(card);
                     GruenerStapelImageUri = SetImageUri(Farbe.Gruen);
                     break;
                 case "Blau":
-                    _stapel[Farbe.Blau].Add(card);
+                    Stapel[Farbe.Blau].Add(card);
                     BlauerStapelImageUri = SetImageUri(Farbe.Blau);
                     break;
                 case "Gelb":
-                    _stapel[Farbe.Gelb].Add(card);
+                    Stapel[Farbe.Gelb].Add(card);
                     GelberStapelImageUri = SetImageUri(Farbe.Gelb);
                     break;
                 case "Rot":
-                    _stapel[Farbe.Rot].Add(card);
+                    Stapel[Farbe.Rot].Add(card);
                     RoterStapelImageUri = SetImageUri(Farbe.Rot);
                     break;
                 default:
@@ -80,9 +81,9 @@ namespace LostCities.ViewModel
         {
             var list = new List<Card>();
             foreach (Farbe farbe in Enum.GetValues(typeof(Farbe))) {
-                if (_stapel[farbe].Count != 0)
+                if (Stapel[farbe].Count != 0)
                 {
-                    list.Add(_stapel[farbe][_stapel[farbe].Count - 1]);
+                    list.Add(Stapel[farbe][Stapel[farbe].Count - 1]);
                 }
             }
             return list;
@@ -90,9 +91,9 @@ namespace LostCities.ViewModel
 
         private String SetImageUri(Farbe farbe)
         {
-            if (_stapel[farbe].Count != 0)
+            if (Stapel[farbe].Count != 0)
             {
-                return _stapel[farbe].ElementAt(_stapel[farbe].Count - 1).ImageUri;
+                return Stapel[farbe].ElementAt(Stapel[farbe].Count - 1).ImageUri;
             }
             else return "kartenhindergrund.png";
         }
