@@ -12,5 +12,6 @@ namespace LostCities.ViewModel
         void KarteAnlegen(Card card);
         List<Card> GetTopCards();
         event EventHandler AddedCardToStack;
+        int CountPoints();
     }
 }

@@ -30,6 +30,26 @@ namespace LostCities.ViewModel
             };
         }
         
+        public int CountPoints()
+        {
+            var points = 0;
+            foreach(KeyValuePair<Farbe,List<Card>> entry in Stapel)
+            {
+                points += CalculatePointsForOneStack(entry.Value);
+            }
+            return 0;
+        }
+
+        private int CalculatePointsForOneStack(List<Card> list)
+        {
+            var points = -20;
+            foreach(var c in list)
+            {
+                points += (int)c.Zahl;
+            }
+            return points > 0 ? points : 0;
+        }
+
         //TODO An dieser Stelle muss ich das enum Farbe auswerten anstatt einen string. Refactoring
         public void KarteAnlegen(Card card)
         {

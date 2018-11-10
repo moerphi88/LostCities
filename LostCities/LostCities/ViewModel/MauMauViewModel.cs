@@ -47,6 +47,11 @@ namespace LostCities.ViewModel
             ShownCardImageUri = _stapel[_stapel.Count - 1].ImageUri;
         }
 
+        public int CountPoints()
+        {
+            throw new NotImplementedException();
+        }
+
         #region Properties
 
         public String ShownCardImageUri
