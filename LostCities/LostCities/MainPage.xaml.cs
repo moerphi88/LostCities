@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using LostCities.ViewModel;
 using LostCities.Model;
 using LostCities.Service;
+using System.Diagnostics;
 
 namespace LostCities
 {
@@ -35,12 +36,6 @@ namespace LostCities
 
             HandSpielerZwei.BindingContext = _mainViewModel.HandVM2;
             CreateHandView(HandSpielerZwei, _mainViewModel.HandVM2);
-        }
-
-        //https://dzone.com/articles/xamarinforms-custom-popup
-        private void btnPopupButton_Clicked(object sender, EventArgs e)
-        {
-            popupLoadingView.IsVisible = true;
         }
 
         protected override void OnSizeAllocated(double width, double height)
