@@ -11,7 +11,9 @@
             <Grid RowSpacing="0" ColumnSpacing="0" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -39,14 +41,14 @@
                         Spacing="5"
                         HorizontalOptions="CenterAndExpand"
                         VerticalOptions="End"
-                        Grid.Row="2"
+                        Grid.Row="4"
                         Grid.Column="1"
                         Grid.ColumnSpan="2">
                 </StackLayout>
                 <StackLayout x:Name="MiddleStack"
                 Orientation="Horizontal"
                 Grid.Column="1"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.ColumnSpan="2"
                 Spacing="50"
                 Padding="10"
@@ -58,8 +60,8 @@
                         </Image.GestureRecognizers>
                     </Image>
                     <StackLayout x:Name="DiscardPile"
-                Orientation="Horizontal"
-                Spacing="35">
+                        Orientation="Horizontal"
+                        Spacing="35">
                         <Image Rotation="90" Source="{Binding WeißerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="0"></TapGestureRecognizer>
@@ -94,7 +96,7 @@
                             HorizontalOptions="Center"
                             VerticalOptions="End"
                             Rotation="180"
-                            Grid.Row="0"
+                            Grid.Row="1"
                             Grid.Column="1"
                             Grid.ColumnSpan="2">
                     <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
@@ -103,7 +105,7 @@
                     <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
                     <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
                 </StackLayout>
-                <StackLayout    x:Name="Anlegestapel2"
+                <!--<StackLayout    x:Name="Anlegestapel2"
                             Orientation="Horizontal"
                             Padding="10"
                             Spacing="20"
@@ -118,12 +120,10 @@
                     <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
                     <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
                     <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
-                </StackLayout>
-
-                <!--<AbsoluteLayout  Grid.Column="0" Grid.Row="1" HeightRequest="200" WidthRequest="100">
-                    <Image Source="blauacht.png" AbsoluteLayout.LayoutBounds=".1,.1,1,1" AbsoluteLayout.LayoutFlags="All"></Image>
-                    <Image Source="blauneun.png"  AbsoluteLayout.LayoutBounds=".5,.5,1,1" AbsoluteLayout.LayoutFlags="All"></Image>
-                </AbsoluteLayout>-->
+                </StackLayout>-->
+                <AbsoluteLayout  x:Name="AbsoluteLayoutName"
+                                 Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2">
+                </AbsoluteLayout>
             </Grid>
         </AbsoluteLayout>
     </ContentPage.Content>
