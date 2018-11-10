@@ -89,39 +89,10 @@
                         </Image>
                     </StackLayout>
                 </StackLayout>
-                <StackLayout    x:Name="Anlegestapel"
-                            Orientation="Horizontal"
-                            Padding="10"
-                            Spacing="20"
-                            HorizontalOptions="Center"
-                            VerticalOptions="End"
-                            Rotation="180"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2">
-                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
-                </StackLayout>
-                <!--<StackLayout    x:Name="Anlegestapel2"
-                            Orientation="Horizontal"
-                            Padding="10"
-                            Spacing="20"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Start"
-                            Rotation="0"
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2">
-                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-                    <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
-                </StackLayout>-->
-                <AbsoluteLayout  x:Name="AbsoluteLayoutName"
+                <AbsoluteLayout  x:Name="Anlegestapel1" Rotation="180"
+                                 Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
+                </AbsoluteLayout>
+                <AbsoluteLayout  x:Name="Anlegestapel2"
                                  Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2">
                 </AbsoluteLayout>
             </Grid>

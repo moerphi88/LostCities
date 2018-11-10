@@ -25,8 +25,8 @@ namespace LostCities
             BindingContext = _mainViewModel;
 
             DiscardPile.BindingContext = _mainViewModel.DiscardPileVM;
-            Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
-            Anlegestapel2.BindingContext = _mainViewModel.AnlegeStapel2VM;
+            //Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
+            //Anlegestapel2.BindingContext = _mainViewModel.AnlegeStapel2VM;
 
             _mainViewModel.AnlegeStapelVM.AddedCardToStack += OnAddedCardToStack;
             _mainViewModel.AnlegeStapel2VM.AddedCardToStack += OnAddedCardToStack;
@@ -83,8 +83,8 @@ namespace LostCities
 
         private void CreateAnlegeStapelView()
         {
-            var vm = (AnlegestapelViewModel)_mainViewModel.AnlegeStapelVM;
-            AddCardsToStapelView(AbsoluteLayoutName, (AnlegestapelViewModel)_mainViewModel.AnlegeStapelVM);
+            AddCardsToStapelView(Anlegestapel1, (AnlegestapelViewModel)_mainViewModel.AnlegeStapelVM);
+            AddCardsToStapelView(Anlegestapel2, (AnlegestapelViewModel)_mainViewModel.AnlegeStapel2VM);
         }
 
         private void AddCardsToStapelView(AbsoluteLayout layout, AnlegestapelViewModel vm)
