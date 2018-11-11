@@ -4,6 +4,6 @@ namespace LostCities
 {
     public enum Farbe { Weiss, Gruen, Blau, Gelb, Rot };
 
-    public enum Wert { Zwei, Drei, Vier, Fuenf, Sechs, Sieben, Acht, Neun, Zehn };
+    public enum Wert { Zwei = 2, Drei = 3, Vier = 4, Fuenf = 5, Sechs = 6, Sieben = 7, Acht = 8, Neun = 9, Zehn = 10};
 
 }
