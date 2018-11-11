@@ -37,7 +37,7 @@ namespace LostCities.ViewModel
             {
                 points += CalculatePointsForOneStack(entry.Value);
             }
-            return 0;
+            return points;
         }
 
         private int CalculatePointsForOneStack(List<Card> list)
@@ -47,10 +47,11 @@ namespace LostCities.ViewModel
             {
                 points += (int)c.Zahl;
             }
-            return points > 0 ? points : 0;
+            if (points == -20) return 0; //In this case the stack is empty. No cards of that colour played
+            else return points;
         }
 
-        //TODO An dieser Stelle muss ich das enum Farbe auswerten anstatt einen string. Refactoring
+        //TODO An dieser Stelle muss ich das enum Farbe auswerten anstatt einen string. Refactoring. Außerdem muss hier die Logik eigentlich schon rein, dass nur aufsteigend angelegt werden kann. Als neueKarte. > alteKarte.Wert
         public void KarteAnlegen(Card card)
         {
             switch (card.Name)
