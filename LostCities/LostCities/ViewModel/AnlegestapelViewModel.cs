@@ -43,10 +43,18 @@ namespace LostCities.ViewModel
         private int CalculatePointsForOneStack(List<Card> list)
         {
             var points = -20;
+            var factor = 1;
             foreach(var c in list)
             {
-                points += (int)c.Zahl;
+                if (c.Zahl == Wert.Hand)
+                {
+                    factor++;
+                } else
+                {
+                    points += (int)c.Zahl;
+                }                
             }
+            points *= factor;
             if (points == -20) return 0; //In this case the stack is empty. No cards of that colour played
             else return points;
         }
