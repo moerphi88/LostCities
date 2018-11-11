@@ -25,7 +25,17 @@ namespace LostCities.Model
                 {
                 foreach (int value2 in Enum.GetValues(typeof(Wert)))
                 {
-                    _list.Add(new Card(value, value2));
+                    if(value2 == (int)Wert.Hand)
+                    {
+                        for(int i = 0; i < 3; i++)
+                        {
+                            _list.Add(new Card(value, value2));
+                        }
+                    } else
+                    {
+                        _list.Add(new Card(value, value2));
+                    }
+                    
                 }
             }
         }

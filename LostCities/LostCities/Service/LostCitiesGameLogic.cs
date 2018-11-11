@@ -89,7 +89,6 @@ namespace LostCities.Service
             KarteZiehenButtonText = "Karte ziehen Binding";
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
 
-            
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
 
@@ -208,8 +207,8 @@ namespace LostCities.Service
                     //Liegt auf dem Farbstapel der ausgewählten Karte bereits eine Karte?
                     if(card.Name == c.Name)
                     {
-                        //Wenn ja, ist die ausgewählte Karte höher als die die schon liegt
-                        if(card.Zahl > c.Zahl)
+                        //Wenn ja, ist die ausgewählte Karte höher oder gleich (gleich bei mehreren Händen) als die die schon liegt
+                        if(card.Zahl >= c.Zahl)
                         {
                             return new String[] { "Karte ablegen", "Karte anlegen" }; //Ja, dann kann der Nutzer frei entscheiden
                         }
