@@ -20,15 +20,16 @@ namespace LostCities.Service
         private CardDeck _cardDeck;
         private bool _gameIsOver;
         private int _activePlayer = 0;
+        private string _countCard = "";
 
         private const int HandCards = 8;
         private const string PlayerNeedsToPlayACard = "Spieler {0}. Bitte spiele eine Karte, indem Du eine Karte von deiner Hand anklickst.";
         private const string PlayerNeedsToDrawACard = "Spieler {0}. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel.";
 
-        private String _anweisungsText;
+        private string _anweisungsText;
         private bool _karteZiehenButtonIsEnabeld;
 
-        public String AnweisungsLabelText
+        public string AnweisungsLabelText
         {
             get
             {
@@ -40,10 +41,7 @@ namespace LostCities.Service
                 OnPropertyChanged();
             }
         }
-        public String KarteZiehenButtonText { get; set; }
-
-        public ICommand OnKarteZiehenButtonPressedCommand { get; }
-
+        public string KarteZiehenButtonText { get; set; }
         public bool KarteZiehenButtonIsEnabled
         {
             get
@@ -56,13 +54,26 @@ namespace LostCities.Service
                 OnPropertyChanged();
             }
         }
+        public string CountCard
+        {
+            get
+            {
+                return _countCard;
+            }
+            set
+            {
+                _countCard = value;
+                if(int.Parse(_countCard) <= 5) OnPropertyChanged();
+            }
+        }
+
+        public ICommand OnKarteZiehenButtonPressedCommand { get; }
 
         private void OnButtonPressed()
         {
             DrawHandCard();
+            CountCard = _cardDeck.CountCard.ToString();
         }
-
-
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {

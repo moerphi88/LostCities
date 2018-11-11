@@ -12,6 +12,13 @@ namespace LostCities.Model
         private List<Card> _list;
         Random random = new Random();
 
+        public int CountCard {
+            get
+            {
+                return _list.Count;
+            }
+        }
+
         private void InitCardDeck()
         {
             foreach(var value in Enum.GetNames(typeof(Farbe)))

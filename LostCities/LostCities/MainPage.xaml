@@ -54,11 +54,14 @@
                 Padding="10"
                 HorizontalOptions="Center"
                 VerticalOptions="Center">
-                    <Image Rotation="0" x:Name="KarteZiehenButton" Source="kartenhindergrund.png" IsEnabled="{Binding KarteZiehenButtonIsEnabled}">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OnKarteZiehenButtonPressedCommand}"></TapGestureRecognizer>
-                        </Image.GestureRecognizers>
-                    </Image>
+                    <AbsoluteLayout x:Name="KarteZiehenButton" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                        <Image Rotation="0"  Source="kartenhindergrund.png" IsEnabled="{Binding KarteZiehenButtonIsEnabled}" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnKarteZiehenButtonPressedCommand}"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>                            
+                        </Image>
+                        <Label Text="{Binding CountCard}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Red" FontSize="Large" AbsoluteLayout.LayoutBounds="0.5,0,25,25" AbsoluteLayout.LayoutFlags="PositionProportional"></Label>
+                    </AbsoluteLayout>
                     <StackLayout x:Name="DiscardPile"
                         Orientation="Horizontal"
                         Spacing="35">
