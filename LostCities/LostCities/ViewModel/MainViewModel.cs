@@ -20,7 +20,6 @@ namespace LostCities.ViewModel
         public HandViewModel HandVM { get; set; }
         public HandViewModel HandVM2 { get; set; }
         public LostCitiesGameLogic Lcgl { get; set; }
-        private GameDataRepository _gameDataRepository;
 
 
         public MainViewModel(INavigation navigation) : base(navigation)
@@ -35,14 +34,6 @@ namespace LostCities.ViewModel
             HandVM2 = new HandViewModel(null);
             Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
 
-
-
-            _gameDataRepository = new GameDataRepository();
-
-            //Beim ersten Starten kommt hier noch "default" zurück
-            _gameDataRepository.GetMyKey();
-
-            _gameDataRepository.SetMyKey("HansWurst");
 
         }
     }
