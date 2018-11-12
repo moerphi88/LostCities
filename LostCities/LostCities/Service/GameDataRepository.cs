@@ -16,7 +16,7 @@ namespace LostCities.Service
 
         public void SetMyKey(string value)
         {
-            Set("my_key","Hallo");
+            Set("my_key",value);
         }
 
         public string GetMyKey()
@@ -27,7 +27,7 @@ namespace LostCities.Service
         private void Set(string key, string value)
         {
             Preferences.Set(key, value);
-            Debug.WriteLine("Set");
+            Debug.WriteLine($"Set: {value}");
         }
 
         private string Get(string key)
