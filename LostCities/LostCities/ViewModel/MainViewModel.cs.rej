@@ -1,0 +1,9 @@
+diff a/LostCities/LostCities/ViewModel/MainViewModel.cs b/LostCities/LostCities/ViewModel/MainViewModel.cs	(rejected hunks)
+@@ -20,7 +20,6 @@
+         public HandViewModel HandVM { get; set; }
+         public HandViewModel HandVM2 { get; set; }
+         public LostCitiesGameLogic Lcgl { get; set; }
+-        private GameDataRepository _gameDataRepository;
+ 
+ 
+         public MainViewModel(INavigation navigation) : base(navigation)
