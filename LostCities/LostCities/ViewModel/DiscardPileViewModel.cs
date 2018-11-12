@@ -9,17 +9,23 @@ using Xamarin.Forms;
 using LostCities;
 using LostCities.Model;
 using System.Diagnostics;
+using LostCities.Service;
 
 namespace LostCities.ViewModel
 {
     public class DiscardPileViewModel : BaseViewModel
     {
+        private const string IsEnabledKeyString = "is_enabled_key_string";
+        private const string DiscardPileDictKeyString = "discard_pile_dict_key_string";
+
         private string _gelberStapelImageUri;
         private string _roterStapelImageUri;
         private string _gruenerStapelImageUri;
         private string _blauerStapelImageUri;
         private string _weißerStapelImageUri;
         private bool _isEnabled;
+
+        private GameDataRepository _gameDataRepository;
 
         private Dictionary<Farbe, List<Card>> _discardPileDict;
 
@@ -39,20 +45,46 @@ namespace LostCities.ViewModel
             Init();
         }
 
+
+
         private void Init()
         {
-            _discardPileDict = new Dictionary<Farbe, List<Card>>();
-            _discardPileDict.Add(Farbe.Weiss, new List<Card>());
-            _discardPileDict.Add(Farbe.Gruen, new List<Card>());
-            _discardPileDict.Add(Farbe.Blau, new List<Card>());
-            _discardPileDict.Add(Farbe.Gelb, new List<Card>());
-            _discardPileDict.Add(Farbe.Rot, new List<Card>());
+            _gameDataRepository = new GameDataRepository();
 
-            GelberStapelImageUri = "kartenhindergrund.png";
-            BlauerStapelImageUri = "kartenhindergrund.png";
-            GruenerStapelImageUri = "kartenhindergrund.png";
-            RoterStapelImageUri = "kartenhindergrund.png";
-            WeißerStapelImageUri = "kartenhindergrund.png";
+            if(_gameDataRepository.GetGameSaved() == true)
+            {
+                IsEnabled = _gameDataRepository.GetBool(IsEnabledKeyString);
+                _discardPileDict = _gameDataRepository.GetJsonDict(DiscardPileDictKeyString);
+
+                foreach(KeyValuePair<Farbe,List<Card>> dict in _discardPileDict)
+                {
+                    UpdateImageUri(dict.Key);
+                }
+
+            } else
+            {
+                _discardPileDict = new Dictionary<Farbe, List<Card>>
+                {
+                    { Farbe.Weiss, new List<Card>() },
+                    { Farbe.Gruen, new List<Card>() },
+                    { Farbe.Blau, new List<Card>() },
+                    { Farbe.Gelb, new List<Card>() },
+                    { Farbe.Rot, new List<Card>() }
+                };
+
+                foreach (KeyValuePair<Farbe, List<Card>> dict in _discardPileDict)
+                {
+                    UpdateImageUri(dict.Key);
+                }
+
+                PersistDict();
+
+                //GelberStapelImageUri = "kartenhindergrund.png";
+                //BlauerStapelImageUri = "kartenhindergrund.png";
+                //GruenerStapelImageUri = "kartenhindergrund.png";
+                //RoterStapelImageUri = "kartenhindergrund.png";
+                //WeißerStapelImageUri = "kartenhindergrund.png";
+            }
         }
 
 
@@ -73,12 +105,18 @@ namespace LostCities.ViewModel
                     OnKarteAbheben(CreateCardEventArgs(farbe));
                     _discardPileDict[farbe].RemoveAt(_discardPileDict[farbe].Count-1);
                     UpdateImageUri(farbe);
+                    PersistDict();
                 }
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
             }
+        }
+
+        private void PersistDict()
+        {
+            _gameDataRepository.SetJsonDict(DiscardPileDictKeyString, _discardPileDict);
         }
 
         public void KarteAblegen(Card card)
@@ -108,6 +146,8 @@ namespace LostCities.ViewModel
                 default:
                     break;
             }
+
+            PersistDict();
         }
 
         private String SetImageUri(Farbe farbe)
@@ -167,6 +207,7 @@ namespace LostCities.ViewModel
             get { return _isEnabled; }
             set {
                 _isEnabled = value;
+                _gameDataRepository.SetBool(IsEnabledKeyString,_isEnabled);
                 OnPropertyChanged();
             }
         }

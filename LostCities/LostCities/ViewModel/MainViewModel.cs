@@ -22,9 +22,6 @@ namespace LostCities.ViewModel
         public HandViewModel HandVM2 { get; set; }
         public LostCitiesGameLogic Lcgl { get; set; }
 
-        private GameDataRepository _gameDataRepository;
-
-
         public MainViewModel(INavigation navigation) : base(navigation)
         {
             //TODO Hier beim erstellen muss ich checken, ob ein altes Spiel vorhanden ist. Kann ich ja auch mit einer Preference machen.
@@ -37,15 +34,6 @@ namespace LostCities.ViewModel
             HandVM2 = new HandViewModel(null);
 
             Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
-
-
-
-            _gameDataRepository = new GameDataRepository();
-
-            //Beim ersten Starten kommt hier noch "default" zurück
-            _gameDataRepository.SetJsonString();
-
-            Debug.WriteLine(_gameDataRepository.GetJsonString().ToString());
 
         }
     }
