@@ -26,22 +26,91 @@ namespace LostCities.Service
             return Get("my_key");
         }
 
-        public void SetJsonString(Card c = null)
+        // Card
+
+        public void SetJsonCard(string key,Card c = null)
         {
             if(null == c)
             {
                 c = new Card();
             }            
             string json = JsonConvert.SerializeObject(c, Formatting.Indented);
-            Debug.WriteLine(json);
-            Set("json", json);
+            //Debug.WriteLine(json);
+            Set(key, json);
         }
 
-        public Card GetJsonString()
+        public Card GetJsonCard(string key)
         {
-            Card c = JsonConvert.DeserializeObject<Card>(Get("json"));
+            Card c = JsonConvert.DeserializeObject<Card>(Get(key));
             return c;
         }
+
+        // CardList
+
+        public void SetJsonList(string key, List<Card> cardList)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(cardList, Formatting.Indented);
+                Set(key, json);
+            } catch(ArgumentNullException e)
+            {
+                Debug.WriteLine("null cannot be handled here: {0}",e.Message);
+            }
+        }
+
+        public List<Card> GetJsonList(string key)
+        {
+            List<Card> cardList = JsonConvert.DeserializeObject<List<Card>>(Get(key));
+            return cardList;
+        }
+
+        // Card Dict
+
+        public void SetJsonDict(string key, Dictionary<Farbe,List<Card>> cardDict)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(cardDict, Formatting.Indented);
+                Set(key, json);
+            }
+            catch (ArgumentNullException e)
+            {
+                Debug.WriteLine("null cannot be handled here: {0}", e.Message);
+            }
+        }
+
+        public Dictionary<Farbe, List<Card>> GetJsonDict(string key)
+        {
+            Dictionary<Farbe, List<Card>> cardDict = JsonConvert.DeserializeObject<Dictionary<Farbe, List<Card>>>(Get(key));
+            return cardDict;
+        }
+
+        // Bool
+
+        public void SetBool(string key,bool b)
+        {
+            Preferences.Set(key, b);
+        }
+
+        public bool GetBool(string key)
+        {
+            return Preferences.Get(key, false);
+        }
+
+        // There is a game already saved
+
+        public void SetGameSaved(bool b)
+        {
+            Preferences.Set("is_a_game_saved", b);
+        }
+
+        public bool GetGameSaved()
+        {
+            return Preferences.Get("is_a_game_saved", false);
+        }
+
+        #region private
 
         private void Set(string key, string value)
         {
@@ -67,5 +136,7 @@ namespace LostCities.Service
             Preferences.Clear();
             Debug.WriteLine("ClearAll");
         }
+
+        #endregion
     }
 }
