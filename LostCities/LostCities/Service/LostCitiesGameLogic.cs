@@ -21,6 +21,9 @@ namespace LostCities.Service
         private bool _gameIsOver;
         private int _activePlayer = 0;
 
+        private GameDataRepository _gameDataRepository;
+
+
 
         private const int HandCards = 8;
         private bool _karteZiehenButtonIsEnabeld;
@@ -69,10 +72,16 @@ namespace LostCities.Service
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
+            _gameDataRepository = new GameDataRepository();
+
+
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
 
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
+
+            //To quickly end a game us this:
+            _cardDeck.GetXCards(28); //Do 
 
             // Eventbinding
             //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
@@ -246,6 +255,7 @@ namespace LostCities.Service
             _handSpielerZwei.DisableHand();
             _ablagestapel.DisableDrawing();
             KarteZiehenButtonIsEnabled = false;
+            _gameDataRepository.SetGameSaved(true);
         }
 
         private void SwitchActivePlayer()
@@ -269,6 +279,7 @@ namespace LostCities.Service
         private void IsGameOver()
         {
             _gameIsOver = _cardDeck.IsEmpty();
+            if(_gameIsOver == true) _gameDataRepository.SetGameSaved(false);
         }
 
         #region INotifyPropertyChanges Handler
