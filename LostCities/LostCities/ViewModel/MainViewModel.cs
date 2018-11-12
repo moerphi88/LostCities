@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace LostCities.ViewModel
         public HandViewModel HandVM { get; set; }
         public HandViewModel HandVM2 { get; set; }
         public LostCitiesGameLogic Lcgl { get; set; }
+
         private GameDataRepository _gameDataRepository;
 
 
@@ -33,6 +35,7 @@ namespace LostCities.ViewModel
             AnlegeStapel2VM = new AnlegestapelViewModel(null);
             HandVM = new HandViewModel(null);
             HandVM2 = new HandViewModel(null);
+
             Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
 
 
@@ -40,9 +43,9 @@ namespace LostCities.ViewModel
             _gameDataRepository = new GameDataRepository();
 
             //Beim ersten Starten kommt hier noch "default" zurück
-            _gameDataRepository.GetMyKey();
+            _gameDataRepository.SetJsonString();
 
-            _gameDataRepository.SetMyKey("HansWurst");
+            Debug.WriteLine(_gameDataRepository.GetJsonString().ToString());
 
         }
     }
