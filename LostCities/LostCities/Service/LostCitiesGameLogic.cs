@@ -20,28 +20,12 @@ namespace LostCities.Service
         private CardDeck _cardDeck;
         private bool _gameIsOver;
         private int _activePlayer = 0;
-        private string _countCard = "";
+
 
         private const int HandCards = 8;
-        private const string PlayerNeedsToPlayACard = "Spieler {0}. Bitte spiele eine Karte, indem Du eine Karte von deiner Hand anklickst.";
-        private const string PlayerNeedsToDrawACard = "Spieler {0}. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel.";
-
-        private string _anweisungsText;
         private bool _karteZiehenButtonIsEnabeld;
+        private string _countCard = "";
 
-        public string AnweisungsLabelText
-        {
-            get
-            {
-                return _anweisungsText;
-            }
-            set
-            {
-                _anweisungsText = value;
-                OnPropertyChanged();
-            }
-        }
-        public string KarteZiehenButtonText { get; set; }
         public bool KarteZiehenButtonIsEnabled
         {
             get
@@ -85,8 +69,6 @@ namespace LostCities.Service
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
-            AnweisungsLabelText = String.Format(PlayerNeedsToPlayACard, _activePlayer == 0 ? "1" : "2");
-            KarteZiehenButtonText = "Karte ziehen Binding";
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
 
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
@@ -224,9 +206,6 @@ namespace LostCities.Service
 
         private void AnnounceNextStepDrawCard()
         {
-            AnweisungsLabelText = String.Format(PlayerNeedsToDrawACard, _activePlayer == 0 ? "1" : "2");
-            //await App.Current.MainPage.DisplayAlert(AnweisungsLabelText, null , "Ok");
-
             _handSpielerEins.DisableHand();
             _handSpielerZwei.DisableHand();
             _ablagestapel.EnableDrawing();
@@ -285,7 +264,6 @@ namespace LostCities.Service
             }
             _ablagestapel.DisableDrawing();
             KarteZiehenButtonIsEnabled = false;
-            AnweisungsLabelText = String.Format(PlayerNeedsToPlayACard, _activePlayer == 0 ? "1" : "2");
         }
 
         private void IsGameOver()
