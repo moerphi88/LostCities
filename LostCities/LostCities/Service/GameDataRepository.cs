@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Newtonsoft.Json;
 using LostCities.Model;
+using System.Collections.ObjectModel;
 
 namespace LostCities.Service
 {
@@ -47,7 +48,7 @@ namespace LostCities.Service
 
         // CardList
 
-        public void SetJsonList(string key, List<Card> cardList)
+        public void SetJsonList(string key, IEnumerable<Card> cardList)
         {
             try
             {
@@ -59,9 +60,9 @@ namespace LostCities.Service
             }
         }
 
-        public List<Card> GetJsonList(string key)
+        public IEnumerable<Card> GetJsonList(string key)
         {
-            List<Card> cardList = JsonConvert.DeserializeObject<List<Card>>(Get(key));
+            IEnumerable<Card> cardList = JsonConvert.DeserializeObject<IEnumerable<Card>>(Get(key));
             return cardList;
         }
 
@@ -84,6 +85,27 @@ namespace LostCities.Service
         {
             Dictionary<Farbe, List<Card>> cardDict = JsonConvert.DeserializeObject<Dictionary<Farbe, List<Card>>>(Get(key));
             return cardDict;
+        }
+
+        // CardList
+
+        public void SetJsonCollection(string key, ObservableCollection<HandCard> cardCollection)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(cardCollection, Formatting.Indented);
+                Set(key, json);
+            }
+            catch (ArgumentNullException e)
+            {
+                Debug.WriteLine("null cannot be handled here: {0}", e.Message);
+            }
+        }
+
+        public ObservableCollection<HandCard> GetJsonCollection(string key)
+        {
+            ObservableCollection<HandCard> cardCollection = JsonConvert.DeserializeObject<ObservableCollection<HandCard>> (Get(key));
+            return cardCollection;
         }
 
         // Bool
