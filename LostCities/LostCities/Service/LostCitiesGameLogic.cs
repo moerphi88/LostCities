@@ -80,6 +80,7 @@ namespace LostCities.Service
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {
             PopupDialogViewModel = new PopupDialogViewModel(null);
+            PopupDialogViewModel.TitleLabelText = "Test text";
             _handSpielerEins = handSpielerEins;
             _handSpielerZwei = handSpielerZwei;
             _ablagestapel = ablagestapel;
@@ -104,15 +105,15 @@ namespace LostCities.Service
 
             InitGame();
 
-            //Task.Run(async () => //Task.Run automatically unwraps nested Task types!
-            //{
-            //    Debug.WriteLine("Start");
-            //    PopupDialogViewModel.Rotation = 90;
-            //    await Task.Delay(5000);
-            //    PopupDialogViewModel.Rotation = 270;
-            //    Debug.WriteLine("Done");
-            //});
-            //Debug.WriteLine("All done");
+            Task.Run(async () => //Task.Run automatically unwraps nested Task types!
+            {
+                Debug.WriteLine("Start");
+                PopupDialogViewModel.Rotation = 90;
+                await Task.Delay(5000);
+                PopupDialogViewModel.Rotation = 180;
+                Debug.WriteLine("Done");
+            });
+            Debug.WriteLine("All done");
         }
 
         public void DrawHandCard()

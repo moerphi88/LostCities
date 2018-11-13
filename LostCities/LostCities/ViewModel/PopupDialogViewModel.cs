@@ -14,23 +14,26 @@ namespace LostCities.ViewModel
 {
     public class PopupDialogViewModel : BaseViewModel
     {
+        private int _rotation;
+        private string _titleLabelText;
+
         public int Rotation
         {
-            get { return Rotation; }
-            set { Rotation = value; OnPropertyChanged(); }
+            get { return _rotation; }
+            set { _rotation = value; OnPropertyChanged(); }
         }
-        
+
         //public bool DialogIsVisible
         //{
         //    get { return DialogIsVisible; }
         //    set { OnPropertyChanged(); }
         //}
 
-        //public string TitleLabelText
-        //{
-        //    get { return TitleLabelText; }
-        //    set { OnPropertyChanged(); }
-        //}
+        public string TitleLabelText
+        {
+            get { return _titleLabelText; }
+            set { _titleLabelText = value; OnPropertyChanged(); }
+        }
 
         //public string SubtitleLabelText
         //{
