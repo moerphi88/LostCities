@@ -18,6 +18,7 @@ namespace LostCities.Service
         private const string HandTwoCardsKeyString = "hand_two_cards_key_string";
         private const string AnlegeStapelOneCardsKeyString = "anlegestapel_one_cards_key_string";
         private const string AnlegeStapelTwoCardsKeyString = "anlegestapel_two_cards_key_string";
+        private const string IsPlayerOneActiveKeyString = "is_player_one_active_key_string";
         private const int HandCards = 8;
 
 
@@ -82,6 +83,7 @@ namespace LostCities.Service
 
             if (_gameDataRepository.GetGameSaved() == true)
             {
+                _activePlayer = _gameDataRepository.GetBool(IsPlayerOneActiveKeyString) ? 0 : 1;
                 _anlegestapel.GetStapelCardsFromPersistency(AnlegeStapelOneCardsKeyString);
                 _anlegestapel2.GetStapelCardsFromPersistency(AnlegeStapelTwoCardsKeyString);
 
@@ -90,6 +92,7 @@ namespace LostCities.Service
             }
             else
             {
+                _activePlayer = 0;
                 _anlegestapel.PersistStapel(AnlegeStapelOneCardsKeyString);
                 _anlegestapel2.PersistStapel(AnlegeStapelTwoCardsKeyString);
 
@@ -295,6 +298,7 @@ namespace LostCities.Service
             }
             _discardPile.DisableDrawing();
             KarteZiehenButtonIsEnabled = false;
+            _gameDataRepository.SetBool(IsPlayerOneActiveKeyString, _activePlayer == 0 ? true : false);
         }
 
         private void IsGameOver()
