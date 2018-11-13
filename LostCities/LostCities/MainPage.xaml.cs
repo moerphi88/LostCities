@@ -127,7 +127,7 @@ namespace LostCities
                 //Creating TapGestureRecognizers https://www.c-sharpcorner.com/UploadFile/e04e9a/xamarin-forms-image-button-recipe/   
                 var tapImage = new TapGestureRecognizer
                 {
-                    Command = handViewModel.OnButtonPressedCommand,
+                    Command = handViewModel.OnUserSelectedHandCardToPlayCommand,
                     CommandParameter = i.ToString()
                 };
                 //Associating tap events to the image buttons    

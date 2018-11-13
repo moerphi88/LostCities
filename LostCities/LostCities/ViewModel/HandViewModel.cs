@@ -11,25 +11,24 @@ namespace LostCities.ViewModel
     public class HandViewModel : BaseViewModel
     {
         private int _abgelegteKarteIndex;
-        
-        public ObservableCollection<HandCard> HandCards { get; set; }
-        
-        private String _buttonName = "Hide Hand";
+        private bool _cardsAreHidden = false;
+        private String _hideShowButtonName = "Hide Hand";
 
         public String HideShowButtonName
         {
-            get { return _buttonName; }
-            set { _buttonName = value; OnPropertyChanged(); }
+            get { return _hideShowButtonName; }
+            set { _hideShowButtonName = value; OnPropertyChanged(); }
         }
-
-        private bool _cardsAreHidden = false;
+        public ObservableCollection<HandCard> HandCards { get; set; }
+        public ICommand OnUserSelectedHandCardToPlayCommand { get; }
+        public ICommand OnHideHandCommand { get; }
 
         public delegate void CardEventHandler(object sender, CardEventArgs e);
         public event CardEventHandler PlayCard;
 
         public HandViewModel(INavigation navigation) : base(navigation)
         {
-            OnButtonPressedCommand = new Command<string>(OnButtonPressed);
+            OnUserSelectedHandCardToPlayCommand = new Command<string>(OnUserSelectedHandCardToPlay);
             OnHideHandCommand = new Command(OnHideHand);
            
 
@@ -43,10 +42,7 @@ namespace LostCities.ViewModel
             PlayCard?.Invoke(this, e);
         }
 
-        public ICommand OnButtonPressedCommand { get; }
-        public ICommand OnHideHandCommand { get; }
-
-        void OnButtonPressed(string value)
+        void OnUserSelectedHandCardToPlay(string value)
         {
             var index = int.Parse(value);
             var CardEventArgs = new CardEventArgs(HandCards[index].Card);
@@ -55,7 +51,6 @@ namespace LostCities.ViewModel
 
             OnPlayCard(CardEventArgs);
         }
-
         void OnHideHand()
         {
             if (_cardsAreHidden)

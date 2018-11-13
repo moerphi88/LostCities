@@ -78,12 +78,6 @@ namespace LostCities.ViewModel
                 }
 
                 PersistDict();
-
-                //GelberStapelImageUri = "kartenhindergrund.png";
-                //BlauerStapelImageUri = "kartenhindergrund.png";
-                //GruenerStapelImageUri = "kartenhindergrund.png";
-                //RoterStapelImageUri = "kartenhindergrund.png";
-                //WeißerStapelImageUri = "kartenhindergrund.png";
             }
         }
 
