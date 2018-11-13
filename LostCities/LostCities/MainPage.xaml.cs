@@ -41,6 +41,12 @@ namespace LostCities
             CreateHandView(HandSpielerZwei, _mainViewModel.HandVM2);
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            CreateAnlegeStapelView();
+        }
+
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
