@@ -16,19 +16,20 @@ namespace LostCities.Service
     {
         private const string HandOneCardsKeyString = "hand_one_cards_key_string";
         private const string HandTwoCardsKeyString = "hand_two_cards_key_string";
+        private const string AnlegeStapelOneCardsKeyString = "anlegestapel_one_cards_key_string";
+        private const string AnlegeStapelTwoCardsKeyString = "anlegestapel_two_cards_key_string";
+        private const int HandCards = 8;
+
 
         private HandViewModel _handPlayerOne, _handPlayerTwo;
         private DiscardPileViewModel _discardPile;
         private IStapel _anlegestapel, _anlegestapel2;
         private CardDeck _cardDeck;
-        private bool _gameIsOver;
+        private bool _gameIsOver = false;
         private int _activePlayer = 0;
 
         private GameDataRepository _gameDataRepository;
-
-
-
-        private const int HandCards = 8;
+        
         private bool _karteZiehenButtonIsEnabeld;
         private string _countCard = "";
 
@@ -67,25 +68,31 @@ namespace LostCities.Service
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {
+            _gameDataRepository = new GameDataRepository();
+
             _handPlayerOne = handSpielerEins;
             _handPlayerTwo = handSpielerZwei;
             _discardPile = ablagestapel;
             _anlegestapel = anlegestapel;
             _anlegestapel2 = anlegestapel2;
-            _cardDeck = new CardDeck();
-            _gameIsOver = false;
 
-            _gameDataRepository = new GameDataRepository();
+            _cardDeck = new CardDeck();
 
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
 
             if (_gameDataRepository.GetGameSaved() == true)
             {
+                _anlegestapel.GetStapelCardsFromPersistency(AnlegeStapelOneCardsKeyString);
+                _anlegestapel2.GetStapelCardsFromPersistency(AnlegeStapelTwoCardsKeyString);
+
                 _handPlayerOne.GetHandCardsFromPersistency(HandOneCardsKeyString);
                 _handPlayerTwo.GetHandCardsFromPersistency(HandTwoCardsKeyString);
             }
             else
             {
+                _anlegestapel.PersistStapel(AnlegeStapelOneCardsKeyString);
+                _anlegestapel2.PersistStapel(AnlegeStapelTwoCardsKeyString);
+
                 _handPlayerOne.GetHandCards(_cardDeck.GetXCards(HandCards), HandOneCardsKeyString);
                 _handPlayerTwo.GetHandCards(_cardDeck.GetXCards(HandCards), HandTwoCardsKeyString);
             }
@@ -141,7 +148,9 @@ namespace LostCities.Service
                                         _discardPile.KarteAblegen(e.Card);
                                         break;
                                     case "Karte anlegen":
-                                        GetActiveAnlegestapel().KarteAnlegen(e.Card);
+                                        var stapel = GetActiveAnlegestapel();
+                                        stapel.s.KarteAnlegen(e.Card);
+                                        stapel.s.PersistStapel(stapel.key);
                                         break;
                                 }
                                 AnnounceNextStepDrawCard();
@@ -190,16 +199,17 @@ namespace LostCities.Service
             }
         }
 
-        private IStapel GetActiveAnlegestapel()
+        private (IStapel s,string key) GetActiveAnlegestapel()
         {
             var anlegestapel = _activePlayer == 0 ? _anlegestapel : _anlegestapel2;
-            return anlegestapel;
+            var key = _activePlayer == 0 ? AnlegeStapelOneCardsKeyString : AnlegeStapelTwoCardsKeyString;
+            return (anlegestapel,key);
         }
 
         private String[] EvaluatePossibilities(Card card)
         {
 
-            var topCard = GetActiveAnlegestapel().GetTopCards();
+            var topCard = GetActiveAnlegestapel().s.GetTopCards();
 
             //Wenn es mindestens eine angelegte Karte gibt,...
             if(topCard.Count != 0)
