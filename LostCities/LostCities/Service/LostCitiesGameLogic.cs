@@ -19,6 +19,7 @@ namespace LostCities.Service
         private const string AnlegeStapelOneCardsKeyString = "anlegestapel_one_cards_key_string";
         private const string AnlegeStapelTwoCardsKeyString = "anlegestapel_two_cards_key_string";
         private const string IsPlayerOneActiveKeyString = "is_player_one_active_key_string";
+        private const string CardDeckKeyString = "card_deck_key_string";
         private const int HandCards = 8;
 
 
@@ -84,26 +85,29 @@ namespace LostCities.Service
             if (_gameDataRepository.GetGameSaved() == true)
             {
                 _activePlayer = _gameDataRepository.GetBool(IsPlayerOneActiveKeyString) ? 0 : 1;
+                _cardDeck.List = (List<Card>)_gameDataRepository.GetJsonList(CardDeckKeyString);
                 _anlegestapel.GetStapelCardsFromPersistency(AnlegeStapelOneCardsKeyString);
                 _anlegestapel2.GetStapelCardsFromPersistency(AnlegeStapelTwoCardsKeyString);
 
                 _handPlayerOne.GetHandCardsFromPersistency(HandOneCardsKeyString);
                 _handPlayerTwo.GetHandCardsFromPersistency(HandTwoCardsKeyString);
+
+                //To quickly end a game us this:
+                _cardDeck.GetXCards(28); //Do 
             }
             else
             {
                 _activePlayer = 0;
+               
                 _anlegestapel.PersistStapel(AnlegeStapelOneCardsKeyString);
                 _anlegestapel2.PersistStapel(AnlegeStapelTwoCardsKeyString);
 
                 _handPlayerOne.GetHandCards(_cardDeck.GetXCards(HandCards), HandOneCardsKeyString);
                 _handPlayerTwo.GetHandCards(_cardDeck.GetXCards(HandCards), HandTwoCardsKeyString);
+
+                _gameDataRepository.SetJsonList(CardDeckKeyString, _cardDeck.List);
             }
-
-
-            //To quickly end a game us this:
-            _cardDeck.GetXCards(28); //Do 
-
+            
             // Eventbinding
             //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
             _handPlayerOne.PlayCard += OnPlayCard;
@@ -117,6 +121,7 @@ namespace LostCities.Service
         public void DrawHandCard()
         {
             GiveNewHandCard(_cardDeck.GetFirstCard());
+            _gameDataRepository.SetJsonList(CardDeckKeyString, _cardDeck.List);
         }
 
         private void OnKarteAbheben(object sender, CardEventArgs e)

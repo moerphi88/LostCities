@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace LostCities.Model
 {
-
     // Test eines Kartenstapels. Wie genau kann ich denn nu eigentlich einzelne Elemten in der Liste verändern?
     public class CardDeck
     {
@@ -102,6 +101,12 @@ namespace LostCities.Model
                 Debug.WriteLine(e.Message);
             }
             return null;
+        }
+        
+        public List<Card> List
+        {
+            get { return _list; }
+            set { _list = value; }
         }
     }
 }
