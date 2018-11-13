@@ -14,8 +14,11 @@ namespace LostCities.Service
 {
     public class LostCitiesGameLogic : INotifyPropertyChanged
     {
-        private HandViewModel _handSpielerEins, _handSpielerZwei;
-        private DiscardPileViewModel _ablagestapel;
+        private const string HandOneCardsKeyString = "hand_one_cards_key_string";
+        private const string HandTwoCardsKeyString = "hand_two_cards_key_string";
+
+        private HandViewModel _handPlayerOne, _handPlayerTwo;
+        private DiscardPileViewModel _discardPile;
         private IStapel _anlegestapel, _anlegestapel2;
         private CardDeck _cardDeck;
         private bool _gameIsOver;
@@ -64,9 +67,9 @@ namespace LostCities.Service
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {
-            _handSpielerEins = handSpielerEins;
-            _handSpielerZwei = handSpielerZwei;
-            _ablagestapel = ablagestapel;
+            _handPlayerOne = handSpielerEins;
+            _handPlayerTwo = handSpielerZwei;
+            _discardPile = ablagestapel;
             _anlegestapel = anlegestapel;
             _anlegestapel2 = anlegestapel2;
             _cardDeck = new CardDeck();
@@ -74,21 +77,29 @@ namespace LostCities.Service
 
             _gameDataRepository = new GameDataRepository();
 
-
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
 
-            _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
-            _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
+            if (_gameDataRepository.GetGameSaved() == true)
+            {
+                _handPlayerOne.GetHandCardsFromPersistency(HandOneCardsKeyString);
+                _handPlayerTwo.GetHandCardsFromPersistency(HandTwoCardsKeyString);
+            }
+            else
+            {
+                _handPlayerOne.GetHandCards(_cardDeck.GetXCards(HandCards), HandOneCardsKeyString);
+                _handPlayerTwo.GetHandCards(_cardDeck.GetXCards(HandCards), HandTwoCardsKeyString);
+            }
+
 
             //To quickly end a game us this:
             _cardDeck.GetXCards(28); //Do 
 
             // Eventbinding
             //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
-            _handSpielerEins.PlayCard += OnPlayCard;
-            _handSpielerZwei.PlayCard += OnPlayCard;
+            _handPlayerOne.PlayCard += OnPlayCard;
+            _handPlayerTwo.PlayCard += OnPlayCard;
 
-            _ablagestapel.KarteAbheben += OnKarteAbheben;
+            _discardPile.KarteAbheben += OnKarteAbheben;
 
             InitGame();
         }
@@ -127,7 +138,7 @@ namespace LostCities.Service
                                 switch (answer)
                                 {
                                     case "Karte ablegen":
-                                        _ablagestapel.KarteAblegen(e.Card);
+                                        _discardPile.KarteAblegen(e.Card);
                                         break;
                                     case "Karte anlegen":
                                         GetActiveAnlegestapel().KarteAnlegen(e.Card);
@@ -215,9 +226,9 @@ namespace LostCities.Service
 
         private void AnnounceNextStepDrawCard()
         {
-            _handSpielerEins.DisableHand();
-            _handSpielerZwei.DisableHand();
-            _ablagestapel.EnableDrawing();
+            _handPlayerOne.DisableHand();
+            _handPlayerTwo.DisableHand();
+            _discardPile.EnableDrawing();
             KarteZiehenButtonIsEnabled = true;
         }
 
@@ -226,11 +237,11 @@ namespace LostCities.Service
             switch (_activePlayer)
             {
                 case 0: //Spieler 1
-                    _handSpielerEins.GetHandCard(card);
+                    _handPlayerOne.GetHandCard(card, HandOneCardsKeyString);
                     SwitchActivePlayer();
                     break;
                 case 1:
-                    _handSpielerZwei.GetHandCard(card);
+                    _handPlayerTwo.GetHandCard(card, HandTwoCardsKeyString);
                     SwitchActivePlayer();
                     break;
             }
@@ -241,19 +252,19 @@ namespace LostCities.Service
             switch (_activePlayer)
             {
                 case 0: //Spieler 1
-                    _handSpielerEins.GetHandCard(card);
+                    _handPlayerOne.GetHandCard(card, HandOneCardsKeyString);
                     break;
                 case 1:
-                    _handSpielerZwei.GetHandCard(card);
+                    _handPlayerTwo.GetHandCard(card, HandTwoCardsKeyString);
                     break;
             }
         }
 
         private void InitGame()
         {
-            _handSpielerEins.EnableHand();
-            _handSpielerZwei.DisableHand();
-            _ablagestapel.DisableDrawing();
+            _handPlayerOne.EnableHand();
+            _handPlayerTwo.DisableHand();
+            _discardPile.DisableDrawing();
             KarteZiehenButtonIsEnabled = false;
             _gameDataRepository.SetGameSaved(true);
         }
@@ -264,15 +275,15 @@ namespace LostCities.Service
             switch (_activePlayer)
             {
                 case 0:
-                    _handSpielerEins.EnableHand();
-                    _handSpielerZwei.DisableHand();
+                    _handPlayerOne.EnableHand();
+                    _handPlayerTwo.DisableHand();
                     break;
                 case 1:
-                    _handSpielerEins.DisableHand();
-                    _handSpielerZwei.EnableHand();
+                    _handPlayerOne.DisableHand();
+                    _handPlayerTwo.EnableHand();
                     break;
             }
-            _ablagestapel.DisableDrawing();
+            _discardPile.DisableDrawing();
             KarteZiehenButtonIsEnabled = false;
         }
 
