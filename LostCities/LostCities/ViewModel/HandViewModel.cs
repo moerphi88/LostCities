@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using LostCities.Model;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using LostCities.Service;
 
 namespace LostCities.ViewModel
 {
@@ -13,6 +14,7 @@ namespace LostCities.ViewModel
         private int _abgelegteKarteIndex;
         private bool _cardsAreHidden = false;
         private String _hideShowButtonName = "Hide Hand";
+        private GameDataRepository _gameDataRepository;
 
         public String HideShowButtonName
         {
@@ -30,11 +32,20 @@ namespace LostCities.ViewModel
         {
             OnUserSelectedHandCardToPlayCommand = new Command<string>(OnUserSelectedHandCardToPlay);
             OnHideHandCommand = new Command(OnHideHand);
-           
 
-            _abgelegteKarteIndex = -1;
+            Init();
+        }
 
+        private void Init()
+        {
+            _gameDataRepository = new GameDataRepository();
+            _abgelegteKarteIndex = -1;   
             HandCards = new ObservableCollection<HandCard>();
+        }
+
+        private void PersistCollection(string key)
+        {
+            _gameDataRepository.SetJsonCollection(key, HandCards);
         }
 
         protected virtual void OnPlayCard(CardEventArgs e)
@@ -42,7 +53,7 @@ namespace LostCities.ViewModel
             PlayCard?.Invoke(this, e);
         }
 
-        void OnUserSelectedHandCardToPlay(string value)
+        private void OnUserSelectedHandCardToPlay(string value)
         {
             var index = int.Parse(value);
             var CardEventArgs = new CardEventArgs(HandCards[index].Card);
@@ -51,7 +62,7 @@ namespace LostCities.ViewModel
 
             OnPlayCard(CardEventArgs);
         }
-        void OnHideHand()
+        private void OnHideHand()
         {
             if (_cardsAreHidden)
             {
@@ -73,16 +84,24 @@ namespace LostCities.ViewModel
         }
 
         //Adds a list of cards to the ObservableCollection
-        public void GetHandCards(List<Card> cardList)
+        public void GetHandCards(List<Card> cardList, string keyToPersist)
         {
             foreach(Card card in cardList)
             {
                 HandCards.Add(new HandCard { Card = card, ImageUri = card.ImageUri, IsEnabled = true, IsVisible = true });
             }
+            PersistCollection(keyToPersist);
+        }
+
+        public void GetHandCardsFromPersistency(string key)
+        {
+            //Frage an Saschas: Ich übergebe hier ja nur die Referenz zum Object, was passiert, wenn das übergebene Object gelöscht wird. M.w.n. bleibt das Object solange erhalten wie es Refernzen gibt, korrekt? Danach kommt der GC
+            HandCards = _gameDataRepository.GetJsonCollection(key);
+            OnHideHand();
         }
 
         //Adds a new card to the ObservableCollection. Exactly to that spot where the last card has been drawn
-        public void GetHandCard(Card card)
+        public void GetHandCard(Card card, string keyToPersist)
         {
             if (null != card)
             {
@@ -90,6 +109,7 @@ namespace LostCities.ViewModel
                 {
                     HandCards[_abgelegteKarteIndex].Card = card;
                 }
+                PersistCollection(keyToPersist);
             }
         }        
 
