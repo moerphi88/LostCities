@@ -91,9 +91,6 @@ namespace LostCities.Service
 
                 _handPlayerOne.GetHandCardsFromPersistency(HandOneCardsKeyString);
                 _handPlayerTwo.GetHandCardsFromPersistency(HandTwoCardsKeyString);
-
-                //To quickly end a game us this:
-                _cardDeck.GetXCards(28); //Do 
             }
             else
             {
@@ -106,6 +103,9 @@ namespace LostCities.Service
                 _handPlayerTwo.GetHandCards(_cardDeck.GetXCards(HandCards), HandTwoCardsKeyString);
 
                 _gameDataRepository.SetJsonList(CardDeckKeyString, _cardDeck.List);
+
+                //To quickly end a game us this:
+                _cardDeck.GetXCards(36); //Do 
             }
             
             // Eventbinding

@@ -89,6 +89,11 @@ namespace LostCities
 
         private void CreateAnlegeStapelView()
         {
+            //Clear Anlegestapel
+            Anlegestapel1.Children.Clear();
+            Anlegestapel2.Children.Clear();
+
+            //Draw again
             AddCardsToStapelView(Anlegestapel1, (AnlegestapelViewModel)_mainViewModel.AnlegeStapelVM);
             AddCardsToStapelView(Anlegestapel2, (AnlegestapelViewModel)_mainViewModel.AnlegeStapel2VM);
         }
