@@ -6,20 +6,23 @@
              x:Class="LostCities.MainPage"
              BackgroundColor="LightSeaGreen"
              BackgroundImage="lostcitiesbackground.jpg">
-    <Grid
-        RowSpacing="0" ColumnSpacing="0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <StackLayout    x:Name="HandSpielerEins"
+    <ContentPage.Content>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid RowSpacing="0" ColumnSpacing="0" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackLayout    x:Name="HandSpielerEins"
                         BackgroundColor="Brown"
                         Orientation="Horizontal"
                         Padding = "10 10 0 10"
@@ -30,96 +33,74 @@
                         Grid.Column="1"
                         Grid.ColumnSpan="2"
                         Rotation="180">
-        </StackLayout>
-        <StackLayout    x:Name="HandSpielerZwei"
+                </StackLayout>
+                <StackLayout    x:Name="HandSpielerZwei"
                         BackgroundColor="Brown"
                         Orientation="Horizontal"
                         Padding = "10 10 0 10"
                         Spacing="5"
                         HorizontalOptions="CenterAndExpand"
                         VerticalOptions="End"
-                        Grid.Row="2"
+                        Grid.Row="4"
                         Grid.Column="1"
                         Grid.ColumnSpan="2">
-        </StackLayout>
-        <StackLayout x:Name="MiddleStack"
+                </StackLayout>
+                <StackLayout x:Name="MiddleStack"
                 Orientation="Horizontal"
                 Grid.Column="1"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.ColumnSpan="2"
                 Spacing="50"
                 Padding="10"
                 HorizontalOptions="Center"
                 VerticalOptions="Center">
-            <Image Rotation="0" x:Name="KarteZiehenButton" Source="kartenhindergrund.png" IsEnabled="{Binding KarteZiehenButtonIsEnabled}">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OnKarteZiehenButtonPressedCommand}"></TapGestureRecognizer>
-                </Image.GestureRecognizers>
-            </Image>
-            <StackLayout x:Name="DiscardPile" Orientation="Horizontal"   Spacing="35">
-                
-                <Image Rotation="90" Source="{Binding WeißerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="0"></TapGestureRecognizer>
-                    </Image.GestureRecognizers>
-                </Image>
-                
-                <Image Rotation="90" Source="{Binding GruenerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="1"></TapGestureRecognizer>
-                    </Image.GestureRecognizers>
-                </Image>
-                
-                <Image Rotation="90" Source="{Binding BlauerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="2"></TapGestureRecognizer>
-                    </Image.GestureRecognizers>
-                </Image>
-                
-                <Image Rotation="90" Source="{Binding GelberStapelImageUri}" IsEnabled="{Binding IsEnabled}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="3"></TapGestureRecognizer>
-                    </Image.GestureRecognizers>
-                </Image>
-                
-                <Image Rotation="90" Source="{Binding RoterStapelImageUri}" IsEnabled="{Binding IsEnabled}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="4"></TapGestureRecognizer>
-                    </Image.GestureRecognizers>
-                </Image>
-        </StackLayout>
-        </StackLayout>
-        <StackLayout    x:Name="Anlegestapel"
-                            Orientation="Horizontal"
-                            Padding="10"
-                            Spacing="20"
-                            HorizontalOptions="Center"
-                            VerticalOptions="End"
-                            Rotation="180"
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2">
-            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}"  Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
-        </StackLayout>
-        <StackLayout    x:Name="Anlegestapel2"
-                            Orientation="Horizontal"
-                            Padding="10"
-                            Spacing="20"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Start"
-                            Rotation="0"
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2">
-            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding WeißerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="0"/>
-            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GruenerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="1"/>
-            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding BlauerStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="2"/>
-            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding GelberStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="3"/>
-            <Button WidthRequest="50" HeightRequest="70" IsEnabled="{Binding IsEnabled}" Image="{Binding RoterStapelImageUri}" Command="{Binding OnButtonPressedCommand}" CommandParameter="4"/>
-        </StackLayout>
-    </Grid>
+                    <AbsoluteLayout x:Name="KarteZiehenButton" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                        <Image Rotation="0"  Source="kartenhindergrund.png" IsEnabled="{Binding KarteZiehenButtonIsEnabled}" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnKarteZiehenButtonPressedCommand}"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label Text="{Binding CountCard}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Red" FontSize="Large" AbsoluteLayout.LayoutBounds="0.5,0,25,25" AbsoluteLayout.LayoutFlags="PositionProportional"></Label>
+                    </AbsoluteLayout>
+                    <StackLayout x:Name="DiscardPile"
+                        Orientation="Horizontal"
+                        Spacing="35">
+                        <Image Rotation="90" Source="{Binding WeißerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="0"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Rotation="90" Source="{Binding GruenerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="1"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Rotation="90" Source="{Binding BlauerStapelImageUri}" IsEnabled="{Binding IsEnabled}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="2"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Rotation="90" Source="{Binding GelberStapelImageUri}" IsEnabled="{Binding IsEnabled}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="3"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Rotation="90" Source="{Binding RoterStapelImageUri}" IsEnabled="{Binding IsEnabled}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnButtonPressedCommand}" CommandParameter="4"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                </StackLayout>
+                <AbsoluteLayout  x:Name="Anlegestapel1" Rotation="180"
+                                 Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
+                </AbsoluteLayout>
+                <AbsoluteLayout  x:Name="Anlegestapel2"
+                                 Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2">
+                </AbsoluteLayout>
+            </Grid>
+            <Button x:Name="HideHandButton1" Command="{Binding OnHideHandCommand}" Text="{Binding HideShowButtonName}" Rotation="180" AbsoluteLayout.LayoutBounds="0,0,150,50" AbsoluteLayout.LayoutFlags="PositionProportional"></Button>
+            <Button x:Name="HideHandButton2" Command="{Binding OnHideHandCommand}" Text="{Binding HideShowButtonName}" AbsoluteLayout.LayoutBounds="1,1,150,50" AbsoluteLayout.LayoutFlags="PositionProportional"></Button>
+        </AbsoluteLayout>
+    </ContentPage.Content>
 </ContentPage>

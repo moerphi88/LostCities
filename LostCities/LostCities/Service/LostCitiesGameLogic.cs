@@ -20,15 +20,16 @@ namespace LostCities.Service
         private CardDeck _cardDeck;
         private bool _gameIsOver;
         private int _activePlayer = 0;
+        private string _countCard = "";
 
         private const int HandCards = 8;
         private const string PlayerNeedsToPlayACard = "Spieler {0}. Bitte spiele eine Karte, indem Du eine Karte von deiner Hand anklickst.";
         private const string PlayerNeedsToDrawACard = "Spieler {0}. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel.";
 
-        private String _anweisungsText;
+        private string _anweisungsText;
         private bool _karteZiehenButtonIsEnabeld;
 
-        public String AnweisungsLabelText
+        public string AnweisungsLabelText
         {
             get
             {
@@ -40,10 +41,7 @@ namespace LostCities.Service
                 OnPropertyChanged();
             }
         }
-        public String KarteZiehenButtonText { get; set; }
-
-        public ICommand OnKarteZiehenButtonPressedCommand { get; }
-
+        public string KarteZiehenButtonText { get; set; }
         public bool KarteZiehenButtonIsEnabled
         {
             get
@@ -56,13 +54,26 @@ namespace LostCities.Service
                 OnPropertyChanged();
             }
         }
+        public string CountCard
+        {
+            get
+            {
+                return _countCard;
+            }
+            set
+            {
+                _countCard = value;
+                if(int.Parse(_countCard) <= 5) OnPropertyChanged();
+            }
+        }
+
+        public ICommand OnKarteZiehenButtonPressedCommand { get; }
 
         private void OnButtonPressed()
         {
             DrawHandCard();
+            CountCard = _cardDeck.CountCard.ToString();
         }
-
-
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {
@@ -77,7 +88,7 @@ namespace LostCities.Service
             AnweisungsLabelText = String.Format(PlayerNeedsToPlayACard, _activePlayer == 0 ? "1" : "2");
             KarteZiehenButtonText = "Karte ziehen Binding";
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
-                                  
+
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
 
@@ -148,6 +159,10 @@ namespace LostCities.Service
                         CancelCardTransfer(e.Card);
                     }
                     IsGameOver();
+                    if (_gameIsOver)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Das Spiel ist zu Ende", ShowWinnerWithPoints(), "Ok");
+                    }
                 }
             }
             catch (Exception ex)
@@ -155,6 +170,22 @@ namespace LostCities.Service
                 Debug.WriteLine("LostCitiesGameLogic. OnKarteAblegen. " + ex.Message);
             }
             Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
+        }
+
+        private String ShowWinnerWithPoints()
+        {
+            var pointsPlayer1 = _anlegestapel.CountPoints();
+            var pointsPlayer2 = _anlegestapel2.CountPoints();
+            if (pointsPlayer1 > pointsPlayer2)
+            {
+                return $"Herzlich Glückwunsch, Spieler 1 du hast gewonnen mit {pointsPlayer1} Punkten. Spieler 2 hat {pointsPlayer2} Punkte. Bitte startet die App neu, um ein neues Spiel zu beginnen";
+            } else if (pointsPlayer1 < pointsPlayer2)
+            {
+                return $"Herzlich Glückwunsch, Spieler 2 du hast gewonnen mit {pointsPlayer2} Punkten. Spieler 1 hat {pointsPlayer1} Punkte. Bitte startet die App neu, um ein neues Spiel zu beginnen ";
+            } else
+            {
+                return $"Unentschieden. Herzlich Glückwunsch. Spieler 1 hat {pointsPlayer1} Punkte und Spieler 2 {pointsPlayer2} Punkte. Bitte startet die App neu, um ein neues Spiel zu beginnen";
+            }
         }
 
         private IStapel GetActiveAnlegestapel()
@@ -176,8 +207,8 @@ namespace LostCities.Service
                     //Liegt auf dem Farbstapel der ausgewählten Karte bereits eine Karte?
                     if(card.Name == c.Name)
                     {
-                        //Wenn ja, ist die ausgewählte Karte höher als die die schon liegt
-                        if(card.Zahl > c.Zahl)
+                        //Wenn ja, ist die ausgewählte Karte höher oder gleich (gleich bei mehreren Händen) als die die schon liegt
+                        if(card.Zahl >= c.Zahl)
                         {
                             return new String[] { "Karte ablegen", "Karte anlegen" }; //Ja, dann kann der Nutzer frei entscheiden
                         }

@@ -7,14 +7,15 @@ using Xamarin.Forms;
 using LostCities.ViewModel;
 using LostCities.Model;
 using LostCities.Service;
+using System.Diagnostics;
 
 namespace LostCities
 {
     public partial class MainPage : ContentPage
     {
         private MainViewModel _mainViewModel;
-        private double _cardWidth = 100.0;
-        private double _cardHeight = 140.0;
+        private double _cardWidth = 75.0;
+        private double _cardHeight = 105.0;
 
         public MainPage()
         {
@@ -24,11 +25,14 @@ namespace LostCities
             BindingContext = _mainViewModel;
 
             DiscardPile.BindingContext = _mainViewModel.DiscardPileVM;
-            Anlegestapel.BindingContext = _mainViewModel.AnlegeStapelVM;
-            Anlegestapel2.BindingContext = _mainViewModel.AnlegeStapel2VM;
 
-            //SpielAnweisung.BindingContext = _mainViewModel.Lcgl;
+            _mainViewModel.AnlegeStapelVM.AddedCardToStack += OnAddedCardToStack;
+            _mainViewModel.AnlegeStapel2VM.AddedCardToStack += OnAddedCardToStack;
+
             KarteZiehenButton.BindingContext = _mainViewModel.Lcgl;
+
+            HideHandButton1.BindingContext = _mainViewModel.HandVM;
+            HideHandButton2.BindingContext = _mainViewModel.HandVM2;
 
             HandSpielerEins.BindingContext = _mainViewModel.HandVM;
             CreateHandView(HandSpielerEins, _mainViewModel.HandVM);
@@ -72,10 +76,38 @@ namespace LostCities
             }
         }
 
-        protected override void OnAppearing()
+        private void OnAddedCardToStack(object sender, EventArgs e)
         {
-            base.OnAppearing();
+            CreateAnlegeStapelView();
         }
+
+        private void CreateAnlegeStapelView()
+        {
+            AddCardsToStapelView(Anlegestapel1, (AnlegestapelViewModel)_mainViewModel.AnlegeStapelVM);
+            AddCardsToStapelView(Anlegestapel2, (AnlegestapelViewModel)_mainViewModel.AnlegeStapel2VM);
+        }
+
+        private void AddCardsToStapelView(AbsoluteLayout layout, AnlegestapelViewModel vm)
+        {
+            //https://docs.microsoft.com/de-de/xamarin/xamarin-forms/user-interface/layouts/absolute-layout 
+
+            double horizontalExtraSpacing = _cardWidth + 50;
+
+            var horizontalOffsetCnt = 0;
+            foreach (KeyValuePair<Farbe, List<Card>> entry in vm.Stapel)
+            {
+                var verticalOffsetCnt = 0;
+                foreach (var c in entry.Value)
+                {
+                    var image = new Image { Source = c.ImageUri };
+                    AbsoluteLayout.SetLayoutBounds(image, new Rectangle(horizontalExtraSpacing + (horizontalOffsetCnt * _cardWidth) + 5, verticalOffsetCnt * .17 * _cardHeight, _cardWidth, _cardHeight));
+                    layout.Children.Add(image);
+                    verticalOffsetCnt++;
+                }
+                horizontalOffsetCnt++;
+            }
+        }
+
 
         // Creates a button for each handcard on a players hand and adds it to the stacklayout
         private void CreateHandView(StackLayout layout, HandViewModel handViewModel)

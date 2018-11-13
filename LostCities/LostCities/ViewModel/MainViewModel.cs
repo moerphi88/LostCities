@@ -29,26 +29,6 @@ namespace LostCities.ViewModel
             HandVM = new HandViewModel(null);
             HandVM2 = new HandViewModel(null);
             Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
-
-            DiscardPileTitleLabelText = "Ablagestapel";
-            AnlegestapelTitleLabelText = "Anlegestapel";
-            HandEinsTitleLabelText = "Hand Spieler 1";
-            HandZweiTitleLabelText = "Hand Spieler 2";
         }
-
-
-
-
-        // Muss ich wirklich die Set Methode implementieren und OnPropertyCHanged aufrufen, oder gibt es eine andere Möglichkeit den Wert zu aktualisieren?! 
-        #region Properties
-
-        public String DiscardPileTitleLabelText { get; set; }
-        public String AnlegestapelTitleLabelText { get; set; }
-        public String HandEinsTitleLabelText { get; set; }
-        public String HandZweiTitleLabelText { get; set; }
-       
-
-        #endregion
-
     }
 }

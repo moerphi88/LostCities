@@ -19,6 +19,8 @@ namespace LostCities.ViewModel
         //TODO Hier könnte ich ein dict einführen. Key wäre die Farbe. und value eine Liste von Cards. Nur die oberste würde angezeigt werden.
         private List<Card> _stapel;
 
+        public event EventHandler AddedCardToStack;
+
         public MauMauViewModel(INavigation navigation) : base(navigation)
         {
             _stapel = new List<Card>();
@@ -43,6 +45,11 @@ namespace LostCities.ViewModel
         private void UpdateView()
         {
             ShownCardImageUri = _stapel[_stapel.Count - 1].ImageUri;
+        }
+
+        public int CountPoints()
+        {
+            throw new NotImplementedException();
         }
 
         #region Properties
