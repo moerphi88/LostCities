@@ -52,6 +52,16 @@ namespace LostCities.ViewModel
             throw new NotImplementedException();
         }
 
+        public void PersistStapel(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetStapelCardsFromPersistency(string key)
+        {
+            throw new NotImplementedException();
+        }
+
         #region Properties
 
         public String ShownCardImageUri

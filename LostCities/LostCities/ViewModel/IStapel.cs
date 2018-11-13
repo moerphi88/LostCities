@@ -13,5 +13,7 @@ namespace LostCities.ViewModel
         List<Card> GetTopCards();
         event EventHandler AddedCardToStack;
         int CountPoints();
+        void PersistStapel(string key);
+        void GetStapelCardsFromPersistency(string key);
     }
 }

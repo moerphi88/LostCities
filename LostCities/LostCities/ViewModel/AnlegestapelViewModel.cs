@@ -9,11 +9,14 @@ using Xamarin.Forms;
 using LostCities;
 using LostCities.Model;
 using System.Diagnostics;
+using LostCities.Service;
 
 namespace LostCities.ViewModel
 {
     public class AnlegestapelViewModel : BaseViewModel, IStapel
     {
+        private GameDataRepository _gameDataRepository;
+
         public Dictionary<Farbe, List<Card>> Stapel { get; set; }
 
         public event EventHandler AddedCardToStack;
@@ -28,6 +31,8 @@ namespace LostCities.ViewModel
                 { Farbe.Gelb, new List<Card>() },
                 { Farbe.Rot, new List<Card>()  }
             };
+
+            _gameDataRepository = new GameDataRepository();
         }
         
         public int CountPoints()
@@ -96,6 +101,16 @@ namespace LostCities.ViewModel
                 }
             }
             return list;
+        }
+
+        public void PersistStapel(string key)
+        {
+            _gameDataRepository.SetJsonDict(key, Stapel);
+        }
+
+        public void GetStapelCardsFromPersistency(string key)
+        {
+            Stapel = _gameDataRepository.GetJsonDict(key);
         }
     }
 }
