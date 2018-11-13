@@ -30,6 +30,7 @@ namespace LostCities
             _mainViewModel.AnlegeStapel2VM.AddedCardToStack += OnAddedCardToStack;
 
             KarteZiehenButton.BindingContext = _mainViewModel.Lcgl;
+            PopupDialog.BindingContext = _mainViewModel.Lcgl.PopupDialogViewModel;
 
             HideHandButton1.BindingContext = _mainViewModel.HandVM;
             HideHandButton2.BindingContext = _mainViewModel.HandVM2;

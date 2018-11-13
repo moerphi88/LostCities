@@ -9,11 +9,13 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace LostCities.Service
 {
     public class LostCitiesGameLogic : INotifyPropertyChanged
     {
+        public PopupDialogViewModel PopupDialogViewModel { get; set; }
         private HandViewModel _handSpielerEins, _handSpielerZwei;
         private DiscardPileViewModel _ablagestapel;
         private IStapel _anlegestapel, _anlegestapel2;
@@ -77,6 +79,7 @@ namespace LostCities.Service
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {
+            PopupDialogViewModel = new PopupDialogViewModel(null);
             _handSpielerEins = handSpielerEins;
             _handSpielerZwei = handSpielerZwei;
             _ablagestapel = ablagestapel;
@@ -100,6 +103,16 @@ namespace LostCities.Service
             _ablagestapel.KarteAbheben += OnKarteAbheben;
 
             InitGame();
+
+            //Task.Run(async () => //Task.Run automatically unwraps nested Task types!
+            //{
+            //    Debug.WriteLine("Start");
+            //    PopupDialogViewModel.Rotation = 90;
+            //    await Task.Delay(5000);
+            //    PopupDialogViewModel.Rotation = 270;
+            //    Debug.WriteLine("Done");
+            //});
+            //Debug.WriteLine("All done");
         }
 
         public void DrawHandCard()
