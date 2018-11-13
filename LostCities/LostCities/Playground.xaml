@@ -3,8 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LostCities.Playground">
   <ContentView.Content>
-      <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
-  </ContentView.Content>
+      <AbsoluteLayout>
+            <ContentView x:Name="popupLoadingView"  BackgroundColor="Accent" Padding="10, 10, 10 , 10" IsVisible="true" AbsoluteLayout.LayoutBounds="0.5, 0.5, 500, 300" AbsoluteLayout.LayoutFlags="PositionProportional">
+                <StackLayout BackgroundColor="Black" Padding="10, 10 , 10, 10">
+                    <Label Padding="0" Margin="0"  BackgroundColor="Blue" x:Name="lblTitleText" LineBreakMode="CharacterWrap"  FontSize="50" TextColor="Black" Text="Spieler 1 ist am Zug."></Label>
+                    <Label BackgroundColor="Blue" x:Name="lblLoadingText" FontSize="Small" TextColor="Black" Text="Loading..."></Label>
+                    <Button BackgroundColor="Blue" Text="Karte ablegen" TextColor="Black" HorizontalOptions="Start"></Button>
+                    <Button BackgroundColor="Blue" Text="Karte ablegen"  TextColor="Black" HorizontalOptions="Start"></Button>
+                    <Button BackgroundColor="Blue" Text="Cancel" TextColor="Violet" HorizontalOptions="Start"></Button>
+                </StackLayout>
+            </ContentView>
+      </AbsoluteLayout>
+    </ContentView.Content>
 </ContentView>

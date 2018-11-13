@@ -101,6 +101,18 @@
             </Grid>
             <Button x:Name="HideHandButton1" Command="{Binding OnHideHandCommand}" Text="{Binding HideShowButtonName}" Rotation="180" AbsoluteLayout.LayoutBounds="0,0,150,50" AbsoluteLayout.LayoutFlags="PositionProportional"></Button>
             <Button x:Name="HideHandButton2" Command="{Binding OnHideHandCommand}" Text="{Binding HideShowButtonName}" AbsoluteLayout.LayoutBounds="1,1,150,50" AbsoluteLayout.LayoutFlags="PositionProportional"></Button>
+            <!--Popup Area-->
+            <ContentView x:Name="popupLoadingView"  Padding="10, 0" IsVisible="true" AbsoluteLayout.LayoutBounds="0, 0, 100, 100"  >
+                <StackLayout  Rotation="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <StackLayout Orientation="Vertical" HeightRequest="150" WidthRequest="200" BackgroundColor="White">
+                        <Label x:Name="lblTitleText" LineBreakMode="CharacterWrap"  FontSize="Large" TextColor="Black" VerticalOptions="Start" HorizontalOptions="Start" VerticalTextAlignment="Center" Text="Spieler 1 ist am Zug."></Label>
+                        <Label x:Name="lblLoadingText" FontSize="Small" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Start" VerticalTextAlignment="Center" Text="Loading..."></Label>
+                        <Button Margin="0" Padding="0"  Text="Karte ablegen" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start"></Button>
+                        <Button Text="Karte ablegen" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start"></Button>
+                        <Button Text="Cacel" BackgroundColor="Transparent" TextColor="Violet" HorizontalOptions="Start"></Button>
+                    </StackLayout>
+                </StackLayout>
+            </ContentView>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
