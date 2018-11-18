@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using LostCities.ViewModel;
 using LostCities.Model;
-using LostCities.Service;
-using System.Diagnostics;
 
 namespace LostCities
 {
@@ -22,7 +17,6 @@ namespace LostCities
             InitializeComponent();
 
             _mainViewModel = new MainViewModel(this.Navigation);
-            BindingContext = _mainViewModel;
 
             DiscardPile.BindingContext = _mainViewModel.DiscardPileVM;
 
