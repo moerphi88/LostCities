@@ -15,7 +15,7 @@ namespace LostCities.Service
 {
     public class LostCitiesGameLogic : INotifyPropertyChanged
     {
-        public PopupDialogViewModel PopupDialogViewModel { get; set; }
+        
         private HandViewModel _handSpielerEins, _handSpielerZwei;
         private DiscardPileViewModel _ablagestapel;
         private IStapel _anlegestapel, _anlegestapel2;
@@ -31,6 +31,8 @@ namespace LostCities.Service
         private string _anweisungsText;
         private bool _karteZiehenButtonIsEnabeld;
 
+        public PopupDialogViewModel PopupDialogViewModel { get; set; }
+        //TODO Wird das noch gebraucht? AnweisungsLabelText und KarteZiehenButtonText
         public string AnweisungsLabelText
         {
             get
@@ -69,8 +71,9 @@ namespace LostCities.Service
             }
         }
 
-        public ICommand OnKarteZiehenButtonPressedCommand { get; }
 
+
+        public ICommand OnKarteZiehenButtonPressedCommand { get; }
         private void OnButtonPressed()
         {
             DrawHandCard();
@@ -96,6 +99,8 @@ namespace LostCities.Service
             _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
             _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
 
+            _cardDeck.GetXCards(35);
+
             // Eventbinding
             //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
             _handSpielerEins.PlayCard += OnPlayCard;
@@ -119,10 +124,6 @@ namespace LostCities.Service
         public void DrawHandCard()
         {
             GiveNewHandCard(_cardDeck.GetFirstCard());
-            PopupDialogViewModel.DialogIsVisible = true;
-            PopupDialogViewModel.ButtonOneText = "Hans";
-            PopupDialogViewModel.ButtonThreeText = "Hunde";
-            PopupDialogViewModel.ButtonTwoText = "Hansi";
         }
 
         private void OnKarteAbheben(object sender, CardEventArgs e)
@@ -179,7 +180,8 @@ namespace LostCities.Service
                     IsGameOver();
                     if (_gameIsOver)
                     {
-                        await App.Current.MainPage.DisplayAlert("Das Spiel ist zu Ende", ShowWinnerWithPoints(), "Ok");
+                        //await App.Current.MainPage.DisplayAlert("Das Spiel ist zu Ende", ShowWinnerWithPoints(), "Ok");
+                        PopupDialogViewModel.CreatePopupDialog("Das Spiel ist zu Ende", ShowWinnerWithPoints(), null, null, "OK");
                     }
                 }
             }

@@ -32,8 +32,8 @@ namespace LostCities.ViewModel
         private string _buttonThreeText;
 
 
-        public ICommand OnFirstButtonPressed { get; }
-        public ICommand OnSecondButtonPressed { get; }
+        public ICommand OnFirstButtonPressed { get; private set; }
+        public ICommand OnSecondButtonPressed { get; private set; }
         public ICommand OnThirdButtonPressed { get; }
 
         public int Rotation
@@ -106,21 +106,54 @@ namespace LostCities.ViewModel
             OnFirstButtonPressed = new Command(() => { DialogIsVisible = false; });
             OnSecondButtonPressed = new Command(() => { DialogIsVisible = false; });
             OnThirdButtonPressed = new Command(() => { DialogIsVisible = false; });
+        }
 
-            DialogIsVisible = true;           
-            TitleLabelText = "Test text";
+        public void CreatePopupDialog(string title, string subtitle = null, string buttonOne = null, string buttonTwo = null, string buttonThree = null)
+        {
+            DialogIsVisible = true;
+            TitleLabelText = title;
 
-            SubtitleLabelText = "Hunde";
-            SubtitleLabelIsVisible = true;
+            if (subtitle != null)
+            {
+                SubtitleLabelText = subtitle;
+                SubtitleLabelIsVisible = true;
+            }
+            else
+            {
+                SubtitleLabelText = string.Empty;
+                SubtitleLabelIsVisible = false;
+            }
 
-            ButtonOneText = "Cancel Cancel Cancel";
-            ButtonOneIsVisible = true;
+            if (buttonOne != null)
+            {
+                ButtonOneText = buttonTwo;
+                ButtonOneIsVisible = true;
+            }
+            else
+            {
+                ButtonOneText = string.Empty;
+                ButtonOneIsVisible = false;
+            }
 
-            ButtonTwoText = "Cancel";
-            ButtonTwoIsVisible = true;
+            if (buttonTwo != null){
+                ButtonTwoText = buttonTwo;
+                ButtonTwoIsVisible = true;
+            }
+            else {
+                ButtonTwoText = string.Empty;
+                ButtonTwoIsVisible = false;
+            }
 
-            ButtonThreeText = "Cancel";
-            ButtonThreeIsVisible = true;
+            if (buttonThree != null)
+            {
+                ButtonThreeText = buttonTwo;
+                ButtonThreeIsVisible = true;
+            }
+            else
+            {
+                ButtonThreeText = string.Empty;
+                ButtonThreeIsVisible = false;
+            }            
         }
     }
 }
