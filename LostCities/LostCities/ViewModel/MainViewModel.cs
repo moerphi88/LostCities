@@ -12,6 +12,8 @@ namespace LostCities.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
+        private const int HandCards = 8;
+
         public DiscardPileViewModel DiscardPileVM { get; set; }
         public IStapel AnlegeStapelVM { get; set; }
         public IStapel AnlegeStapel2VM { get; set; }
@@ -29,6 +31,16 @@ namespace LostCities.ViewModel
             HandVM = new HandViewModel(null);
             HandVM2 = new HandViewModel(null);
             Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
+
+            HandVM.GetHandCards(Lcgl.CardDeck.GetXCards(HandCards));
+            HandVM2.GetHandCards(Lcgl.CardDeck.GetXCards(HandCards));
+            
+            // Eventbinding
+            //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
+            HandVM.PlayCard += Lcgl.OnPlayCard;
+            HandVM2.PlayCard += Lcgl.OnPlayCard;
+
+            DiscardPileVM.KarteAbheben += Lcgl.OnKarteAbheben;
         }
     }
 }

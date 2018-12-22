@@ -14,38 +14,26 @@ using System.Threading.Tasks;
 namespace LostCities.Service
 {
     public class LostCitiesGameLogic : INotifyPropertyChanged
-    {
-        
+    {        
         private HandViewModel _handSpielerEins, _handSpielerZwei;
         private DiscardPileViewModel _ablagestapel;
         private IStapel _anlegestapel, _anlegestapel2;
         private CardDeck _cardDeck;
+        public CardDeck CardDeck {
+            get
+            {
+                return _cardDeck;
+            }
+        }
         private bool _gameIsOver;
         private int _activePlayer = 0;
         private string _countCard = "";
 
-        private const int HandCards = 8;
-        private const string PlayerNeedsToPlayACard = "Spieler {0}. Bitte spiele eine Karte, indem Du eine Karte von deiner Hand anklickst.";
-        private const string PlayerNeedsToDrawACard = "Spieler {0}. Bitte nimm eine Karte vom Nachziehstapel oder vom Ablagestapel.";
 
-        private string _anweisungsText;
-        private bool _karteZiehenButtonIsEnabeld;
 
         public PopupDialogViewModel PopupDialogViewModel { get; set; }
-        //TODO Wird das noch gebraucht? AnweisungsLabelText und KarteZiehenButtonText
-        public string AnweisungsLabelText
-        {
-            get
-            {
-                return _anweisungsText;
-            }
-            set
-            {
-                _anweisungsText = value;
-                OnPropertyChanged();
-            }
-        }
-        public string KarteZiehenButtonText { get; set; }
+
+        private bool _karteZiehenButtonIsEnabeld;
         public bool KarteZiehenButtonIsEnabled
         {
             get
@@ -72,12 +60,11 @@ namespace LostCities.Service
         }
 
 
-
         public ICommand OnKarteZiehenButtonPressedCommand { get; }
         private void OnButtonPressed()
         {
             DrawHandCard();
-            CountCard = _cardDeck.CountCard.ToString();
+            CountCard = CardDeck.CountCard.ToString();
         }
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
@@ -92,21 +79,11 @@ namespace LostCities.Service
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
-            AnweisungsLabelText = String.Format(PlayerNeedsToPlayACard, _activePlayer == 0 ? "1" : "2");
-            KarteZiehenButtonText = "Karte ziehen Binding";
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
 
-            _handSpielerEins.GetHandCards(_cardDeck.GetXCards(HandCards));
-            _handSpielerZwei.GetHandCards(_cardDeck.GetXCards(HandCards));
 
-            _cardDeck.GetXCards(35);
+            _cardDeck.GetXCards(35); //Karten wegwerfen
 
-            // Eventbinding
-            //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
-            _handSpielerEins.PlayCard += OnPlayCard;
-            _handSpielerZwei.PlayCard += OnPlayCard;
-
-            _ablagestapel.KarteAbheben += OnKarteAbheben;
 
             InitGame();
 
@@ -126,13 +103,13 @@ namespace LostCities.Service
             GiveNewHandCard(_cardDeck.GetFirstCard());
         }
 
-        private void OnKarteAbheben(object sender, CardEventArgs e)
+        public void OnKarteAbheben(object sender, CardEventArgs e)
         {
             GiveNewHandCard(e.Card);
             Debug.WriteLine(nameof(OnKarteAbheben));
         }
 
-        private async void OnPlayCard(object sender, CardEventArgs e)
+        public async void OnPlayCard(object sender, CardEventArgs e)
         {
             try
             {
@@ -244,7 +221,6 @@ namespace LostCities.Service
 
         private void AnnounceNextStepDrawCard()
         {
-            AnweisungsLabelText = String.Format(PlayerNeedsToDrawACard, _activePlayer == 0 ? "1" : "2");
             //await App.Current.MainPage.DisplayAlert(AnweisungsLabelText, null , "Ok");
 
             _handSpielerEins.DisableHand();
@@ -305,7 +281,6 @@ namespace LostCities.Service
             }
             _ablagestapel.DisableDrawing();
             KarteZiehenButtonIsEnabled = false;
-            AnweisungsLabelText = String.Format(PlayerNeedsToPlayACard, _activePlayer == 0 ? "1" : "2");
         }
 
         private void IsGameOver()
