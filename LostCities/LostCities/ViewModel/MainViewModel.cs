@@ -32,6 +32,8 @@ namespace LostCities.ViewModel
             HandVM2 = new HandViewModel(null);
             Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
 
+            OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
+
             HandVM.GetHandCards(Lcgl.CardDeck.GetXCards(HandCards));
             HandVM2.GetHandCards(Lcgl.CardDeck.GetXCards(HandCards));
             
@@ -41,6 +43,43 @@ namespace LostCities.ViewModel
             HandVM2.PlayCard += Lcgl.OnPlayCard;
 
             DiscardPileVM.KarteAbheben += Lcgl.OnKarteAbheben;
+            KarteZiehenButtonIsEnabled = true;
+        }
+
+
+        private bool _karteZiehenButtonIsEnabeld;
+        public bool KarteZiehenButtonIsEnabled
+        {
+            get
+            {
+                return _karteZiehenButtonIsEnabeld;
+            }
+            set
+            {
+                _karteZiehenButtonIsEnabeld = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _countCard = "";
+        public string CountCard
+        {
+            get
+            {
+                return _countCard;
+            }
+            set
+            {
+                _countCard = value;
+                if (int.Parse(_countCard) <= 5) OnPropertyChanged();
+            }
+        }
+
+        public ICommand OnKarteZiehenButtonPressedCommand { get; }
+        private void OnButtonPressed()
+        {
+            Lcgl.DrawHandCard();
+            CountCard = Lcgl.CardDeck.CountCard.ToString();
         }
     }
 }

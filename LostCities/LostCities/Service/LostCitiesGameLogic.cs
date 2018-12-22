@@ -27,45 +27,12 @@ namespace LostCities.Service
         }
         private bool _gameIsOver;
         private int _activePlayer = 0;
-        private string _countCard = "";
+        
 
 
 
         public PopupDialogViewModel PopupDialogViewModel { get; set; }
 
-        private bool _karteZiehenButtonIsEnabeld;
-        public bool KarteZiehenButtonIsEnabled
-        {
-            get
-            {
-                return _karteZiehenButtonIsEnabeld;
-            }
-            set
-            {
-                _karteZiehenButtonIsEnabeld = value;
-                OnPropertyChanged();
-            }
-        }
-        public string CountCard
-        {
-            get
-            {
-                return _countCard;
-            }
-            set
-            {
-                _countCard = value;
-                if(int.Parse(_countCard) <= 5) OnPropertyChanged();
-            }
-        }
-
-
-        public ICommand OnKarteZiehenButtonPressedCommand { get; }
-        private void OnButtonPressed()
-        {
-            DrawHandCard();
-            CountCard = CardDeck.CountCard.ToString();
-        }
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {
@@ -79,7 +46,7 @@ namespace LostCities.Service
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
-            OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
+
 
 
             _cardDeck.GetXCards(35); //Karten wegwerfen
@@ -226,7 +193,7 @@ namespace LostCities.Service
             _handSpielerEins.DisableHand();
             _handSpielerZwei.DisableHand();
             _ablagestapel.EnableDrawing();
-            KarteZiehenButtonIsEnabled = true;
+            //KarteZiehenButtonIsEnabled = true; ToDo => Sobald im mainViewModel der GameState abgefragt werden kann, muss das übernommen werden! 
         }
 
         private void GiveNewHandCard(Card card)
@@ -262,7 +229,7 @@ namespace LostCities.Service
             _handSpielerEins.EnableHand();
             _handSpielerZwei.DisableHand();
             _ablagestapel.DisableDrawing();
-            KarteZiehenButtonIsEnabled = false;
+            //KarteZiehenButtonIsEnabled = false; ToDo => Sobald im mainViewModel der GameState abgefragt werden kann, muss das übernommen werden!
         }
 
         private void SwitchActivePlayer()
@@ -280,7 +247,7 @@ namespace LostCities.Service
                     break;
             }
             _ablagestapel.DisableDrawing();
-            KarteZiehenButtonIsEnabled = false;
+            //KarteZiehenButtonIsEnabled = false; ToDo => Sobald im mainViewModel der GameState abgefragt werden kann, muss das übernommen werden!
         }
 
         private void IsGameOver()
