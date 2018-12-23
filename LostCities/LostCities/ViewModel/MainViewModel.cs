@@ -74,10 +74,10 @@ namespace LostCities.ViewModel
             PopupDialogViewModel.Rotation = Lcgl.GetActivePlayer() == Player.PlayerOne ? 180 : 0;
             if (Lcgl.IsAnlegenPossible(card))
             {
-                PopupDialogViewModel.CreatePopupDialog("Spieler X ist am Zug!", "Test", "Ablegen", "Anlegen", "CANCEL");
+                PopupDialogViewModel.CreatePopupDialog($"{Lcgl.GetActivePlayer().ToString()} ist am Zug!", "Bitte spiele eine Karte.", "Ablegen", "Anlegen", "CANCEL");
             } else
             {
-                PopupDialogViewModel.CreatePopupDialog("Spieler X ist am Zug!", "Test", "Ablegen", null, "CANCEL");
+                PopupDialogViewModel.CreatePopupDialog($"{Lcgl.GetActivePlayer().ToString()} ist am Zug!", "Bitte spiele eine Karte.", "Ablegen", null, "CANCEL");
             }
         }
 
