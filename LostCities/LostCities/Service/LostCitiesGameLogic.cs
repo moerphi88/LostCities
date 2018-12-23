@@ -15,8 +15,6 @@ namespace LostCities.Service
 {
     public class LostCitiesGameLogic : INotifyPropertyChanged
     {        
-        private HandViewModel _handSpielerEins, _handSpielerZwei;
-        private DiscardPileViewModel _ablagestapel;
         private IStapel _anlegestapel, _anlegestapel2;
         private CardDeck _cardDeck;
         public CardDeck CardDeck {
@@ -25,37 +23,18 @@ namespace LostCities.Service
                 return _cardDeck;
             }
         }
-        private bool _gameIsOver;
-        private int _activePlayer = 0;
 
         public event EventHandler StatusChangedEvent;
 
-        public PopupDialogViewModel PopupDialogViewModel { get; set; }
         public GameStatus GameStatus { get; private set; }
 
-        public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
-        {
-            PopupDialogViewModel = new PopupDialogViewModel(null);
-
-            _handSpielerEins = handSpielerEins;
-            _handSpielerZwei = handSpielerZwei;
-            _ablagestapel = ablagestapel;
+        public LostCitiesGameLogic(DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
+        {           
             _anlegestapel = anlegestapel;
             _anlegestapel2 = anlegestapel2;
             _cardDeck = new CardDeck();
-            _gameIsOver = false;
 
             _cardDeck.GetXCards(35); //Karten wegwerfen
-
-            //Task.Run(async () => //Task.Run automatically unwraps nested Task types!
-            //{
-            //    Debug.WriteLine("Start");
-            //    PopupDialogViewModel.Rotation = 90;
-            //    await Task.Delay(5000);
-            //    PopupDialogViewModel.Rotation = 180;
-            //    Debug.WriteLine("Done");
-            //});
-            //Debug.WriteLine("All done");
         }
 
         protected virtual void StatusChanged(EventArgs e)
@@ -90,76 +69,9 @@ namespace LostCities.Service
             StatusChanged(null);
         }
 
-        public void DrawHandCard()
+        public Card GetNewHandCard()
         {
-            GiveNewHandCard(_cardDeck.GetFirstCard());
-        }
-
-        public void OnKarteAbheben(object sender, CardEventArgs e)
-        {
-            GiveNewHandCard(e.Card);
-            Debug.WriteLine(nameof(OnKarteAbheben));
-        }
-
-        public async void OnPlayCard(object sender, CardEventArgs e)
-        {
-            GameStateMachine();
-            try
-            {                
-                if (!_gameIsOver)
-                {
-                    // GameLogik für MauMau
-                    var buttons = EvaluatePossibilities(e.Card);
-
-                    if (null != buttons)
-                    {
-                        //var buttons = new String[] { "Karte ablegen", "Karte anlegen" };
-                        var spieler = _activePlayer == 0 ? "Eins" : "Zwei";
-                        var text = "Spieler " + spieler + " ist am Zug.";
-                        var answer = await App.Current.MainPage.DisplayActionSheet(text, null, "Cancel", buttons);
-
-                        if (null != answer)
-                        {
-                            if (answer != "Cancel")
-                            {
-                                switch (answer)
-                                {
-                                    case "Karte ablegen":
-                                        _ablagestapel.KarteAblegen(e.Card);
-                                        break;
-                                    case "Karte anlegen":
-                                        GetActiveAnlegestapel().KarteAnlegen(e.Card);
-                                        break;
-                                }
-                                AnnounceNextStepDrawCard();
-                            }
-                            else
-                            {
-                                CancelCardTransfer(e.Card);
-                            }
-                        }
-                        else
-                        {
-                            CancelCardTransfer(e.Card);
-                        }
-                    }
-                    else
-                    {
-                        CancelCardTransfer(e.Card);
-                    }
-                    IsGameOver();
-                    if (_gameIsOver)
-                    {
-                        //await App.Current.MainPage.DisplayAlert("Das Spiel ist zu Ende", ShowWinnerWithPoints(), "Ok");
-                        PopupDialogViewModel.CreatePopupDialog("Das Spiel ist zu Ende", ShowWinnerWithPoints(), null, null, "OK");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("LostCitiesGameLogic. OnKarteAblegen. " + ex.Message);
-            }
-            Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
+            return CardDeck.GetFirstCard();
         }
 
         public String ShowWinnerWithPoints()
@@ -178,15 +90,28 @@ namespace LostCities.Service
             }
         }
 
-        private IStapel GetActiveAnlegestapel()
+        #region Helper
+        public Player GetActivePlayer()
         {
-            var anlegestapel = _activePlayer == 0 ? _anlegestapel : _anlegestapel2;
-            return anlegestapel;
+            if (GameStatus == GameStatus.PlayerOneDrawCard || GameStatus == GameStatus.PlayerOnePlayCard)
+            {
+                return Player.PlayerOne;
+            }
+            else
+            {
+                return Player.PlayerTwo;
+            }
         }
 
-        private String[] EvaluatePossibilities(Card card)
+        private IStapel GetActiveAnlegestapel()
         {
+            return GetActivePlayer() == Player.PlayerOne ? _anlegestapel : _anlegestapel2;
+        }
 
+        #endregion
+
+        public String[] EvaluatePossibilities(Card card)
+        {
             var topCard = GetActiveAnlegestapel().GetTopCards();
 
             //Wenn es mindestens eine angelegte Karte gibt,...
@@ -212,72 +137,10 @@ namespace LostCities.Service
             }
         }
 
-        private void AnnounceNextStepDrawCard()
-        {
-            //await App.Current.MainPage.DisplayAlert(AnweisungsLabelText, null , "Ok");
-
-            _handSpielerEins.DisableHand();
-            _handSpielerZwei.DisableHand();
-            _ablagestapel.EnableDrawing();
-            //KarteZiehenButtonIsEnabled = true; ToDo => Sobald im mainViewModel der GameState abgefragt werden kann, muss das übernommen werden! 
-        }
-
-        private void GiveNewHandCard(Card card)
-        {
-            switch (_activePlayer)
-            {
-                case 0: //Spieler 1
-                    _handSpielerEins.GetHandCard(card);
-                    SwitchActivePlayer();
-                    break;
-                case 1:
-                    _handSpielerZwei.GetHandCard(card);
-                    SwitchActivePlayer();
-                    break;
-            }
-        }
-
-        private void CancelCardTransfer(Card card)
-        {
-            switch (_activePlayer)
-            {
-                case 0: //Spieler 1
-                    _handSpielerEins.GetHandCard(card);
-                    break;
-                case 1:
-                    _handSpielerZwei.GetHandCard(card);
-                    break;
-            }
-        }
-
         public void InitGame()
         {
             GameStateMachine();  //Start game
         }
-
-        private void SwitchActivePlayer()
-        {
-            _activePlayer = _activePlayer == 0 ? 1 : 0;
-            switch (_activePlayer)
-            {
-                case 0:
-                    _handSpielerEins.EnableHand();
-                    _handSpielerZwei.DisableHand();
-                    break;
-                case 1:
-                    _handSpielerEins.DisableHand();
-                    _handSpielerZwei.EnableHand();
-                    break;
-            }
-            _ablagestapel.DisableDrawing();
-            //KarteZiehenButtonIsEnabled = false; ToDo => Sobald im mainViewModel der GameState abgefragt werden kann, muss das übernommen werden!
-        }
-
-        private void IsGameOver()
-        {
-            _gameIsOver = _cardDeck.IsEmpty();
-        }
-
 
         #region INotifyPropertyChanges Handler
 

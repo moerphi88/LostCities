@@ -1,4 +1,5 @@
-﻿using LostCities.Service;
+﻿using LostCities.Model;
+using LostCities.Service;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -53,7 +54,7 @@ namespace LostCities.ViewModel
             AnlegeStapel2VM = new AnlegestapelViewModel(null);
             HandVM = new HandViewModel(null);
             HandVM2 = new HandViewModel(null);
-            Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
+            Lcgl = new LostCitiesGameLogic(DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
 
             PopupDialogViewModel = new PopupDialogViewModel(null);
             PopupDialogViewModel.SetCommand(new Command(() => { CardAblegen(); }), new Command(() => { CardAnlegen(); }));
@@ -65,16 +66,12 @@ namespace LostCities.ViewModel
             
             // Eventbinding
             //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
-            HandVM.PlayCard += Lcgl.OnPlayCard;
-            HandVM2.PlayCard += Lcgl.OnPlayCard;
-
             HandVM.SelectedCardEvent += OnCardSelected;
             HandVM2.SelectedCardEvent += OnCardSelected;
 
             Lcgl.StatusChangedEvent += OnStatusChanged;
 
-            DiscardPileVM.KarteAbheben += Lcgl.OnKarteAbheben;
-            KarteZiehenButtonIsEnabled = true; // TODO Am Ende löschen
+            DiscardPileVM.KarteAbheben += OnKarteAbheben;
 
             StartGame();
         }
@@ -87,7 +84,7 @@ namespace LostCities.ViewModel
 
         private void ShowDialog()
         {
-            PopupDialogViewModel.Rotation = GetActivePlayer() == Player.PlayerOne ? 180 : 0;
+            PopupDialogViewModel.Rotation = Lcgl.GetActivePlayer() == Player.PlayerOne ? 180 : 0;
             PopupDialogViewModel.CreatePopupDialog("Spieler X ist am Zug!", "Test", "Ablegen", "Anlegen", "CANCEL");            
         }
 
@@ -127,8 +124,15 @@ namespace LostCities.ViewModel
         public ICommand OnKarteZiehenButtonPressedCommand { get; }
         private void OnButtonPressed()
         {
-            Lcgl.DrawHandCard();
+            GetActiveHand().GetHandCard(Lcgl.GetNewHandCard());
             CountCard = Lcgl.CardDeck.CountCard.ToString();
+            Lcgl.GameStateMachine();
+        }
+
+        public void OnKarteAbheben(object sender, CardEventArgs e)
+        {
+            GetActiveHand().GetHandCard(e.Card);
+            Lcgl.GameStateMachine();
         }
 
         public void OnStatusChanged(object sender, EventArgs e)
@@ -146,22 +150,26 @@ namespace LostCities.ViewModel
                     HandVM.DisableHand();
                     HandVM2.DisableHand();
                     DiscardPileVM.DisableDrawing();
-                    KarteZiehenButtonIsEnabled = false; //TODO Am Ende Kommentar wegnehmen!
+                    KarteZiehenButtonIsEnabled = false;
                     break;
                 case GameStatus.PlayerOnePlayCard:
                     HandVM.EnableHand();
                     HandVM2.DisableHand();
+                    DiscardPileVM.DisableDrawing();
+                    KarteZiehenButtonIsEnabled = false;
                     break;
                 case GameStatus.PlayerTwoPlayCard:
                     HandVM2.EnableHand();
                     HandVM.DisableHand();
+                    DiscardPileVM.DisableDrawing();
+                    KarteZiehenButtonIsEnabled = false;
                     break;
                 case GameStatus.PlayerOneDrawCard:
                 case GameStatus.PlayerTwoDrawCard:
                     HandVM.DisableHand();
                     HandVM2.DisableHand();
                     DiscardPileVM.EnableDrawing();
-                    KarteZiehenButtonIsEnabled = true; //TODO Am Ende Kommentar wegnehmen!
+                    KarteZiehenButtonIsEnabled = true;
                     break;
                 case GameStatus.GameOver:
                     PopupDialogViewModel.CreatePopupDialog("Das Spiel ist zu Ende", Lcgl.ShowWinnerWithPoints(), null, null, "OK");
@@ -171,44 +179,16 @@ namespace LostCities.ViewModel
             }
         }
 
-
         #region Helper
-
-        // TODO Kind of helper, that return the active player. Is it possible to have this logic directly in GameLogic?!
-        private Player GetActivePlayer()
-        {
-            if (Lcgl.GameStatus == GameStatus.PlayerOneDrawCard || Lcgl.GameStatus == GameStatus.PlayerOnePlayCard)
-            {
-                return Player.PlayerOne;
-            }
-            else
-            {
-                return Player.PlayerTwo;
-            }
-        }
-
+        
         private HandViewModel GetActiveHand()
         {
-            if (GetActivePlayer() == Player.PlayerOne)
-            {
-                return HandVM;
-            }
-            else
-            {
-                return HandVM2;
-            }
+            return Lcgl.GetActivePlayer() == Player.PlayerOne ? HandVM : HandVM2;
         }
 
         private IStapel GetActiveAnlegestapel()
         {
-            if (GetActivePlayer() == Player.PlayerOne)
-            {
-                return AnlegeStapelVM;
-            }
-            else
-            {
-                return AnlegeStapel2VM;
-            }
+            return Lcgl.GetActivePlayer() == Player.PlayerOne ? AnlegeStapelVM : AnlegeStapel2VM;
         }
 
         #endregion
