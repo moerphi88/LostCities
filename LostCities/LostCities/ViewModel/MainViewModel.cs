@@ -79,12 +79,13 @@ namespace LostCities.ViewModel
         private void OnCardSelected(object sender, EventArgs e)
         {
             var handViewModel = sender as HandViewModel;
-            ShowDialog();
+            ShowDialog(handViewModel.SelectedCard);
         }
 
-        private void ShowDialog()
+        private void ShowDialog(Card card)
         {
             PopupDialogViewModel.Rotation = Lcgl.GetActivePlayer() == Player.PlayerOne ? 180 : 0;
+            var String = Lcgl.EvaluatePossibilities(card);
             PopupDialogViewModel.CreatePopupDialog("Spieler X ist am Zug!", "Test", "Ablegen", "Anlegen", "CANCEL");            
         }
 
@@ -179,8 +180,7 @@ namespace LostCities.ViewModel
             }
         }
 
-        #region Helper
-        
+        #region Helper        
         private HandViewModel GetActiveHand()
         {
             return Lcgl.GetActivePlayer() == Player.PlayerOne ? HandVM : HandVM2;
@@ -190,8 +190,6 @@ namespace LostCities.ViewModel
         {
             return Lcgl.GetActivePlayer() == Player.PlayerOne ? AnlegeStapelVM : AnlegeStapel2VM;
         }
-
         #endregion
-
     }
 }

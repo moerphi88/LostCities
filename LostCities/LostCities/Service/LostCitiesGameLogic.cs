@@ -13,18 +13,16 @@ using System.Threading.Tasks;
 
 namespace LostCities.Service
 {
-    public class LostCitiesGameLogic : INotifyPropertyChanged
+    public class LostCitiesGameLogic
     {        
         private IStapel _anlegestapel, _anlegestapel2;
-        private CardDeck _cardDeck;
-        public CardDeck CardDeck {
-            get
-            {
-                return _cardDeck;
-            }
-        }
+        public CardDeck CardDeck { get; private set; }
 
         public event EventHandler StatusChangedEvent;
+        protected virtual void StatusChanged(EventArgs e)
+        {
+            StatusChangedEvent?.Invoke(this, e);
+        }
 
         public GameStatus GameStatus { get; private set; }
 
@@ -32,16 +30,16 @@ namespace LostCities.Service
         {           
             _anlegestapel = anlegestapel;
             _anlegestapel2 = anlegestapel2;
-            _cardDeck = new CardDeck();
+            CardDeck = new CardDeck();
 
-            _cardDeck.GetXCards(35); //Karten wegwerfen
+            CardDeck.GetXCards(35); //Karten wegwerfen
         }
 
-        protected virtual void StatusChanged(EventArgs e)
+        public void InitGame()
         {
-            StatusChangedEvent?.Invoke(this, e);
+            GameStateMachine();  //Start game
         }
-
+        
         public void GameStateMachine()
         {
             switch (GameStatus)
@@ -90,26 +88,6 @@ namespace LostCities.Service
             }
         }
 
-        #region Helper
-        public Player GetActivePlayer()
-        {
-            if (GameStatus == GameStatus.PlayerOneDrawCard || GameStatus == GameStatus.PlayerOnePlayCard)
-            {
-                return Player.PlayerOne;
-            }
-            else
-            {
-                return Player.PlayerTwo;
-            }
-        }
-
-        private IStapel GetActiveAnlegestapel()
-        {
-            return GetActivePlayer() == Player.PlayerOne ? _anlegestapel : _anlegestapel2;
-        }
-
-        #endregion
-
         public String[] EvaluatePossibilities(Card card)
         {
             var topCard = GetActiveAnlegestapel().GetTopCards();
@@ -137,17 +115,23 @@ namespace LostCities.Service
             }
         }
 
-        public void InitGame()
+        #region Helper
+        public Player GetActivePlayer()
         {
-            GameStateMachine();  //Start game
+            if (GameStatus == GameStatus.PlayerOneDrawCard || GameStatus == GameStatus.PlayerOnePlayCard)
+            {
+                return Player.PlayerOne;
+            }
+            else
+            {
+                return Player.PlayerTwo;
+            }
         }
 
-        #region INotifyPropertyChanges Handler
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName]string propertyName = "") =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        private IStapel GetActiveAnlegestapel()
+        {
+            return GetActivePlayer() == Player.PlayerOne ? _anlegestapel : _anlegestapel2;
+        }
         #endregion
     }
 }
