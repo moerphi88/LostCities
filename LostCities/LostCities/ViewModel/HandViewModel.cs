@@ -10,36 +10,20 @@ namespace LostCities.ViewModel
 {
     public class HandViewModel : BaseViewModel
     {
-        // Todo später löschen
-        static int count;
-        string name;
-        // bis hier
-
         private int _abgelegteKarteIndex;
-        
-        public ObservableCollection<HandCard> HandCards { get; set; }
-        
         private String _buttonName = "Hide Hand";
+        private bool _cardsAreHidden = false;
 
+        public ObservableCollection<HandCard> HandCards { get; set; } 
         public String HideShowButtonName
         {
             get { return _buttonName; }
             set { _buttonName = value; OnPropertyChanged(); }
         }
 
-        private bool _cardsAreHidden = false;
-
         public ICommand OnButtonPressedCommand { get; }
         public ICommand OnHideHandCommand { get; }
 
-        public delegate void CardEventHandler(object sender, CardEventArgs e);
-        public event CardEventHandler PlayCard;
-        protected virtual void OnPlayCard(CardEventArgs e)
-        {
-            PlayCard?.Invoke(this, e);
-        }
-
-        // Wenn das hier klappt, kann alles bzgl. PlayCard weg
         public Card SelectedCard { get; private set; }
         public event EventHandler SelectedCardEvent;
         protected virtual void CardSelected(EventArgs e)
@@ -47,38 +31,23 @@ namespace LostCities.ViewModel
             SelectedCardEvent?.Invoke(this, e);
         }
 
-        public Card PlaySelectedCard()
-        {
-            HideDrawnCard(_abgelegteKarteIndex);
-            return SelectedCard;
-        }
-
         public HandViewModel(INavigation navigation) : base(navigation)
         {
-            count++;
-            name = count.ToString();
+            HandCards = new ObservableCollection<HandCard>();
 
             OnButtonPressedCommand = new Command<string>(OnButtonPressed);
             OnHideHandCommand = new Command(OnHideHand);           
 
             _abgelegteKarteIndex = -1;
-
-            HandCards = new ObservableCollection<HandCard>();
         }
 
         void OnButtonPressed(string value)
         {
             var index = int.Parse(value);
-            //var CardEventArgs = new CardEventArgs(HandCards[index].Card);
             _abgelegteKarteIndex = index;
-            //HideDrawnCard(index);
-
-            //OnPlayCard(CardEventArgs);
             SelectedCard = HandCards[index].Card;
             CardSelected(null);
         }
-
-        
 
         void OnHideHand()
         {

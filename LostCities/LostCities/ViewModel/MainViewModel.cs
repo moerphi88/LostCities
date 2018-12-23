@@ -22,10 +22,34 @@ namespace LostCities.ViewModel
         public HandViewModel HandVM { get; set; }
         public HandViewModel HandVM2 { get; set; }
         public LostCitiesGameLogic Lcgl { get; set; }
-
         public PopupDialogViewModel PopupDialogViewModel { get; set; }
 
+        public MainViewModel(INavigation navigation) : base(navigation)
+        {
+            DiscardPileVM = new DiscardPileViewModel(null);
+            AnlegeStapelVM = new AnlegestapelViewModel(null);
+            AnlegeStapel2VM = new AnlegestapelViewModel(null);
+            HandVM = new HandViewModel(null);
+            HandVM2 = new HandViewModel(null);
+            Lcgl = new LostCitiesGameLogic(DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
 
+            PopupDialogViewModel = new PopupDialogViewModel(null);
+            PopupDialogViewModel.SetCommand(new Command(() => { CardAblegen(); }), new Command(() => { CardAnlegen(); }));
+
+            OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
+
+            HandVM.GetHandCards(Lcgl.CardDeck.GetXCards(HandCards));
+            HandVM2.GetHandCards(Lcgl.CardDeck.GetXCards(HandCards));
+            
+            // Eventbinding
+            //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
+            HandVM.SelectedCardEvent += OnCardSelected;
+            HandVM2.SelectedCardEvent += OnCardSelected;
+            Lcgl.StatusChangedEvent += OnStatusChanged;
+            DiscardPileVM.KarteAbheben += OnKarteAbheben;
+
+            StartGame();
+        }
 
         public void CardAblegen()
         {
@@ -45,48 +69,16 @@ namespace LostCities.ViewModel
             Lcgl.GameStateMachine();
         }
 
-
-        public MainViewModel(INavigation navigation) : base(navigation)
-        {
-            DiscardPileVM = new DiscardPileViewModel(null);
-            //AnlegeStapelVM = new MauMauViewModel(null);
-            AnlegeStapelVM = new AnlegestapelViewModel(null);
-            AnlegeStapel2VM = new AnlegestapelViewModel(null);
-            HandVM = new HandViewModel(null);
-            HandVM2 = new HandViewModel(null);
-            Lcgl = new LostCitiesGameLogic(DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
-
-            PopupDialogViewModel = new PopupDialogViewModel(null);
-            PopupDialogViewModel.SetCommand(new Command(() => { CardAblegen(); }), new Command(() => { CardAnlegen(); }));
-
-            OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
-
-            HandVM.GetHandCards(Lcgl.CardDeck.GetXCards(HandCards));
-            HandVM2.GetHandCards(Lcgl.CardDeck.GetXCards(HandCards));
-            
-            // Eventbinding
-            //TODO die Events müssen noch wieder abgemeldet werden. Ggf. im Destruktor?!
-            HandVM.SelectedCardEvent += OnCardSelected;
-            HandVM2.SelectedCardEvent += OnCardSelected;
-
-            Lcgl.StatusChangedEvent += OnStatusChanged;
-
-            DiscardPileVM.KarteAbheben += OnKarteAbheben;
-
-            StartGame();
-        }
-
-        private void OnCardSelected(object sender, EventArgs e)
-        {
-            var handViewModel = sender as HandViewModel;
-            ShowDialog(handViewModel.SelectedCard);
-        }
-
         private void ShowDialog(Card card)
         {
             PopupDialogViewModel.Rotation = Lcgl.GetActivePlayer() == Player.PlayerOne ? 180 : 0;
-            var String = Lcgl.EvaluatePossibilities(card);
-            PopupDialogViewModel.CreatePopupDialog("Spieler X ist am Zug!", "Test", "Ablegen", "Anlegen", "CANCEL");            
+            if (Lcgl.IsAnlegenPossible(card))
+            {
+                PopupDialogViewModel.CreatePopupDialog("Spieler X ist am Zug!", "Test", "Ablegen", "Anlegen", "CANCEL");
+            } else
+            {
+                PopupDialogViewModel.CreatePopupDialog("Spieler X ist am Zug!", "Test", "Ablegen", null, "CANCEL");
+            }
         }
 
         private void StartGame()
@@ -128,6 +120,12 @@ namespace LostCities.ViewModel
             GetActiveHand().GetHandCard(Lcgl.GetNewHandCard());
             CountCard = Lcgl.CardDeck.CountCard.ToString();
             Lcgl.GameStateMachine();
+        }
+
+        private void OnCardSelected(object sender, EventArgs e)
+        {
+            var handViewModel = sender as HandViewModel;
+            ShowDialog(handViewModel.SelectedCard);
         }
 
         public void OnKarteAbheben(object sender, CardEventArgs e)

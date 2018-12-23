@@ -17,14 +17,13 @@ namespace LostCities.Service
     {        
         private IStapel _anlegestapel, _anlegestapel2;
         public CardDeck CardDeck { get; private set; }
+        public GameStatus GameStatus { get; private set; }
 
         public event EventHandler StatusChangedEvent;
         protected virtual void StatusChanged(EventArgs e)
         {
             StatusChangedEvent?.Invoke(this, e);
         }
-
-        public GameStatus GameStatus { get; private set; }
 
         public LostCitiesGameLogic(DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {           
@@ -72,6 +71,7 @@ namespace LostCities.Service
             return CardDeck.GetFirstCard();
         }
 
+        //ToDO Diese Methode/Logik in die Anlegestapel verlagern
         public String ShowWinnerWithPoints()
         {
             var pointsPlayer1 = _anlegestapel.CountPoints();
@@ -88,30 +88,32 @@ namespace LostCities.Service
             }
         }
 
-        public String[] EvaluatePossibilities(Card card)
+        //ToDO Diese Methode/Logik in die Anlegestapel verlagern
+        public bool IsAnlegenPossible(Card card)
         {
             var topCard = GetActiveAnlegestapel().GetTopCards();
 
             //Wenn es mindestens eine angelegte Karte gibt,...
-            if(topCard.Count != 0)
+            if (topCard.Count != 0)
             {
                 foreach (var c in topCard)
                 {
                     //Liegt auf dem Farbstapel der ausgewählten Karte bereits eine Karte?
-                    if(card.Name == c.Name)
+                    if (card.Name == c.Name)
                     {
                         //Wenn ja, ist die ausgewählte Karte höher oder gleich (gleich bei mehreren Händen) als die die schon liegt
-                        if(card.Zahl >= c.Zahl)
+                        if (card.Zahl >= c.Zahl)
                         {
-                            return new String[] { "Karte ablegen", "Karte anlegen" }; //Ja, dann kann der Nutzer frei entscheiden
+                            return true; //Ja, dann kann der Nutzer frei entscheiden
                         }
-                        return new String[] { "Karte ablegen" }; //Wenn nicht, dann kann er die Karte nur ablegen
-                    }                    
+                        return false; //Wenn nicht, dann kann er die Karte nur ablegen
+                    }
                 }
-                return new String[] { "Karte ablegen", "Karte anlegen" };//Es liegt noch keine Karte der ausgewählten Farbe auf dem Anlegestapel
+                return true;//Es liegt noch keine Karte der ausgewählten Farbe auf dem Anlegestapel
             }
-            else { //Spieler kann alles legen, weil noch keine Karte angelegt wurde
-                return new String[] { "Karte ablegen", "Karte anlegen" };
+            else
+            { //Spieler kann alles legen, weil noch keine Karte angelegt wurde
+                return true;
             }
         }
 
