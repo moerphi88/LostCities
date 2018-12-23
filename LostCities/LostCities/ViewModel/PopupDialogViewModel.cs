@@ -14,6 +14,7 @@ namespace LostCities.ViewModel
 {
     public class PopupDialogViewModel : BaseViewModel
     {
+        #region Fields 
         private int _rotation;
         private bool _dialogIsVisible;
 
@@ -31,10 +32,17 @@ namespace LostCities.ViewModel
         private bool _buttonThreeIsVisible;
         private string _buttonThreeText;
 
+        #endregion
+
+        #region Commands
 
         public ICommand OnFirstButtonPressed { get; private set; }
         public ICommand OnSecondButtonPressed { get; private set; }
         public ICommand OnThirdButtonPressed { get; }
+
+        #endregion
+
+        #region Props
 
         public int Rotation
         {
@@ -101,11 +109,21 @@ namespace LostCities.ViewModel
             set { _buttonThreeIsVisible = value;  OnPropertyChanged(); }
         }
 
+        #endregion
+
         public PopupDialogViewModel(INavigation navigation) : base(navigation)
         {
             OnFirstButtonPressed = new Command(() => { DialogIsVisible = false; });
             OnSecondButtonPressed = new Command(() => { DialogIsVisible = false; });
             OnThirdButtonPressed = new Command(() => { DialogIsVisible = false; });
+        }
+
+        public void SetCommand(ICommand _command1, ICommand _command2)
+        {
+            OnFirstButtonPressed = _command1;
+            OnSecondButtonPressed = _command2;
+            OnPropertyChanged("OnFirstButtonPressed");
+            OnPropertyChanged("OnSecondButtonPressed");
         }
 
         public void CreatePopupDialog(string title, string subtitle = null, string buttonOne = null, string buttonTwo = null, string buttonThree = null)
@@ -126,12 +144,12 @@ namespace LostCities.ViewModel
 
             if (buttonOne != null)
             {
-                ButtonOneText = buttonTwo;
+                ButtonOneText = buttonOne;
                 ButtonOneIsVisible = true;
             }
             else
             {
-                ButtonOneText = string.Empty;
+                ButtonOneText = "";
                 ButtonOneIsVisible = false;
             }
 
@@ -140,13 +158,13 @@ namespace LostCities.ViewModel
                 ButtonTwoIsVisible = true;
             }
             else {
-                ButtonTwoText = string.Empty;
+                ButtonTwoText = "";
                 ButtonTwoIsVisible = false;
             }
 
             if (buttonThree != null)
             {
-                ButtonThreeText = buttonTwo;
+                ButtonThreeText = buttonThree;
                 ButtonThreeIsVisible = true;
             }
             else

@@ -110,7 +110,7 @@
                             <Label FontSize="Small" TextColor="Black" Text="{Binding SubtitleLabelText}" IsVisible="{Binding SubtitleLabelIsVisible}" ></Label>
                         </StackLayout>
                         <StackLayout AbsoluteLayout.LayoutBounds="1, 1, 1, .5" AbsoluteLayout.LayoutFlags="All" Spacing="0">
-                            <Button HeightRequest="40" HorizontalOptions="Start" BackgroundColor="Transparent" Text="{Binding ButtonTwoText}" IsVisible="{Binding ButtonOneIsVisible}" Command="{Binding OnFirstButtonPressed}" TextColor="Black"></Button>
+                            <Button HeightRequest="40" HorizontalOptions="Start" BackgroundColor="Transparent" Text="{Binding ButtonOneText}" IsVisible="{Binding ButtonOneIsVisible}" Command="{Binding OnFirstButtonPressed}" TextColor="Black"></Button>
                             <Button HeightRequest="40" HorizontalOptions="Start" BackgroundColor="Transparent" Text="{Binding ButtonTwoText}" IsVisible="{Binding ButtonTwoIsVisible}"  Command="{Binding OnSecondButtonPressed}" TextColor="Black"></Button>
                             <Button HeightRequest="40" HorizontalOptions="End" BackgroundColor="Transparent" Text="{Binding ButtonThreeText}" IsVisible="{Binding ButtonThreeIsVisible}" Command="{Binding OnThirdButtonPressed}" TextColor="PaleVioletRed"></Button>
                         </StackLayout>

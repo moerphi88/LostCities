@@ -63,7 +63,7 @@ namespace LostCities.Service
             StatusChangedEvent?.Invoke(this, e);
         }
 
-        private void GameStateMachine()
+        public void GameStateMachine()
         {
             switch (GameStatus)
             {
@@ -71,15 +71,13 @@ namespace LostCities.Service
                     GameStatus = GameStatus.PlayerOnePlayCard;
                     break;
                 case GameStatus.PlayerOnePlayCard:
-                    //wenn CardDeck = empty => GameOver ansonsten KarteZiehen
-                    GameStatus = GameStatus.PlayerOneDrawCard;
+                    GameStatus = CardDeck.IsEmpty() ? GameStatus.GameOver : GameStatus.PlayerOneDrawCard;
                     break;
                 case GameStatus.PlayerOneDrawCard:
                     GameStatus = GameStatus.PlayerTwoPlayCard;
                     break;
                 case GameStatus.PlayerTwoPlayCard:
-                    //wenn CardDeck = empty => GameOver ansonsten KarteZiehen
-                    GameStatus = GameStatus.PlayerTwoDrawCard;
+                    GameStatus = CardDeck.IsEmpty() ? GameStatus.GameOver : GameStatus.PlayerTwoDrawCard;
                     break;
                 case GameStatus.PlayerTwoDrawCard:
                     GameStatus = GameStatus.PlayerOnePlayCard;
@@ -105,6 +103,7 @@ namespace LostCities.Service
 
         public async void OnPlayCard(object sender, CardEventArgs e)
         {
+            GameStateMachine();
             try
             {                
                 if (!_gameIsOver)
@@ -163,7 +162,7 @@ namespace LostCities.Service
             Debug.WriteLine("OnKarteAblegen. GameIsOver:{0} " + "Active Player: {1}", _gameIsOver, _activePlayer);
         }
 
-        private String ShowWinnerWithPoints()
+        public String ShowWinnerWithPoints()
         {
             var pointsPlayer1 = _anlegestapel.CountPoints();
             var pointsPlayer2 = _anlegestapel2.CountPoints();

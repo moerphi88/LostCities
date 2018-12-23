@@ -22,6 +22,27 @@ namespace LostCities.ViewModel
         public HandViewModel HandVM2 { get; set; }
         public LostCitiesGameLogic Lcgl { get; set; }
 
+        public PopupDialogViewModel PopupDialogViewModel { get; set; }
+
+
+
+        public void CardAblegen()
+        {
+            var hand = GetActiveHand() as HandViewModel;
+            hand.HideDrawnCard();
+            DiscardPileVM.KarteAblegen(hand.SelectedCard);
+            PopupDialogViewModel.DialogIsVisible = false;
+            Lcgl.GameStateMachine();
+        }
+
+        public void CardAnlegen()
+        {
+            var hand = GetActiveHand() as HandViewModel;
+            hand.HideDrawnCard();
+            GetActiveAnlegestapel().KarteAnlegen(hand.SelectedCard);
+            PopupDialogViewModel.DialogIsVisible = false;
+            Lcgl.GameStateMachine();
+        }
 
 
         public MainViewModel(INavigation navigation) : base(navigation)
@@ -34,6 +55,9 @@ namespace LostCities.ViewModel
             HandVM2 = new HandViewModel(null);
             Lcgl = new LostCitiesGameLogic(HandVM, HandVM2, DiscardPileVM, AnlegeStapelVM, AnlegeStapel2VM);
 
+            PopupDialogViewModel = new PopupDialogViewModel(null);
+            PopupDialogViewModel.SetCommand(new Command(() => { CardAblegen(); }), new Command(() => { CardAnlegen(); }));
+
             OnKarteZiehenButtonPressedCommand = new Command(OnButtonPressed);
 
             HandVM.GetHandCards(Lcgl.CardDeck.GetXCards(HandCards));
@@ -44,12 +68,27 @@ namespace LostCities.ViewModel
             HandVM.PlayCard += Lcgl.OnPlayCard;
             HandVM2.PlayCard += Lcgl.OnPlayCard;
 
+            HandVM.SelectedCardEvent += OnCardSelected;
+            HandVM2.SelectedCardEvent += OnCardSelected;
+
             Lcgl.StatusChangedEvent += OnStatusChanged;
 
             DiscardPileVM.KarteAbheben += Lcgl.OnKarteAbheben;
             KarteZiehenButtonIsEnabled = true; // TODO Am Ende löschen
 
             StartGame();
+        }
+
+        private void OnCardSelected(object sender, EventArgs e)
+        {
+            var handViewModel = sender as HandViewModel;
+            ShowDialog();
+        }
+
+        private void ShowDialog()
+        {
+            PopupDialogViewModel.Rotation = GetActivePlayer() == Player.PlayerOne ? 180 : 0;
+            PopupDialogViewModel.CreatePopupDialog("Spieler X ist am Zug!", "Test", "Ablegen", "Anlegen", "CANCEL");            
         }
 
         private void StartGame()
@@ -125,11 +164,54 @@ namespace LostCities.ViewModel
                     KarteZiehenButtonIsEnabled = true; //TODO Am Ende Kommentar wegnehmen!
                     break;
                 case GameStatus.GameOver:
+                    PopupDialogViewModel.CreatePopupDialog("Das Spiel ist zu Ende", Lcgl.ShowWinnerWithPoints(), null, null, "OK");
+                    break;
                 default:
                     break;
             }
-
-            Debug.WriteLine("MainViewModel: Update(): {0}",Lcgl.GameStatus.ToString());
         }
+
+
+        #region Helper
+
+        // TODO Kind of helper, that return the active player. Is it possible to have this logic directly in GameLogic?!
+        private Player GetActivePlayer()
+        {
+            if (Lcgl.GameStatus == GameStatus.PlayerOneDrawCard || Lcgl.GameStatus == GameStatus.PlayerOnePlayCard)
+            {
+                return Player.PlayerOne;
+            }
+            else
+            {
+                return Player.PlayerTwo;
+            }
+        }
+
+        private HandViewModel GetActiveHand()
+        {
+            if (GetActivePlayer() == Player.PlayerOne)
+            {
+                return HandVM;
+            }
+            else
+            {
+                return HandVM2;
+            }
+        }
+
+        private IStapel GetActiveAnlegestapel()
+        {
+            if (GetActivePlayer() == Player.PlayerOne)
+            {
+                return AnlegeStapelVM;
+            }
+            else
+            {
+                return AnlegeStapel2VM;
+            }
+        }
+
+        #endregion
+
     }
 }
