@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace LostCities.ViewModel
         public HandViewModel HandVM { get; set; }
         public HandViewModel HandVM2 { get; set; }
         public LostCitiesGameLogic Lcgl { get; set; }
+
 
 
         public MainViewModel(INavigation navigation) : base(navigation)
@@ -42,10 +44,12 @@ namespace LostCities.ViewModel
             HandVM.PlayCard += Lcgl.OnPlayCard;
             HandVM2.PlayCard += Lcgl.OnPlayCard;
 
+            Lcgl.StatusChangedEvent += OnStatusChanged;
+
             DiscardPileVM.KarteAbheben += Lcgl.OnKarteAbheben;
             KarteZiehenButtonIsEnabled = true;
+            
         }
-
 
         private bool _karteZiehenButtonIsEnabeld;
         public bool KarteZiehenButtonIsEnabled
@@ -80,6 +84,17 @@ namespace LostCities.ViewModel
         {
             Lcgl.DrawHandCard();
             CountCard = Lcgl.CardDeck.CountCard.ToString();
+        }
+
+        public void OnStatusChanged(object sender, EventArgs e)
+        {
+            Update();            
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            Debug.WriteLine("MainViewModel: Update(): {0}",Lcgl.GameStatus.ToString());
         }
     }
 }

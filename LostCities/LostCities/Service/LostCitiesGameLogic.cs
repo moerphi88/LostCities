@@ -27,12 +27,11 @@ namespace LostCities.Service
         }
         private bool _gameIsOver;
         private int _activePlayer = 0;
-        
 
-
+        public event EventHandler StatusChangedEvent;
 
         public PopupDialogViewModel PopupDialogViewModel { get; set; }
-
+        public GameStatus GameStatus = GameStatus.Idle;
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {
@@ -46,11 +45,7 @@ namespace LostCities.Service
             _cardDeck = new CardDeck();
             _gameIsOver = false;
 
-
-
-
             _cardDeck.GetXCards(35); //Karten wegwerfen
-
 
             InitGame();
 
@@ -63,6 +58,40 @@ namespace LostCities.Service
             //    Debug.WriteLine("Done");
             //});
             //Debug.WriteLine("All done");
+        }
+
+        protected virtual void StatusChanged(EventArgs e)
+        {
+            StatusChangedEvent?.Invoke(this, e);
+        }
+
+        private void GameStateMachine()
+        {
+            switch (GameStatus)
+            {
+                case GameStatus.Idle:
+                    GameStatus = GameStatus.PlayerOnePlayCard;
+                    break;
+                case GameStatus.PlayerOnePlayCard:
+                    //wenn CardDeck = empty => GameOver ansonsten KarteZiehen
+                    GameStatus = GameStatus.PlayerOneDrawCard;
+                    break;
+                case GameStatus.PlayerOneDrawCard:
+                    GameStatus = GameStatus.PlayerTwoPlayCard;
+                    break;
+                case GameStatus.PlayerTwoPlayCard:
+                    //wenn CardDeck = empty => GameOver ansonsten KarteZiehen
+                    GameStatus = GameStatus.PlayerTwoDrawCard;
+                    break;
+                case GameStatus.PlayerTwoDrawCard:
+                    GameStatus = GameStatus.PlayerOnePlayCard;
+                    break;
+                case GameStatus.GameOver:
+                default:
+                    GameStatus = GameStatus.Idle;
+                    break;
+            }
+            StatusChanged(null);
         }
 
         public void DrawHandCard()
@@ -80,6 +109,7 @@ namespace LostCities.Service
         {
             try
             {
+                GameStateMachine();
                 if (!_gameIsOver)
                 {
                     // GameLogik für MauMau
@@ -254,6 +284,7 @@ namespace LostCities.Service
         {
             _gameIsOver = _cardDeck.IsEmpty();
         }
+
 
         #region INotifyPropertyChanges Handler
 
