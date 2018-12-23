@@ -15,7 +15,6 @@ namespace LostCities.ViewModel
         string name;
         // bis hier
 
-
         private int _abgelegteKarteIndex;
         
         public ObservableCollection<HandCard> HandCards { get; set; }
@@ -70,11 +69,12 @@ namespace LostCities.ViewModel
         void OnButtonPressed(string value)
         {
             var index = int.Parse(value);
-            var CardEventArgs = new CardEventArgs(HandCards[index].Card);
+            //var CardEventArgs = new CardEventArgs(HandCards[index].Card);
             _abgelegteKarteIndex = index;
             //HideDrawnCard(index);
 
             //OnPlayCard(CardEventArgs);
+            SelectedCard = HandCards[index].Card;
             CardSelected(null);
         }
 
@@ -129,7 +129,7 @@ namespace LostCities.ViewModel
 
         private void HideDrawnCard(int idx)
         {
-            HandCards[idx].IsVisible = false;            
+            HandCards[idx].IsVisible = false;
         }
 
         public void DisableHand()
