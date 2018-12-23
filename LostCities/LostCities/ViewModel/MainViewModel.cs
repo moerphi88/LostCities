@@ -47,8 +47,14 @@ namespace LostCities.ViewModel
             Lcgl.StatusChangedEvent += OnStatusChanged;
 
             DiscardPileVM.KarteAbheben += Lcgl.OnKarteAbheben;
-            KarteZiehenButtonIsEnabled = true;
-            
+            KarteZiehenButtonIsEnabled = true; // TODO Am Ende löschen
+
+            StartGame();
+        }
+
+        private void StartGame()
+        {
+            Lcgl.InitGame();            
         }
 
         private bool _karteZiehenButtonIsEnabeld;
@@ -94,6 +100,35 @@ namespace LostCities.ViewModel
         public override void Update()
         {
             base.Update();
+
+            switch (Lcgl.GameStatus)
+            {
+                case GameStatus.Idle:
+                    HandVM.DisableHand();
+                    HandVM2.DisableHand();
+                    DiscardPileVM.DisableDrawing();
+                    KarteZiehenButtonIsEnabled = false; //TODO Am Ende Kommentar wegnehmen!
+                    break;
+                case GameStatus.PlayerOnePlayCard:
+                    HandVM.EnableHand();
+                    HandVM2.DisableHand();
+                    break;
+                case GameStatus.PlayerTwoPlayCard:
+                    HandVM2.EnableHand();
+                    HandVM.DisableHand();
+                    break;
+                case GameStatus.PlayerOneDrawCard:
+                case GameStatus.PlayerTwoDrawCard:
+                    HandVM.DisableHand();
+                    HandVM2.DisableHand();
+                    DiscardPileVM.EnableDrawing();
+                    KarteZiehenButtonIsEnabled = true; //TODO Am Ende Kommentar wegnehmen!
+                    break;
+                case GameStatus.GameOver:
+                default:
+                    break;
+            }
+
             Debug.WriteLine("MainViewModel: Update(): {0}",Lcgl.GameStatus.ToString());
         }
     }

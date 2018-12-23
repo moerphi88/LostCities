@@ -31,7 +31,7 @@ namespace LostCities.Service
         public event EventHandler StatusChangedEvent;
 
         public PopupDialogViewModel PopupDialogViewModel { get; set; }
-        public GameStatus GameStatus = GameStatus.Idle;
+        public GameStatus GameStatus { get; private set; }
 
         public LostCitiesGameLogic(HandViewModel handSpielerEins, HandViewModel handSpielerZwei, DiscardPileViewModel ablagestapel, IStapel anlegestapel, IStapel anlegestapel2)
         {
@@ -46,8 +46,6 @@ namespace LostCities.Service
             _gameIsOver = false;
 
             _cardDeck.GetXCards(35); //Karten wegwerfen
-
-            InitGame();
 
             //Task.Run(async () => //Task.Run automatically unwraps nested Task types!
             //{
@@ -108,8 +106,7 @@ namespace LostCities.Service
         public async void OnPlayCard(object sender, CardEventArgs e)
         {
             try
-            {
-                GameStateMachine();
+            {                
                 if (!_gameIsOver)
                 {
                     // GameLogik für MauMau
@@ -254,12 +251,9 @@ namespace LostCities.Service
             }
         }
 
-        private void InitGame()
+        public void InitGame()
         {
-            _handSpielerEins.EnableHand();
-            _handSpielerZwei.DisableHand();
-            _ablagestapel.DisableDrawing();
-            //KarteZiehenButtonIsEnabled = false; ToDo => Sobald im mainViewModel der GameState abgefragt werden kann, muss das übernommen werden!
+            GameStateMachine();  //Start game
         }
 
         private void SwitchActivePlayer()
