@@ -8,4 +8,6 @@ namespace LostCities
 
     public enum GameStatus { Idle, PlayerOnePlayCard, PlayerOneDrawCard, PlayerTwoPlayCard, PlayerTwoDrawCard, GameOver };
 
+    public enum Player { PlayerOne, PlayerTwo };
+
 }
